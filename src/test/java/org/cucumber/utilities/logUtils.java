@@ -1,6 +1,6 @@
 package org.cucumber.utilities;
 
-import com.suleyman.step_definitions.ERAAutomation_Defs;
+import org.cucumber.step_definitions.ERAAutomation_Defs;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
