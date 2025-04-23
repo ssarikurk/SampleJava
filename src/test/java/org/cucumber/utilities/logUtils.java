@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class logUtils {
 
+
     private static final Logger logger = LoggerFactory.getLogger(ERAAutomation_Defs.class);
 
     public static void assertEquals(String errorLogMessage, Object expected, Object actual ) {
