@@ -20,7 +20,7 @@ public class SshUtils {
 
     public static void sshJenkinsDockerAWS() {
 
-        String privateKeyPath = BrowserUtils.getPath(".ssh/jenkins3.pem");
+        String privateKeyPath = BrowserUtils.getPath(".ssh/jenk.pem");
         String knownHostPath = BrowserUtils.getPath(".ssh/known_hosts");
 
 
@@ -2656,7 +2656,7 @@ public class SshUtils {
             // Run a command
             channelExec.setCommand("cd workspace &&" +
                     "cd current &&" +
-                    "/home/ubuntu/.nvm/versions/node/v20.10.0/bin/node ./background/auto-create-claims.js --partner-id xxxxxxxx --user-email suleyman@mail.ai --practice-id xxxxxxxxx");
+                    "node ./background/auto-create.js --partner-id xxxxxxxx --user-email suleyman@mail.ai");
 //        Thread.sleep(1000);
 
             // display errors to System.err
@@ -2734,8 +2734,8 @@ public class SshUtils {
             // Run a command
             channelExec.setCommand("cd workspace &&" +
                     "cd current &&" +
-                    "/home/ubuntu/.nvm/versions/node/v20.10.0/bin/node background/execute-auto-eligibility.js --partner "+partner+" --practice "+practice);
-//                    "node background/execute-auto-eligibility.js --partner pdc-all-chi-api --practice "+practice);
+                    "node background/execute-auto-eligibility.js --partner "+partner+" --practice "+practice);
+//                    "node background/execute-auto-eligibility.js --partner all-chi-api --practice "+practice);
 
             //        Thread.sleep(1000);
 
@@ -2815,7 +2815,7 @@ public class SshUtils {
             channelExec.setCommand("cd workspace &&" +
                     "cd current &&" +
                     "/home/ubuntu/.nvm/versions/node/v20.10.0/bin/node background/execute-auto-eligibility.js --partner xxxxxxxxx --practice "+practice);
-//                    "node background/execute-auto-eligibility.js --partner pdc-all-chi-api --practice "+practice);
+//                    "node background/execute-auto-eligibility.js --partner all-chi-api --practice "+practice);
 
             //        Thread.sleep(1000);
 
@@ -2897,7 +2897,7 @@ public class SshUtils {
             channelExec.setCommand("cd workspace &&" +
                     "cd current &&" +
                     command);
-//                    "node background/execute-auto-eligibility.js --partner pdc-all-chi-api --practice "+practice);
+//                    "node background/execute-auto-eligibility.js --partner all-chi-api --practice "+practice);
 
             //        Thread.sleep(1000);
 
@@ -3763,7 +3763,7 @@ public class SshUtils {
             // Run a command
             channelExec.setCommand("cd workspace &&" +
                     "cd current &&" +
-                    "/home/ubuntu/.nvm/versions/node/v20.10.0/bin/node ./background/process-help-tickets.js --partner-id pdc-all-chi-api");
+                    "/home/ubuntu/.nvm/versions/node/v20.10.0/bin/node ./background/process-help-tickets.js --partner-id all-chi-api");
 
             //        Thread.sleep(1000);
 

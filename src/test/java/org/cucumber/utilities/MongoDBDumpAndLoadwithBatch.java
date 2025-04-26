@@ -43,22 +43,9 @@ public class MongoDBDumpAndLoadwithBatch {
 
             // Collections to dump
             List<String> collectionsToDump = Arrays.asList(
-//                    "st_835_assigned",
-//                    "clp_835_assigned",
-//                    "svc_835_assigned",
-//                    "cas_svc_835_assigned",
-                    "era_split_file_assigned"
-//                    "ledger_1",
-//                    "dfi_account_1",
-//                    "claim_1",
-//                    "claim_proc_1",
-//                    "hsbc_820_835_entry",
-//                    "patient_plan_1",
-//                    "insurance_plan_1",
-//                    "insurance_subscriber_1",
-//                    "enrollment_1",
-//                    "patient_plan_companion_1",
-//                    "patient_payer_mapping_1"
+//                    "aaaa_assigned",
+                    "file_assigned"
+//                    "ledger_record_1"
             );
 
             MongoClientURI uri = new MongoClientURI(ConfigurationReader.get("mongoURI"));
@@ -113,22 +100,6 @@ public class MongoDBDumpAndLoadwithBatch {
 
         }
 
-//    private static String buildMongoURI(String host, int port, String username, String password, String databaseName) {
-//        StringBuilder uriBuilder = new StringBuilder("mongodb://");
-//        if (username != null && password != null) {
-//            uriBuilder.append(username).append(":").append(password).append("@");
-//        }
-//        uriBuilder.append(host).append(":").append(port).append("/").append(databaseName);
-//        return uriBuilder.toString();
-//    }
-//
-//    private static void saveDocumentsToJson(String outputDir, String collectionName, List<Document> documents) throws IOException {
-//        File outputFile = new File(outputDir, collectionName + ".json");
-//        // Use your preferred method to save documents to a file, e.g., JSON serialization
-//        // Here, we'll simply print the documents to the console for demonstration purposes
-//        for (Document document : documents) {
-//            System.out.println(document.toJson());
-//        }
-//    }
+
     }
 }

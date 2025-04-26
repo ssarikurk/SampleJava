@@ -14,6 +14,8 @@ public class ConfigurationReader {
 
         try {
             String path = "configuration.properties";
+//            String path = "/Users/ss/Documents/SampleJava/configuration.properties";
+//            /Users/ss/Documents/SampleJava/configuration.properties
             FileInputStream input = new FileInputStream(path);
             properties = new Properties();
             properties.load(input);

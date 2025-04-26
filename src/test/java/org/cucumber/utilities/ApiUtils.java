@@ -37,7 +37,7 @@ public class ApiUtils {
                 .header("User-Agent", "test")
                 .contentType("application/json")
                 .body(postBody)
-                .when().post(ConfigurationReader.get("staging")+"/api/request_json_web_token");
+                .when().post(ConfigurationReader.get("url")+"/api/requesttoken");
 
 //       response.prettyPrint();
 //       System.out.println("response.statusCode() = " + response.statusCode());
@@ -50,12 +50,12 @@ public class ApiUtils {
     }
 
     public static String getX12 (String partner, String practice, String claimNum){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
                 .queryParam("practice_id",practice)
-                .when().get("/api/claim/"+claimNum+"/get_x12");
+                .when().get("/api/clear/"+claimNum+"/get_x12");
         JsonPath jsonPath = response.jsonPath();
         response.prettyPrint();
         System.out.println(response.statusCode());
@@ -64,7 +64,7 @@ public class ApiUtils {
     }
 
     public static JsonPath getReprocessStatus (String partner, String integrationId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -76,7 +76,7 @@ public class ApiUtils {
     }
 
     public static JsonPath getSweepPage (String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -89,7 +89,7 @@ public class ApiUtils {
 
 
     public static JsonPath getListOfSweep (String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -101,23 +101,23 @@ public class ApiUtils {
     }
 
     public static JsonPath GetFullListOfAch(String partner, String accountId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
-                .when().get("/api/account/"+accountId+"/ach_out_details/table?limit=10&skip=0&sortBy=request_timestamp&sortOrder=-1&startDate=&endDate=");
+                .when().get("/api/account/"+accountId+"/details/table?limit=10&skip=0&sortBy=request_timestamp&sortOrder=-1&startDate=&endDate=");
         JsonPath jsonPath = response.jsonPath();
         response.prettyPrint();
 //        System.out.println(response.statusCode());
         return jsonPath;
     }
 
-    public static Response previewACH (String partner, String dfiAccounId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+    public static Response previewACH (String partner, String dounId){
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
-                .when().get("/api/accounts/sweep/xml/?dfi_account_id="+dfiAccounId+"&achServiceCode=NURG");
+                .when().get("/api/accounts/sweep/xml/?account_id="+dounId+"&viceCode=NURG");
 //                .when().get("/api/accounts/sweep/xml/?dfi_account_id=hsbc317000551&tin=844035200&npi=1811520976&achServiceCode=NURG");
 //        response.prettyPrint();
 //        System.out.println(response.statusCode());
@@ -125,10 +125,10 @@ public class ApiUtils {
     }
 
     public static JsonPath enableNegativePatientResponsibility (String partner, String practiceId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
-                .when().get("/api/practice/create_pos_procedure_adj_type?practice_id="+practiceId);
+                .when().get("/api/practice/procedure_adj_type?practice_id="+practiceId);
         JsonPath jsonPath = response.jsonPath();
         response.prettyPrint();
         System.out.println("enableNegativePatientResponsibility api request Status: "+response.statusCode());
@@ -136,7 +136,7 @@ public class ApiUtils {
     }
 
     public static JsonPath getPatientData (String partner, String practice, String patient){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -150,11 +150,11 @@ public class ApiUtils {
     public static Map<String, Object> getDefaultBillingProvider (String partner, String practice){
         Map<String, Object> map = null;
         try {
-            RestAssured.baseURI = ConfigurationReader.get("staging");
+            RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
             Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                     .header("User-Agent", "test")
-                    .when().get("/api/default_billing_provider/"+practice+"?appointment_id=undefined");
+                    .when().get("/api/dilling_provider/"+practice+"?appoint_id=undefined");
             map = response.body().as(Map.class);
 //            System.out.println("fromApi = " + response.prettyPrint());
 //            System.out.println("map = " + map);
@@ -168,11 +168,11 @@ public class ApiUtils {
 
 
     public static String getDefaultBillingProviderid (String partner, String practice){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
-                .when().get("/api/default_billing_provider/"+practice+"?appointment_id=undefined");
+                .when().get("/api/dilling_provider/"+practice+"?appoint_id=undefined");
         JsonPath jsonPath = response.jsonPath();
         String providerID = jsonPath.get("provider_id").toString();
 //        System.out.println("fromProvider = " + response.prettyPrint());
@@ -182,7 +182,7 @@ public class ApiUtils {
     }
 
     public static JsonPath getBillingProvideFromPractice (String partner, String practice){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -196,7 +196,7 @@ public class ApiUtils {
 
     public static Map<String,Object> getEligRequirements (String partner, String practice, String dentalPayorId, String patient){
 //        System.out.println("payor = " + payor);
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -212,7 +212,7 @@ public class ApiUtils {
 
     public static JsonPath getEligRequirementsJson (String partner, String practice, String dentalPayorId, String patient){
 //        System.out.println("payor = " + payor);
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -228,7 +228,7 @@ public class ApiUtils {
 
     public static Map<String,Object> getEligRequirementsforSecondaryInsurance (String partner, String practice, String dentalPayorId, String patient){
 //        System.out.println("payor = " + payor);
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -245,7 +245,7 @@ public class ApiUtils {
     public static JsonPath getEligibilityResponse(String partner, String practice, String patient){
         Object token = generateToken(partner);
 //        System.out.println("generateToken() = " + token);
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         System.out.println("baseURI = " + baseURI);
         Response response = RestAssured.given()
                 .relaxedHTTPSValidation()
@@ -253,7 +253,7 @@ public class ApiUtils {
                 .header("User-Agent", "test")
                 .contentType("application/json")
                 .body(prepareEligibilityPostbody(patient,partner,practice))
-                .when().post("/api/eligibility_check"); // for staging2 environment
+                .when().post("/api/eligibility_check"); // for url2 environment
                // .when().post("/eligibility_check");
         JsonPath jsonPath = response.jsonPath();
 //        response.prettyPrint();
@@ -272,7 +272,7 @@ public class ApiUtils {
         Object token = generateToken(partner);
         System.out.println("Token: " + token);
 
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         System.out.println("baseURI = " + baseURI);
 
         // Construct the JSON payload
@@ -300,7 +300,7 @@ public class ApiUtils {
         Object token = generateToken(partner);
 //        System.out.println("Token: " + token);
 
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        System.out.println("baseURI = " + baseURI);
 
         // Construct the JSON payload
@@ -326,7 +326,7 @@ public class ApiUtils {
         Object token = generateToken(partner);
 //        System.out.println("Token: " + token);
 
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        System.out.println("baseURI = " + baseURI);
 
         String currentUTCTimestamp = Instant.now()
@@ -350,124 +350,11 @@ public class ApiUtils {
         System.out.println("reconcileLedger API Request status code: "+response.statusCode());
     }
 
-    public static void postWriteOffEdit(
-            String eraSplitFileAssignedId,
-            String partner,
-            String svcHash,
-            String claimIdentifier,
-            Double preWriteOff,
-            Double editedWriteOff
-    ) {
-        // Generate the token
-        Object token = generateToken(partner);
-        System.out.println("Token: " + token);
-
-        // Set the base URI
-        RestAssured.baseURI = ConfigurationReader.get("staging");
-        System.out.println("baseURI = " + RestAssured.baseURI);
-
-        // Construct the JSON payload
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("era_split_file_assigned_id", eraSplitFileAssignedId);
-
-        // Create newLogs
-        List<Map<String, Object>> newLogs = new ArrayList<>();
-        Map<String, Object> logEntry = new HashMap<>();
-        logEntry.put("svc_hash", svcHash);
-        logEntry.put("claim_identifier", claimIdentifier);
-        logEntry.put("previous_attributes", Map.of("svc_835_assigned", Map.of("write_off_computation", Map.of("write_off", preWriteOff))));
-        logEntry.put("new_attributes", Map.of("svc_835_assigned", Map.of("write_off_computation", Map.of("write_off", editedWriteOff))));
-        newLogs.add(logEntry);
-
-        payload.put("newLogs", newLogs);
-
-        // Create svcBody
-        List<Map<String, Object>> svcBody = new ArrayList<>();
-        Map<String, Object> svcBodyEntry = new HashMap<>();
-        svcBodyEntry.put("svc_hash", svcHash);
-        svcBodyEntry.put("write_off", editedWriteOff);
-        svcBodyEntry.put("issueDetected", "balanced");
-        svcBody.add(svcBodyEntry);
-
-        payload.put("svcBody", svcBody);
-
-        // Send the POST request
-        Response response = RestAssured.given()
-                .relaxedHTTPSValidation() // To bypass SSL validation
-                .header("Authorization", token) // Set the Authorization header
-                .header("User-Agent", "test") // Add a User-Agent header
-                .contentType("application/json") // Set content type to JSON
-                .body(payload) // Send the payload as the request body
-                .when()
-                .post("/api/era/svc-835-user-edit-log");
-
-        // Parse and return the response as JsonPath
-        JsonPath jsonPath = response.jsonPath();
-        response.prettyPrint(); // Print the response
-        System.out.println("postWriteOffEdit Status Code: " + response.statusCode()); // Print the status code
-    }
-
-    public static void matchPayerPRAdjustment(
-            String eraSplitFileAssignedId,
-            String partner,
-            String svcHash,
-            String claimIdentifier,
-            double preOdAdjustment, // Parameterized for od_adjustment
-            double postOdAdjustment // Parameterized for od_adjustment
-    ) {
-        // Generate the token
-        Object token = generateToken(partner);
-        System.out.println("Token: " + token);
-
-        // Set the base URI
-        RestAssured.baseURI = ConfigurationReader.get("staging");
-        System.out.println("baseURI = " + RestAssured.baseURI);
-
-        // Construct the JSON payload
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("era_split_file_assigned_id", eraSplitFileAssignedId);
-
-        // Create newLogs
-        List<Map<String, Object>> newLogs = new ArrayList<>();
-        Map<String, Object> logEntry = new HashMap<>();
-        logEntry.put("svc_hash", svcHash);
-        logEntry.put("claim_identifier", claimIdentifier);
-        logEntry.put("previous_attributes", Map.of("svc_835_assigned", Map.of("write_off_computation", Map.of("od_adjustment", preOdAdjustment))));
-        logEntry.put("new_attributes", Map.of("svc_835_assigned", Map.of("write_off_computation", Map.of("od_adjustment", postOdAdjustment))));
-        newLogs.add(logEntry);
-
-        payload.put("newLogs", newLogs);
-
-        // Create svcBody
-        List<Map<String, Object>> svcBody = new ArrayList<>();
-        Map<String, Object> svcBodyEntry = new HashMap<>();
-        svcBodyEntry.put("svc_hash", svcHash);
-        svcBodyEntry.put("od_adjustment", postOdAdjustment);
-        svcBodyEntry.put("issueDetected", "balanced");
-        svcBody.add(svcBodyEntry);
-
-        payload.put("svcBody", svcBody);
-
-        // Send the POST request
-        Response response = RestAssured.given()
-                .relaxedHTTPSValidation() // To bypass SSL validation
-                .header("Authorization", token) // Set the Authorization header
-                .header("User-Agent", "test") // Add a User-Agent header
-                .contentType("application/json") // Set content type to JSON
-                .body(payload) // Send the payload as the request body
-                .when()
-                .post("/api/era/svc-835-user-edit-log");
-
-        // Print the response and status code for debugging
-        response.prettyPrint();
-        System.out.println("matchPayerPRAdjustment Status Code: " + response.statusCode());
-    }
-
 
     public static Response getEligibilityResponse2(String partner, String practice, String patient){
         Object token = generateToken(partner);
 //        System.out.println("generateToken() = " + token);
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         System.out.println("baseURI = " + baseURI);
         Response response = RestAssured.given()
                 .relaxedHTTPSValidation()
@@ -475,7 +362,7 @@ public class ApiUtils {
                 .header("User-Agent", "test")
                 .contentType("application/json")
                 .body(prepareEligibilityPostbody(patient,partner,practice))
-                .when().post("/api/eligibility_check"); // for staging2 environment
+                .when().post("/api/eligibility_check"); // for url2 environment
         // .when().post("/eligibility_check");
 //        JsonPath jsonPath = response.jsonPath();
 //        response.prettyPrint();
@@ -502,7 +389,7 @@ public class ApiUtils {
             String patRelation = patPlanDoc.getString("relationship");
             System.out.println("patRelation = " + patRelation);
 
-            AggregateIterable<Document> aggregateDoc = patientColl.aggregate(AggregatePipeline.patientToCarrier(practice,patient));
+            AggregateIterable<Document> aggregateDoc = patientColl.aggregate(AggregatePipeline.personToCarrier(practice,patient));
             Document patientDoc = aggregateDoc.first();
 //            System.out.println("patientDoc.get(\"patient_id\") = " + patientDoc.get("patient_id"));
             JsonPath patientJson = JsonPath.from(patientDoc.toJson());
@@ -587,7 +474,7 @@ public class ApiUtils {
                 postBody.put("subscriber_first_name", patientAllDataJson.getString("insurance.primary.insurance_subscriber.first_name"));
                 postBody.put("subscriber_member_id", patientJson.getString("insSub.subscriber_id"));
                 String birthdate = DateUtils.getNewFormatedDate2(patientAllDataJson.get("insurance.primary.insurance_subscriber.birth_date"),"yyyyMMdd");
-                System.out.println("birthdate subscriber= " + birthdate);
+//                System.out.println("birthdate subscriber= " + birthdate);
                 postBody.put("subscriber_birth_date", birthdate);
                 postBody.put("subscriber_gender", patientJson.getString("gender"));
                 postBody.put("patient_id", patient);
@@ -625,7 +512,7 @@ public class ApiUtils {
                 postBody.put("subscriber_first_name", patientAllDataJson.getString("insurance.primary.insurance_subscriber.first_name"));
                 postBody.put("subscriber_member_id", patientAllDataJson.getString("insurance.primary.insurance_subscriber.subscriber_id"));
                 String birthdate = DateUtils.getNewFormatedDate2(patientAllDataJson.get("insurance.primary.insurance_subscriber.birth_date"),"yyyyMMdd");
-                System.out.println("birthdate subscriber= " + birthdate);
+//                System.out.println("birthdate subscriber= " + birthdate);
                 postBody.put("subscriber_birth_date", birthdate);
                 postBody.put("subscriber_gender", patientAllDataJson.getString("insurance.primary.insurance_subscriber.gender"));
                 postBody.put("dependent_last_name", patientJson.get("last_name"));
@@ -664,7 +551,7 @@ public class ApiUtils {
     }
 
     public static JsonPath reconcileLedger (String partner, Map<String,Object> postBody){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
 
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
@@ -679,7 +566,7 @@ public class ApiUtils {
     }
 
     public static JsonPath reconcileLedger (String partner, String practice, String ledgerObjId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
 
         Map<String, Object> postBody = new HashMap<>();
@@ -702,7 +589,7 @@ public class ApiUtils {
     }
 
     public static JsonPath retDisapproveERA (String partner, String era_split_file_assigned_id){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("type", "disapprove");
@@ -720,7 +607,7 @@ public class ApiUtils {
     }
 
     public static JsonPath retApproveERA (String partner, String era_split_file_assigned_id){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("type", "approve");
@@ -739,7 +626,7 @@ public class ApiUtils {
 
     public static JsonPath providerApproveERA (String partner, String era_split_file_assigned_id){
 //        era_split_file_assigned_id = "RdMsdQorPckTnag4";
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("type", "approve");
        System.out.println("postBody = " + postBody);
@@ -758,7 +645,7 @@ public class ApiUtils {
 
     public static JsonPath providerDisapproveERA (String partner, String era_split_file_assigned_id){
 //        era_split_file_assigned_id = "RdMsdQorPckTnag4";
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("type", "disapprove");
 //        System.out.println("postBody = " + postBody);
@@ -795,7 +682,7 @@ public class ApiUtils {
 
 
     public static JsonPath submitClaimsEraCycle  (String partner, String practice, List<String> claimIdListtoSubmit, String collectionName){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("practice_id", practice);
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -848,7 +735,7 @@ public class ApiUtils {
             return jsonPath;
     }
     public static JsonPath submitClaimsEraCycle2  (String partner, String practice, List<String> claimIdListtoSubmit, String collectionName, String testCaseDB){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("practice_id", practice);
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -902,7 +789,7 @@ public class ApiUtils {
     }
 
     public static void submitMultipleClaimsEraCycle (String partner, String practice, String claims, String collectionName){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("practice_id", practice);
         postBody.put("claim_ids", claims);
@@ -950,7 +837,7 @@ public class ApiUtils {
 
 
     public static void submitMultipleClaims (String partner, String practice, String claims){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         postBody.put("practice_id", practice);
         postBody.put("claim_ids", claims);
@@ -984,7 +871,7 @@ public class ApiUtils {
     }
 
     public static JsonPath startFullSync (String partner, String integrationId){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
         Map<String,Object> actionMap = new HashMap<>();
         actionMap.put("action","reset-tables");
@@ -1016,7 +903,7 @@ public class ApiUtils {
     }
 
     public static JsonPath updateAllPlans (Map<String,Object> postBody, String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        System.out.println("postBody = " + postBody);
 
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
@@ -1031,7 +918,7 @@ public class ApiUtils {
     }
 
     public static JsonPath dropPartnerDatabase (Map<String,Object> postBody){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        System.out.println("postBody = " + postBody);
 
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken("qa-vixwin"))
@@ -1047,7 +934,7 @@ public class ApiUtils {
 
 
     public static JsonPath sendEra (String partner, String dfiAccount){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -1060,7 +947,7 @@ public class ApiUtils {
 
 
     public static Response getSweepResponse (String partner, String dfiAccount){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        RestAssured.useRelaxedHTTPSValidation();
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
                 .header("User-Agent", "test")
@@ -1073,7 +960,7 @@ public class ApiUtils {
     }
 
     public static JsonPath validateTasks (Map<String,Object> postBody, String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 //        System.out.println("postBody = " + postBody);
 
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
@@ -1089,7 +976,7 @@ public class ApiUtils {
     }
 
     public static JsonPath sendCrashLog (Map<String,Object> postBody, String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         //System.out.println("postBody = " + postBody);
 
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
@@ -1105,7 +992,7 @@ public class ApiUtils {
     }
 
     public static JsonPath requalifyERA (String eraSplitFileAssignedId, String partner){
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
         Map<String,Object> postBody = new HashMap<>();
 //        System.out.println("postBody = " + postBody);
         Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
@@ -1121,7 +1008,7 @@ public class ApiUtils {
     }
 
     public static JsonPath getSweepList(String partner) {
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 
         Response response = given()
                 .relaxedHTTPSValidation()
@@ -1138,15 +1025,14 @@ public class ApiUtils {
     }
 
     public static JsonPath getACH(String partner) {
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 
-        // API çağrısı
         Response response = given()
                 .relaxedHTTPSValidation()
                 .header("Authorization", generateToken(partner))
                 .header("User-Agent", "test")
                 .when()
-                .get("/api/accounts/sweep/xml/?dfi_account_id=hsbc317000047&tin=814445149&npi=1083122097&achServiceCode=NURG");
+                .get("/api/accounts/xml/?account_id=000&tin=999&npi=888&achServiceCode=NURG");
 
         JsonPath jsonPath = response.jsonPath();
 //        response.prettyPrint();
@@ -1156,16 +1042,14 @@ public class ApiUtils {
     }
 
     public static Response getStatusCode(String partner) {
-        RestAssured.baseURI = ConfigurationReader.get("staging");
+        RestAssured.baseURI = ConfigurationReader.get("url");
 
-        // API çağrısı
         Response response = given()
                 .relaxedHTTPSValidation()
                 .header("Authorization", generateToken(partner))
                 .header("User-Agent", "test")
                 .when()
-                .get("/api/accounts/sweep/xml/?dfi_account_id=hsbc317000047&tin=814445149&npi=1083122097&achServiceCode=NURG");
-
+                .get("/api/accounts/xml/?account_id=000&tin=999&npi=888&achServiceCode=NURG");
 //        JsonPath jsonPath = response.jsonPath();
 //        response.prettyPrint();
         System.out.println("Response Status Code: " + response.statusCode());
@@ -1192,7 +1076,6 @@ public class ApiUtils {
                 break;
             }
         }
-
         return (String) matchedItem.get(expectedField);
     }
 }

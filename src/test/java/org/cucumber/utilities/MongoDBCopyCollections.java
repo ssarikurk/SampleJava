@@ -34,19 +34,15 @@ public class MongoDBCopyCollections {
             String partDbNew = "partners-trial-2-" + partnerShort;
 
             String[] collectionsOperations = {
-                    "file_835",
-                    "st_835",
-                    "clp_835",
-                    "svc_835",
-                    "cas_svc_835"
+                    "aaaa_assigned",
+                    "file_assigned",
+                    "ledger_record"
             };
 
             String[] collectionsPartner = {
-                    "era_split_file_assigned",
-                    "st_835_assigned",
-                    "clp_835_assigned",
-                    "svc_835_assigned",
-                    "cas_svc_835_assigned"
+                    "aaaa_assigned",
+                    "file_assigned",
+                    "ledger_record"
             };
 
             if (trial1) {

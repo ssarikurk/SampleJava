@@ -8,21 +8,21 @@ import java.util.List;
 public class AggregatePipeline {
 
 
-    /*This aggregate lists records patient to carrier with
-    Patient
+    /*This aggregate lists records person to carrier with
+    person
     patplan
     inssub
     insplan
     carrier order.*/
-    public static List<Document> patientToCarrier(String practice, String patient){
+    public static List<Document> personToCarrier(String practice, String person){
 
         List<Document> pipeline = Arrays.asList(new Document("$match",
-                        new Document("patient_id", patient)
+                        new Document("person_id", person)
                                 .append("practice_id", practice)),
                 new Document("$lookup",
-                        new Document("from", "patient_plan_1")
-                                .append("localField", "patient_id")
-                                .append("foreignField", "patient_id")
+                        new Document("from", "person_plan_1")
+                                .append("localField", "person_id")
+                                .append("foreignField", "person_id")
                                 .append("as", "patPlan")),
                 new Document("$unwind",
                         new Document("path", "$patPlan")),
@@ -60,8 +60,7 @@ public class AggregatePipeline {
     }
 
 
-    //   This pipeline works with clinic setup partners!!!! starts from carrier_payor_lookup_1 collection
-    public static List<Document> payorToPatientList(String payorID){
+    public static List<Document> payorTopersonList(String payorID){
 
         List<Document> pipeline = Arrays.asList(new Document("$match",
                         new Document("payer_id", payorID)),
@@ -82,7 +81,7 @@ public class AggregatePipeline {
                         new Document("path", "$inssub")
                                 .append("preserveNullAndEmptyArrays", false)),
                 new Document("$lookup",
-                        new Document("from", "patient_plan_1")
+                        new Document("from", "person_plan_1")
                                 .append("localField", "inssub.insurance_subscriber_id")
                                 .append("foreignField", "insurance_subscriber_id")
                                 .append("as", "patplan")),
@@ -90,25 +89,22 @@ public class AggregatePipeline {
                         new Document("path", "$patplan")
                                 .append("preserveNullAndEmptyArrays", false)),
                 new Document("$lookup",
-                        new Document("from", "patient_1")
-                                .append("localField", "patplan.patient_id")
-                                .append("foreignField", "patient_id")
-                                .append("as", "patient")),
+                        new Document("from", "person_1")
+                                .append("localField", "patplan.person_id")
+                                .append("foreignField", "person_id")
+                                .append("as", "person")),
                 new Document("$unwind",
-                        new Document("path", "$patient")
+                        new Document("path", "$person")
                                 .append("preserveNullAndEmptyArrays", false)),
                 new Document("$lookup",
                         new Document("from", "clinic_1")
-                                .append("localField", "patient.clinic_id")
+                                .append("localField", "person.clinic_id")
                                 .append("foreignField", "clinic_id")
                                 .append("as", "clinic")),
                 new Document("$unwind",
                         new Document("path", "$clinic")
                                 .append("preserveNullAndEmptyArrays", false)));
-
         return pipeline;
     }
-
-
 
 }

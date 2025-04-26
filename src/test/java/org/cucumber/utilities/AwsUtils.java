@@ -68,14 +68,8 @@ public class AwsUtils {
                 BrowserUtils.waitFor(30);
                 System.out.println("Reached maximum retry limit. Command status could not be confirmed.");
             }
-
         }
     }
-
-
-
-
-
 }
 
 

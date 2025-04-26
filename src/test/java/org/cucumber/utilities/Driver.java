@@ -203,7 +203,7 @@ public class Driver {
                             "high-dpi-support=0.50"
                             );
                     try {
-                        driverPool.set(new RemoteWebDriver(new URL("http://52.43.222.111:4445"),chromeOptions)); //for seleniumGrid docker
+                        driverPool.set(new RemoteWebDriver(new URL("http://xx.xx.xxx.111:4445"),chromeOptions)); //for seleniumGrid docker
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }

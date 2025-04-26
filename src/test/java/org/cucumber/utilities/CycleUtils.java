@@ -18,7 +18,7 @@ public class CycleUtils {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         BasicDBObject query = BasicDBObject.parse("{testCaseName:'" + testCaseName + "'}");
 //        System.out.println("query = " + query);
-        MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, "eraCycleTestCases");
+        MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, "CycleTestCases");
         Document testDoc = eraTestColl.find(query).first();
 
         mongoClient.close();
@@ -40,7 +40,7 @@ public class CycleUtils {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         Document filter = new Document("testId", testId);
         Document update = new Document("$set", new Document(key, value));
-        MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, "eraCycleTestCases");
+        MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, "CycleTestCases");
 
         eraTestColl.updateMany(filter, update);
         System.out.println("document updated");
@@ -97,12 +97,12 @@ public class CycleUtils {
         }
     }
 
-    public static void setEraCycleReadiness(boolean settingsValue) {
+    public static void setCycleReadiness(boolean settingsValue) {
 //        System.out.println("settingsValue = " + settingsValue);
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> keepSettingsColl = MongoDBUtils.connectMongodb(mongoClient, "qa-test", "keepSettings");
         Document keepSettingFilter = new Document("settingsName", "restore");
-        Document keepSettingsUpdate = new Document("$set", new Document("isReadyToEraCycle", settingsValue).append("timeStamp", new Date()));
+        Document keepSettingsUpdate = new Document("$set", new Document("isReadyToCycle", settingsValue).append("timeStamp", new Date()));
         try {
             MongoDBUtils.executeUpdateQuery(keepSettingsColl, keepSettingFilter, keepSettingsUpdate);
         } catch (Exception e) {
@@ -112,22 +112,22 @@ public class CycleUtils {
         }
     }
 
-    public static boolean getEraCycleReadiness() {
+    public static boolean getCycleReadiness() {
 //        System.out.println("settingsValue = " + settingsValue);
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> keepSettingsColl = MongoDBUtils.connectMongodb(mongoClient, "qa-test", "keepSettings");
         Document keepSettingFilter = new Document("settingsName", "restore");
-        boolean isReadyToEraCycle = false;
+        boolean isReadyToCycle = false;
         try {
             Document settingDoc = keepSettingsColl.find(keepSettingFilter).first();
-            isReadyToEraCycle = settingDoc.getBoolean("isReadyToEraCycle");
-            System.out.println("isReadyToEraCycle = " + isReadyToEraCycle);
+            isReadyToCycle = settingDoc.getBoolean("isReadyToCycle");
+            System.out.println("isReadyToCycle = " + isReadyToCycle);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             mongoClient.close();
         }
-        return isReadyToEraCycle;
+        return isReadyToCycle;
     }
 
 
@@ -150,31 +150,31 @@ public class CycleUtils {
         return isRestoreInprogress;
     }
 
-    public static boolean getEraCycleStatus(String partner) {
+    public static boolean getCycleStatus(String partner) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> keepSettingsColl = MongoDBUtils.connectMongodb(mongoClient, "qa-test", "keepSettings");
-        Document keepSettingFilter = new Document("settingsName", "eraCycleStatus").append("partner", partner);
-        boolean isEraCycleInprogress = true;
+        Document keepSettingFilter = new Document("settingsName", "CycleStatus").append("partner", partner);
+        boolean isCycleInprogress = true;
         try {
             Document keepSetDoc = keepSettingsColl.find(keepSettingFilter).first();
-            isEraCycleInprogress = (boolean) keepSetDoc.get("isEraCycleInprogress");
-            System.out.println("isEraCycleInprogress = " + isEraCycleInprogress);
+            isCycleInprogress = (boolean) keepSetDoc.get("isCycleInprogress");
+            System.out.println("isCycleInprogress = " + isCycleInprogress);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             mongoClient.close();
         }
-        return isEraCycleInprogress;
+        return isCycleInprogress;
     }
 
 
-    public static void setEraCycleProgressStatus(boolean settingsValue, String partner) {
+    public static void setCycleProgressStatus(boolean settingsValue, String partner) {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> keepSettingsColl = MongoDBUtils.connectMongodb(mongoClient, "qa-test", "keepSettings");
-        Document keepSettingFilter = new Document("settingsName", "eraCycleStatus")
+        Document keepSettingFilter = new Document("settingsName", "CycleStatus")
                 .append("partner", partner);
-        Document keepSettingsUpdate = new Document("$set", new Document("isEraCycleInprogress", settingsValue)
+        Document keepSettingsUpdate = new Document("$set", new Document("isCycleInprogress", settingsValue)
                 .append("startTime", new Date()));
         try {
             MongoDBUtils.executeUpdateQuery(keepSettingsColl, keepSettingFilter, keepSettingsUpdate);
@@ -188,11 +188,11 @@ public class CycleUtils {
     public static void checkECATStatus() {
         String partner = "qa-clinic3";
         boolean isRestoreInprogress = CycleUtils.getRestoreStatus();
-        boolean isEraCycleInprogress = CycleUtils.getEraCycleStatus(partner);
+        boolean isCycleInprogress = CycleUtils.getCycleStatus(partner);
 
-        boolean isEveryThingOkForECAT = !isEraCycleInprogress && !isRestoreInprogress;
-        System.out.println("isEveryThingOkForERACycleNewTest = " + isEveryThingOkForECAT);
-        Assert.assertTrue("!!!!!An Environment Restore or EraCycle test is Inprogress you need to wait until it finishes!!!!!", isEveryThingOkForECAT);
+        boolean isEveryThingOkForECAT = !isCycleInprogress && !isRestoreInprogress;
+        System.out.println("isEveryThingOkForCycleNewTest = " + isEveryThingOkForECAT);
+        Assert.assertTrue("!!!!!An Environment Restore or Cycle test is Inprogress you need to wait until it finishes!!!!!", isEveryThingOkForECAT);
 
     }
 

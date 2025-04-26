@@ -66,8 +66,6 @@ public class GmailUtil {
         }
 
         System.out.println("********************** Mail Sent **********************");
-
-
     }
 
 

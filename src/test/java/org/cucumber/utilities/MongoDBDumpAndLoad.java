@@ -21,8 +21,6 @@ public class MongoDBDumpAndLoad {
     public static void main(String[] args) throws IOException, ParseException {
 
 
-
-
         JSONParser jsonParser = new JSONParser();
         FileReader partnerList = new FileReader(BrowserUtils.getDownloadPath()+"/partnerList.json");
         JSONArray partnerArray = (JSONArray) jsonParser.parse(partnerList);
@@ -43,15 +41,9 @@ public class MongoDBDumpAndLoad {
 
             // Collections to dump
             List<String> collectionsToDump = Arrays.asList(
-//                    "st_835_assigned",
-//                    "clp_835_assigned",
-//                    "svc_835_assigned",
-//                    "cas_svc_835_assigned",
-//                    "era_split_file_assigned",
-//                    "ledger_1",
-//                    "dfi_account_1",
-//                    "claim_1"
-//                    "claim_proc_1"
+///                   "aaaa_assigned",
+//                    "file_assigned"
+//                    "ledger_record_1"
 //                    "users"
             );
 
@@ -76,8 +68,6 @@ public class MongoDBDumpAndLoad {
                 // Insert new data into the target collection
                 targetCollection.insertMany(documents);
 
-                // Save the documents to JSON files (optional)
-//                    saveDocumentsToJson(outputDir, collectionName, documents);
             }
 
             System.out.println("Copying collection completed.");
@@ -85,22 +75,5 @@ public class MongoDBDumpAndLoad {
 
     }
 
-//    private static String buildMongoURI(String host, int port, String username, String password, String databaseName) {
-//        StringBuilder uriBuilder = new StringBuilder("mongodb://");
-//        if (username != null && password != null) {
-//            uriBuilder.append(username).append(":").append(password).append("@");
-//        }
-//        uriBuilder.append(host).append(":").append(port).append("/").append(databaseName);
-//        return uriBuilder.toString();
-//    }
-//
-//    private static void saveDocumentsToJson(String outputDir, String collectionName, List<Document> documents) throws IOException {
-//        File outputFile = new File(outputDir, collectionName + ".json");
-//        // Use your preferred method to save documents to a file, e.g., JSON serialization
-//        // Here, we'll simply print the documents to the console for demonstration purposes
-//        for (Document document : documents) {
-//            System.out.println(document.toJson());
-//        }
-//    }
 }
 
