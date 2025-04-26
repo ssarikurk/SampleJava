@@ -1,4 +1,4 @@
-# <img src="https://seeklogo.com/images/S/selenium-logo-A1B53CEFB0-seeklogo.com.png" width="30"> <img src="https://cdn.worldvectorlogo.com/logos/cucumber.svg" width="30"> Sample Java-Selenium-Cucumber Framework
+# <img src="images/selenium.png" width="30"> <img src="images/cucumber.png" width="30"> Sample Java-Selenium-Cucumber Framework
 
 This project is a **sample automation framework** built using **Selenium WebDriver** and **Cucumber (BDD)**.  
 It is designed as a scalable template to automate:
