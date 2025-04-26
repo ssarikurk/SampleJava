@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class sshUtils {
+public class SshUtils {
 
     public static void sshJenkinsDockerAWS() {
 
@@ -611,7 +611,7 @@ public class sshUtils {
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
             // 10 seconds timeout session
             jschSession.connect(20000);
@@ -628,11 +628,11 @@ public class sshUtils {
         try {
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("synthetic-chi", "10.200.15.53", 22);
+            jschSession = jsch.getSession("synthetic-chi", "xx.xxx.xx.111", 22);
 
             // not recommend, uses jsch.setKnownHosts
             //jschSession.setConfig("StrictHostKeyChecking", "no");
-            jschSession.setPassword("retrace123");
+            jschSession.setPassword("ret123");
 
             // 10 seconds timeout session
             jschSession.connect(20000);
@@ -649,11 +649,11 @@ public class sshUtils {
         try {
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession(userName, "10.200.15.53", 22);
+            jschSession = jsch.getSession(userName, "xx.xxx.xx.111", 22);
 
             // not recommend, uses jsch.setKnownHosts
             //jschSession.setConfig("StrictHostKeyChecking", "no");
-            jschSession.setPassword("retrace123");
+            jschSession.setPassword("ret123");
 
             // 10 seconds timeout session
             jschSession.connect(20000);
@@ -673,7 +673,7 @@ public class sshUtils {
         try {
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("suleyman", "10.200.12.229", 22);
+            jschSession = jsch.getSession("suleyman", "xx.xxx.xx.111", 22);
 
             // not recommend, uses jsch.setKnownHosts
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
@@ -689,24 +689,6 @@ public class sshUtils {
         return jschSession;
 
 
-//        Session jschSession = null;
-//        String knownHostPath = BrowserUtils.getPath(".ssh/known_hosts");
-//        try {
-//            JSch jsch = new JSch();
-//            jsch.setKnownHosts(knownHostPath);
-//            jschSession = jsch.getSession("suleyman", "10.200.12.229", 22);
-//
-//            // not recommend, uses jsch.setKnownHosts
-//            //jschSession.setConfig("StrictHostKeyChecking", "no");
-//            jschSession.setPassword("MSvT30qRe7NB");
-//
-//            // 10 seconds timeout session
-//            jschSession.connect(20000);
-//        } catch (JSchException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return jschSession;
     }
 
     public static void sftpDeleteFilesInFolder(String folderPath) {
@@ -1109,8 +1091,8 @@ public class sshUtils {
 
         JSch jsch = new JSch();
         jsch.setKnownHosts(knownHostPath);
-        jschSession = jsch.getSession("ubuntu", "3.124.28.89", 22);
-//            jschSession = jsch.getSession("ubuntu", "10.200.14.177", 22);
+        jschSession = jsch.getSession("ubuntu", "xxx.xxx.xxx.xx", 22);
+
 
         // not recommend, uses jsch.setKnownHosts
         //jschSession.setConfig("StrictHostKeyChecking", "no");
@@ -1191,7 +1173,7 @@ public class sshUtils {
 
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("ubuntu", "3.124.28.89", 22);
+            jschSession = jsch.getSession("ubuntu", "xxx.xxx.xxx.xx", 22);
 
             // not recommend, uses jsch.setKnownHosts
             //jschSession.setConfig("StrictHostKeyChecking", "no");
@@ -1267,14 +1249,14 @@ public class sshUtils {
 
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("ubuntu", "10.200.55.91", 22);
+            jschSession = jsch.getSession("ubuntu", "xx.xxx.xx.111", 22);
 
             // not recommend, uses jsch.setKnownHosts
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2195,7 +2177,7 @@ public class sshUtils {
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
             // 10 seconds timeout session
             jschSession.connect(20000);
@@ -2322,7 +2304,7 @@ public class sshUtils {
     }
 
     public static void runDeletePartnerS3 (){
-        runScripts("node ./background/delete-s3-buckets.js");
+        runScripts("node ./background/delete-s3-buckets.js", "xxx.xx.xx.xx", "v1.0.0" );
     }
 
     public static void runNachaScript() {
@@ -2346,7 +2328,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2425,7 +2407,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2580,7 +2562,7 @@ public class sshUtils {
 
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("ubuntu", "3.124.28.89", 22);
+            jschSession = jsch.getSession("ubuntu", "xx.xxx.xxx.x", 22);
 
             // not recommend, uses jsch.setKnownHosts
             //jschSession.setConfig("StrictHostKeyChecking", "no");
@@ -2656,14 +2638,14 @@ public class sshUtils {
 
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("ubuntu", "10.200.14.177", 22);
+            jschSession = jsch.getSession("ubuntu", "xxx.xx.xx.xx", 22);
 
             // not recommend, uses jsch.setKnownHosts
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2741,7 +2723,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2821,7 +2803,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2901,7 +2883,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -2984,7 +2966,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3061,7 +3043,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3138,7 +3120,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3215,7 +3197,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3286,14 +3268,14 @@ public class sshUtils {
 
             JSch jsch = new JSch();
             jsch.setKnownHosts(knownHostPath);
-            jschSession = jsch.getSession("ubuntu", "10.200.55.91", 22);
+            jschSession = jsch.getSession("ubuntu", "xx.xxx.xx.111", 22);
 
             // not recommend, uses jsch.setKnownHosts
 //            jschSession.setConfig("StrictHostKeyChecking", "no");
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3373,7 +3355,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3455,7 +3437,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3536,7 +3518,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3615,7 +3597,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3691,7 +3673,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3770,7 +3752,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3849,7 +3831,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -3930,7 +3912,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session
@@ -4011,7 +3993,7 @@ public class sshUtils {
 
             // authenticate using private key
 
-//            jschSession.setPassword("retrace@123");
+//            jschSession.setPassword("ret@123");
             jsch.addIdentity(privateKeyPath);
 
             // 10 seconds timeout session

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class logUtils {
+public class LogUtils {
 
 
     private static final Logger logger = LoggerFactory.getLogger(ERAAutomation_Defs.class);

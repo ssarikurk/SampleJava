@@ -397,7 +397,7 @@ public class MongoDBUtils {
             MongoDatabase db = mongoClient.getDatabase("qa-test");
 
             // Read the JavaScript query from the file
-            String filePath = "C:\\Users\\Administrator\\vscodeRetrace\\fullstack\\retrace-fullstack\\scripts\\directorydb\\dental_payor_dxc.js";
+            String filePath = "C:\\Users\\Administrator\\vscodeRet\\fullstack\\ret-fullstack\\scripts\\directorydb\\dental_payor_dxc.js";
             String query = new String(Files.readAllBytes(Paths.get(filePath)));
             System.out.println("query = " + query);
 
@@ -433,7 +433,7 @@ public class MongoDBUtils {
         for (String clearinghouse : clearinghouseList) {
 
             // Path to your JavaScript file
-            String filePath = "C:\\Users\\Administrator\\vscodeRetrace\\fullstack\\retrace-fullstack\\scripts\\directorydb\\dental_payor_"+clearinghouse+".js";
+            String filePath = "C:\\Users\\Administrator\\vscodeRet\\fullstack\\ret-fullstack\\scripts\\directorydb\\dental_payor_"+clearinghouse+".js";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
                 String line;
@@ -452,7 +452,7 @@ public class MongoDBUtils {
 
     public static void deleteSingletonRecord (String processName){
         MongoCollection<Document> singletonDoc = MongoDBUtils.connectMongodb(getMongoClient(),"operations","singleton_process_1");
-        Bson filter = Filters.and(Filters.eq("name", processName), Filters.eq("ip_address", "10.200.55.91"));
+        Bson filter = Filters.and(Filters.eq("name", processName), Filters.eq("ip_address", "xx.xxx.xx.111"));
         singletonDoc.deleteMany(filter);
     }
 
@@ -493,7 +493,7 @@ public class MongoDBUtils {
     public static void setVersionChangedLocked (boolean settingsValue){
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> keepSettingsColl = MongoDBUtils.connectMongodb(mongoClient,"qa-test","keepSettings");
-        Document keepSettingFilter = new Document("settingsName", "retraceAppVersion");
+        Document keepSettingFilter = new Document("settingsName", "retAppVersion");
         Document keepSettingsUpdate = new Document("$set", new Document("versionChangedLocked", settingsValue));
         try {
             executeUpdateQuery(keepSettingsColl, keepSettingFilter, keepSettingsUpdate);

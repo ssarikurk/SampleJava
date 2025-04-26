@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class s3Utils {
+public class S3Utils {
 
     public static int listS3ResultList(S3Client s3, String bucketName, String filePath ) {
         int objectSize = 0;

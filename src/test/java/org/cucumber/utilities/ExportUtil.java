@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class exportUtil {
+public class ExportUtil {
 
     public static void toCSV(String fileName, List<LinkedHashMap<String, String>> listToExport) {
 

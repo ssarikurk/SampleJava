@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class eraCycleUtils {
+public class CycleUtils {
 
     public static Document getTestCase2(String testCasesDB, String testCaseName) {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -187,8 +187,8 @@ public class eraCycleUtils {
 
     public static void checkECATStatus() {
         String partner = "qa-clinic3";
-        boolean isRestoreInprogress = eraCycleUtils.getRestoreStatus();
-        boolean isEraCycleInprogress = eraCycleUtils.getEraCycleStatus(partner);
+        boolean isRestoreInprogress = CycleUtils.getRestoreStatus();
+        boolean isEraCycleInprogress = CycleUtils.getEraCycleStatus(partner);
 
         boolean isEveryThingOkForECAT = !isEraCycleInprogress && !isRestoreInprogress;
         System.out.println("isEveryThingOkForERACycleNewTest = " + isEveryThingOkForECAT);

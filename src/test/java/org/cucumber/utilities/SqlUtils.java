@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class sqlUtils {
+public class SqlUtils {
     private static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
@@ -41,7 +41,7 @@ public class sqlUtils {
     public static void createConnection(String ip, String dbName) {
         String dbUrl = "jdbc:mysql://"+ip+":3306/"+dbName+"?zeroDateTimeBehavior=convertToNull";
         String dbUsername = "root";
-        String dbPassword = "retrace123";
+        String dbPassword = "xxxxxxxx";
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             System.out.println("*************Connected**************");

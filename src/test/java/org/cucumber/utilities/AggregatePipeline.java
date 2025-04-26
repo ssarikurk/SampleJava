@@ -5,7 +5,7 @@ import org.bson.Document;
 import java.util.Arrays;
 import java.util.List;
 
-public class aggregatePipeline {
+public class AggregatePipeline {
 
 
     /*This aggregate lists records patient to carrier with

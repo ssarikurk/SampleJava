@@ -500,7 +500,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ai.retrace.utilities.eraTestFramework</mainClass>
+                    <mainClass>org.cucumber.utilities.EraTestFramework</mainClass>
                     <classpathScope>test</classpathScope>
                 </configuration>
             </plugin>

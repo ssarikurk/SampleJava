@@ -11,10 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class gitUtils {
+public class GitUtils {
 
     public static void gitPullFullstack() {
-        String projectPath = "C:\\Users\\Administrator\\vscodeRetrace\\fullstack\\retrace-fullstack";
+        String projectPath = "C:\\Users\\Administrator\\vscoderet\\fullstack\\ret-fullstack";
         String gitPath = projectPath + File.separator + ".git";
 //        System.out.println("gitPath = " + gitPath);
 
@@ -45,7 +45,7 @@ public class gitUtils {
             ProcessBuilder processBuilder = new ProcessBuilder();
             processBuilder.command("git", "pull");
 
-            processBuilder.directory(new File("C:\\Users\\Administrator\\vscodeRetrace\\fullstack\\retrace-fullstack"));
+            processBuilder.directory(new File("C:\\Users\\Administrator\\vscoderet\\fullstack\\ret-fullstack"));
 
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
@@ -109,7 +109,7 @@ public class gitUtils {
 //                if (mergeResult.getConflicts() != null && !mergeResult.getConflicts().isEmpty()) {
 //                    // Resolve conflicts in CukesRunner.java by accepting the local version
 //                    for (String conflict : mergeResult.getConflicts().keySet()) {
-//                        if (conflict.equals(projectPath + File.separator + "src/test/java/ai/retrace/runners/CukesRunner.java")) {
+//                        if (conflict.equals(projectPath + File.separator + "src/test/java/org/cucumber/runners/CukesRunner.java")) {
 //                            // Resolve conflicts by accepting the local version
 //                            git.checkout().setStage(CheckoutCommand.Stage.THEIRS).addPath(conflict).call();
 //                        }
@@ -127,9 +127,6 @@ public class gitUtils {
                 e.printStackTrace();
             }
 
-
     }
-
-
 
 }

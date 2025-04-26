@@ -9,7 +9,7 @@ import org.bson.types.Decimal128;
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class convertUtils {
+public class ConvertUtils {
 
     public static JsonPath mapToJsonpath(Map<String, Object> map) {
         Gson gson = new Gson();

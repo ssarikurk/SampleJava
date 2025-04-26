@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.Properties;
 
 
-public class gmailUtil {
+public class GmailUtil {
 
     //this is responsible to send the message with attachment
     public static void sendAttach(String message, String subject, String to, String from, String filepath) {

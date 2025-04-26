@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
-public class jenkinsUtils {
+public class JenkinsUtils {
     public static String triggerJenkinsJob( String jobName) {
         String username = ConfigurationReader.get("jenkinsUsername");
         String token = ConfigurationReader.get("jenkinsToken");

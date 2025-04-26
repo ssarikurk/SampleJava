@@ -12,13 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class fileUtils {
+public class FileUtils {
 
     public static void copyFile(String sourceFilePath, String destinationDirectoryPath, String fileName) {
 
         /* sample file paths below
-        sourceFilePath = "C:\\Users\\Administrator\\vscodeRetrace\\fullstack\\retrace-fullstack\\assets\\crosswalks\\semantic_payer_crosswalk_eligibility.csv";
-        destinationDirectoryPath= "C:\\Users\\Administrator\\IdeaProjects\\retrace-QA-automation-scripts\\src\\test\\resources\\Downloads\\crosswalk";
+        sourceFilePath = "C:\\Users\\Administrator\\cucumber\\fullstack\\ret-fullstack\\assets\\crosswalks\\semantic_payer_crosswalk_eligibility.csv";
+        destinationDirectoryPath= "C:\\Users\\Administrator\\IdeaProjects\\ret-QA-automation-scripts\\src\\test\\resources\\Downloads\\crosswalk";
         fileName = "semantic_payer_crosswalk_eligibility.csv";
         */
 
@@ -226,7 +226,7 @@ public class fileUtils {
             // Move to the next occurrence
 //            System.out.println("index = " + index);
             int beginIndex = content.indexOf(keywordFull);
-            int seIndex = content.indexOf(fileUtils.getKeyword("SE*"), beginIndex);
+            int seIndex = content.indexOf(FileUtils.getKeyword("SE*"), beginIndex);
             int lastIndex = content.indexOf("~", seIndex + 1);
 
 //            int lastIndex = content.indexOf("~",index+3);
@@ -253,7 +253,7 @@ public class fileUtils {
             if (beginIndex == -1) break;
 
             // Find the ending segment "~SE*" and then "~" that follows
-            int seIndex = content.indexOf(fileUtils.getKeyword("~SE*"), beginIndex);
+            int seIndex = content.indexOf(FileUtils.getKeyword("~SE*"), beginIndex);
             if (seIndex == -1) break; // Ensure we find "~SE*" in the content
 
             int lastIndex = content.indexOf("~", seIndex + 1);
@@ -311,7 +311,7 @@ public class fileUtils {
                 lastIndex = nextIndex;
             } else {
                 // If no next occurrence, find end based on "SE*" or "~"
-                int seIndex = content.indexOf(fileUtils.getKeyword("~SE*"), beginIndex);
+                int seIndex = content.indexOf(FileUtils.getKeyword("~SE*"), beginIndex);
                 lastIndex = (seIndex != -1) ? content.indexOf("~", seIndex + 1) : content.length();
             }
 

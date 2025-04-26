@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class eraTestFramework {
+public class ETestFramework {
 
     private static String testCasesDB;
 

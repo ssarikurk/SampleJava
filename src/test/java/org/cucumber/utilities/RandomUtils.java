@@ -3,7 +3,7 @@ package org.cucumber.utilities;
 
 import java.util.Random;
 
-public class randomUtils {
+public class RandomUtils {
 
     public static String generateRandomAlphaNumeric(int randomLength) {
 //        int randomLength = 3;

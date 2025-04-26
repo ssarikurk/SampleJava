@@ -55,12 +55,12 @@ public class ERAAutomation_Defs {
     String practiceId = "";
     String mysqlIp = "";
     String mysqlDbName = "";
-    String s3BucketName = "retrace-synthetic-bank-processing";
+    String s3BucketName = "ret-synthetic-bank-processing";
     String practiceName = "";
     String integrationId = "";
-    String s3TestFolderName = "eraAutomationTest/";
-    String collectionName = "eraCycleTestCases";
-    String serverIp = "10.200.55.91";
+    String s3TestFolderName = "eAutomationTest/";
+    String collectionName = "eCycleTestCases";
+    String serverIp = "1x.xx.xxx.xx";
     String server820UploadPath = "/tmp/process820";
 
 
@@ -86,14 +86,14 @@ public class ERAAutomation_Defs {
         testCasesDB = "qa-clinic3Era"; // we are keeping all data in this database
         partner = "qa-clinic3";
         practiceId = "LtB29WCY4jh1WL9u";
-        practiceName = "ERA CYCLE";
+        practiceName = "ECYCLE";
         mysqlIp = "10.200.11.31";
-        s3BucketName = "retrace-synthetic-bank-processing";
+        s3BucketName = "ret-synthetic-bank-processing";
         mysqlDbName = "era_cycle";
         integrationId = "48ba61f4-d1d5-4f8d-bd5b-2ca1e8672e53";
         s3TestFolderName = "eraAutomationTestECAT/";
         collectionName = "eraCycleTestCases";
-        dfiAccountId = "q09iwToxSvUevirtualEraCycle";
+        dfiAccountId = "q09irtualECycle";
         serverIp = "10.200.55.91";
         server820UploadPath = "/tmp/process820ecat";
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -113,7 +113,7 @@ public class ERAAutomation_Defs {
         practiceId = "iCyaFQjSsFmt1RfN";
         practiceName = "CLS2";
         mysqlIp = "10.200.11.31";
-        s3BucketName = "retrace-synthetic-bank-processing";
+        s3BucketName = "ret-synthetic-bank-processing";
         mysqlDbName = "clc_staging";
         integrationId = "d76b0913-0268-42d3-9a44-f87be448d590";
         s3TestFolderName = "eraAutomationTest/";
@@ -186,14 +186,14 @@ public class ERAAutomation_Defs {
                 "DELETE FROM etransmessagetext;",
                 "DELETE FROM insbluebook;",
                 "DELETE FROM adjustment;",
-                "DELETE FROM retrace_change_log;",
+                "DELETE FROM ret_change_log;",
                 "UPDATE claimproc SET STATUS = 0, DedApplied = 0, InsPayAmt = 0, WriteOff = 0, AllowedOverride = 0, PaymentRow = 0, ClaimAdjReasonCodes = '', Remarks = '', ClaimPaymentNum = 0;",
                 "UPDATE claim SET ClaimStatus = 'S', WriteOff = 0, InsPayAmt = 0 WHERE ClaimType = 'P';",
                 "UPDATE claim SET ClaimStatus = 'H', WriteOff = 0, InsPayAmt = 0 WHERE ClaimType = 'S';"
         };
 
-        sqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "retrace123");
-        sqlUtils.batchQueryExecuter(queries);
+        SqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "xxx123");
+        SqlUtils.batchQueryExecuter(queries);
 
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -371,7 +371,7 @@ public class ERAAutomation_Defs {
     @Given("restore Mysql")
     public void restoreMysql() {
 
-        System.out.println(textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED + "------------------Restore MySQL Started------------------" + textColorUtils.ANSI_RESET);
+        System.out.println(TextColorUtils.ANSI_YELLOW_BACKGROUND + TextColorUtils.ANSI_RED + "------------------Restore MySQL Started------------------" + TextColorUtils.ANSI_RESET);
         String accessKey = ConfigurationReader.get("accessKeyStaging");
         String secretKey = ConfigurationReader.get("secretKeyStaging");
         String instanceId = "i-05fea3b9a69d91990";
@@ -456,8 +456,8 @@ public class ERAAutomation_Defs {
     public void startFullSync() {
 
         BrowserUtils.waitFor(20);
-        System.out.println(apiUtils.ANSI_YELLOW_BACKGROUND + apiUtils.ANSI_RED + "------------------Opendental Fullsync Started------------------" + apiUtils.ANSI_RESET);
-        apiUtils.startFullSync(partner, integrationId);
+        System.out.println(ApiUtils.ANSI_YELLOW_BACKGROUND + ApiUtils.ANSI_RED + "------------------Opendental Fullsync Started------------------" + ApiUtils.ANSI_RESET);
+        ApiUtils.startFullSync(partner, integrationId);
         BrowserUtils.waitFor(20);
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
@@ -487,22 +487,22 @@ public class ERAAutomation_Defs {
 
     @Given("delete old s3 bucket records")
     public void deleteOldS3BucketRecords() {
-        s3Utils.deleteFilesFromS3(s3TestFolderName, s3BucketName);
+        S3Utils.deleteFilesFromS3(s3TestFolderName, s3BucketName);
         BrowserUtils.waitFor(5);
-        s3Utils.deleteFilesFromS3("synthetic-chi/era_outbound/2025/", "retrace-synthetic-processing-cmteasxriap");
+        S3Utils.deleteFilesFromS3("synthetic-chi/era_outbound/2025/", "ret-synthetic-processing-cmteasxriap");
         BrowserUtils.waitFor(5);
-        s3Utils.deleteFilesFromS3("synthetic-chi/inbound/", "retrace-synthetic-processing-cmteasxriap");
+        S3Utils.deleteFilesFromS3("synthetic-chi/inbound/", "ret-synthetic-processing-cmteasxriap");
         BrowserUtils.waitFor(5);
-        s3Utils.deleteFilesFromS3("synthetic-chi/outbound/2025/", "retrace-synthetic-processing-cmteasxriap");
+        S3Utils.deleteFilesFromS3("synthetic-chi/outbound/2025/", "ret-synthetic-processing-cmteasxriap");
         BrowserUtils.waitFor(5);
-        s3Utils.deleteFilesFromS3("synthetic-chi/status_outbound/2025/", "retrace-synthetic-processing-cmteasxriap");
+        S3Utils.deleteFilesFromS3("synthetic-chi/status_outbound/2025/", "ret-synthetic-processing-cmteasxriap");
         BrowserUtils.waitFor(5);
     }
 
     @Given("submit all claims key= {string} value= {string}")
     public void submitAllClaimsKeyValue(String key, String value) {
 
-        System.out.println(apiUtils.ANSI_YELLOW_BACKGROUND + apiUtils.ANSI_RED + "------------------Claim Submission Started------------------" + apiUtils.ANSI_RESET);
+        System.out.println(ApiUtils.ANSI_YELLOW_BACKGROUND + ApiUtils.ANSI_RED + "------------------Claim Submission Started------------------" + ApiUtils.ANSI_RESET);
         String claimIDs = "";
         List<String> claimIdListCombined = new ArrayList<>();
         List<String> claimIdList = new ArrayList<>();
@@ -631,7 +631,7 @@ public class ERAAutomation_Defs {
 
         System.out.println("claimIdListtoSubmit Size = " + claimIdListtoSubmit.size());
 //        apiUtils.submitMultipleClaimsEraCycle(partner,practiceId,claimIDs,collectionName);
-        apiUtils.submitClaimsEraCycle(partner, practiceId, claimIdListtoSubmit, collectionName);
+        ApiUtils.submitClaimsEraCycle(partner, practiceId, claimIdListtoSubmit, collectionName);
 
     }
 
@@ -676,7 +676,7 @@ public class ERAAutomation_Defs {
 
 //        claimIDs = "535,536";
 
-        apiUtils.submitMultipleClaimsEraCycle(partner, practiceId, claimIDs, collectionName);
+        ApiUtils.submitMultipleClaimsEraCycle(partner, practiceId, claimIDs, collectionName);
 
     }
 
@@ -687,7 +687,7 @@ public class ERAAutomation_Defs {
         String script = "node ./background/synthetic-clearinghouse.js --cat P0 --sts 1 --interface-id hsbcdev " +
                 "--interchange-name synthetic --interchange-env dev";
 
-        sshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouse", testCasesDB);
+        SshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouse", testCasesDB);
 //        BrowserUtils.waitFor(20);
 
     }
@@ -722,7 +722,7 @@ public class ERAAutomation_Defs {
                         " --cat F0 --sts 1";
 
                 System.out.println("script = " + script);
-                sshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForCombinedClaims", testCasesDB);
+                SshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForCombinedClaims", testCasesDB);
 //                sshUtils.runScripts(script,ip);
 
 //                int name835Index = fileNames.size();
@@ -778,7 +778,7 @@ public class ERAAutomation_Defs {
                         " --cat F2 --sts 1";
 
                 System.out.println("script = " + script);
-                sshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForZeropaid", testCasesDB);
+                SshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForZeropaid", testCasesDB);
             }
 
 //
@@ -831,7 +831,7 @@ public class ERAAutomation_Defs {
                         " --cat F0 --sts 1";
 
                 System.out.println("script = " + script);
-                sshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForGeneratePartial", testCasesDB);
+                SshUtils.runScriptsLogToFile(script, ip, "syntheticClearingHouseForGeneratePartial", testCasesDB);
             }
         }
         mongoClient.close();
@@ -843,7 +843,7 @@ public class ERAAutomation_Defs {
         String filePath = "/synthetic-chi/inbound";
 
 //        List<String> newFileNameList837 = new ArrayList<>();
-        List<String> newFileNameList837 = sshUtils.sftpGetFileName837(filePath);
+        List<String> newFileNameList837 = SshUtils.sftpGetFileName837(filePath);
         fileNameList837.addAll(newFileNameList837);
 
         for (String s : newFileNameList837) {
@@ -876,14 +876,14 @@ public class ERAAutomation_Defs {
 
         for (String fileName835 : fileNameList835) {
             System.out.println("fileName835 to replace 820= " + fileName835);
-            String fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            String fileName820 = "CDT.RET_" + fileName835.replace(".835", ".820");
             System.out.println("fileName820 = " + fileName820);
 //            System.out.println("fileName820 = " + fileName820);
             String filter = "{fileName835:'" + fileName835 + "'}";
             String update = "{$set:{fileName820:'" + fileName820 + "'}}";
             MongoDBUtils.executeUpdateQuery(partialEraColl, filter, update);
 
-            sshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
+            SshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
             downloaded820NameList.add(fileName820);
         }
 
@@ -915,14 +915,14 @@ public class ERAAutomation_Defs {
 
         for (String fileName835 : fileNameList835) {
             System.out.println("fileName835 to replace 820= " + fileName835);
-            String fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            String fileName820 = "CDT.EDI_" + fileName835.replace(".835", ".820");
             System.out.println("fileName820 = " + fileName820);
 
             String filter = "{fileName835:'" + fileName835 + "'}";
             String update = "{$set:{fileName820:'" + fileName820 + "'}}";
             MongoDBUtils.executeUpdateQuery(partialEraColl, filter, update);
 
-            sshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
+            SshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
             downloaded820NameList.add(fileName820);
         }
         mongoClient.close();
@@ -952,14 +952,14 @@ public class ERAAutomation_Defs {
 
         for (String fileName835 : fileNameList835) {
             System.out.println("fileName835 to replace 820= " + fileName835);
-            String fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            String fileName820 = "CDT.EDI_" + fileName835.replace(".835", ".820");
             System.out.println("fileName820 = " + fileName820);
 
             String filter = "{fileName835:'" + fileName835 + "'}";
             String update = "{$set:{fileName820:'" + fileName820 + "'}}";
             MongoDBUtils.executeUpdateQuery(partialEraColl, filter, update);
 
-            sshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
+            SshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
             downloaded820NameList.add(fileName820);
         }
         mongoClient.close();
@@ -989,14 +989,14 @@ public class ERAAutomation_Defs {
 
         for (String fileName835 : fileNameList835) {
             System.out.println("fileName835 to replace 820= " + fileName835);
-            String fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            String fileName820 = "CDT.EDI_" + fileName835.replace(".835", ".820");
             System.out.println("fileName820 = " + fileName820);
 //            System.out.println("fileName820 = " + fileName820);
             String filter = "{fileName835:'" + fileName835 + "'}";
             String update = "{$set:{fileName820:'" + fileName820 + "'}}";
             MongoDBUtils.executeUpdateQuery(partialEraColl, filter, update);
 
-            sshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
+            SshUtils.download820FromSftp(filePath, fileName820, downloadPath, collectionName);
             downloaded820NameList.add(fileName820);
         }
         mongoClient.close();
@@ -1008,10 +1008,10 @@ public class ERAAutomation_Defs {
         String downloadPath = BrowserUtils.getDownloadPath();
         String ip = serverIp;
 
-        sshUtils.uploadFileToServer(ip, downloaded820NameList, server820UploadPath, testCaseName);
+        SshUtils.uploadFileToServer(ip, downloaded820NameList, server820UploadPath, testCaseName);
 
         for (String file820Name : downloaded820NameList) {
-            s3Utils.upload820ToS3(file820Name, s3TestFolderName, s3BucketName, collectionName);
+            S3Utils.upload820ToS3(file820Name, s3TestFolderName, s3BucketName, collectionName);
 //            String fullPath = downloadPath+File.separator+file820Name;
 //            System.out.println("fullPath for delete files = " + fullPath);
 //            try {
@@ -1199,7 +1199,7 @@ public class ERAAutomation_Defs {
             String filePath = "/synthetic-chi/inbound";
             String fileContent837 = "File not Written";
             try {
-                fileContent837 = sshUtils.readFile(filePath, fileName);
+                fileContent837 = SshUtils.readFile(filePath, fileName);
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error(fileName + " read error --> " + Arrays.toString(e.getStackTrace()));
@@ -1270,17 +1270,17 @@ public class ERAAutomation_Defs {
                 ? testDoc.getBoolean("isTestCaseHealthy")
                 : null;
 
-        boolean isRestoreInprogress = eraCycleUtils.getRestoreStatus();
+        boolean isRestoreInprogress = CycleUtils.getRestoreStatus();
 //        System.out.println("isRestoreInprogress = " + isRestoreInprogress);
         while (isRestoreInprogress) {
             BrowserUtils.waitFor(20);
-            isRestoreInprogress = eraCycleUtils.getRestoreStatus();
+            isRestoreInprogress = CycleUtils.getRestoreStatus();
         }
 
-        logUtils.assertNotNull(isTestCaseHealthy, textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED +
-                "!!!!!Test Case NOT healty Test STOPPED!!!!!" + textColorUtils.ANSI_RESET);
-        logUtils.assertTrue(isTestCaseHealthy, textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED +
-                "!!!!!Test Case NOT healty Test STOPPED!!!!!" + textColorUtils.ANSI_RESET);
+        LogUtils.assertNotNull(isTestCaseHealthy, TextColorUtils.ANSI_YELLOW_BACKGROUND + TextColorUtils.ANSI_RED +
+                "!!!!!Test Case NOT healty Test STOPPED!!!!!" + TextColorUtils.ANSI_RESET);
+        LogUtils.assertTrue(isTestCaseHealthy, TextColorUtils.ANSI_YELLOW_BACKGROUND + TextColorUtils.ANSI_RED +
+                "!!!!!Test Case NOT healty Test STOPPED!!!!!" + TextColorUtils.ANSI_RESET);
 
 //        try {
 //            Assert.assertTrue(textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED +
@@ -1328,11 +1328,11 @@ public class ERAAutomation_Defs {
                 if (!MongoDBUtils.getSingletonSettings()) { // check last time and then start
                     MongoDBUtils.pushAndKeepSettings(partner, practiceId, logger, testCaseName, script, testCasesDB);
                     MongoDBUtils.deleteSingletonRecord("checkClearinghouseFtp");
-                    int exitStatus = sshUtils.runScriptsLogToFile(script, ip, testCaseName + "_checkClearingHouseFtp", testCasesDB);
+                    int exitStatus = SshUtils.runScriptsLogToFile(script, ip, testCaseName + "_checkClearingHouseFtp", testCasesDB);
                     if (exitStatus != 0) {
                         String filePath_CheckClearingHouse = "src/test/resources/Logs/" + testCaseName + "_checkClearingHouseFtp.log";
                         System.out.println("filePath_CheckClearingHouse = " + filePath_CheckClearingHouse);
-                        String checkClearingHouseScriptLog = fileUtils.readLogContent(filePath_CheckClearingHouse);
+                        String checkClearingHouseScriptLog = FileUtils.readLogContent(filePath_CheckClearingHouse);
                         System.out.println("checkClearingHouseScriptLog = " + checkClearingHouseScriptLog);
                         String singletonError = "Error: Another process is running, job is not executed";
                         if (checkClearingHouseScriptLog.contains(singletonError)) {
@@ -1340,19 +1340,19 @@ public class ERAAutomation_Defs {
                             System.out.println("------- Script run started from beginning ------- = ");
                             continue;
                         } else {
-                            logUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n " +
+                            LogUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n " +
                                     "Error is not Singleton Error \n " + script, 0, exitStatus);
 //                            break;
                         }
                     } else {
-                        logUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n" + script, 0, exitStatus);
+                        LogUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n" + script, 0, exitStatus);
 //                        break;
                     }
                 }
                 BrowserUtils.waitFor(0.5);
                 MongoDBUtils.setSingletonSettings(false, "notKept", "none", testCasesDB);
                 BrowserUtils.waitFor(1);
-                eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "checkClearinghouseFtp script run", testCasesDB);
+                CycleUtils.updateTestCaseDoc(testId, "testStatus", "checkClearinghouseFtp script run", testCasesDB);
                 break;
             } else {
                 System.out.println("----waiting for singleton script run checkclearingHouseFtp----");
@@ -1360,10 +1360,10 @@ public class ERAAutomation_Defs {
             }
         }
         try {
-            boolean settingsMatched = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatched = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatched before checkClearinghouseFtp = " + settingsMatched);
         } catch (AssertionError e) {
-            boolean settingsMatchedCatchBlok = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatchedCatchBlok = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatchedCatchBlok = " + settingsMatchedCatchBlok);
             throw e;  // Rethrow the exception so the test still fails
         }
@@ -1374,7 +1374,7 @@ public class ERAAutomation_Defs {
     public void runCheckClearinghouseftpScriptFor(String testCaseName) {
 //        fileName837 = "2024071009059684149.837";
 //        String fileName835 = fileName837.replace(".837",".835");
-        String fileName835 = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("fileName835");
+        String fileName835 = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("fileName835");
         String ip = serverIp;
         String script = "node ./background/checkClearinghouseFtp.js --clearinghouse synthetic --env dev --transaction 835 " +
                 "--partner-id " + partner + " --file " + fileName835;
@@ -1386,11 +1386,11 @@ public class ERAAutomation_Defs {
                 if (!MongoDBUtils.getSingletonSettings()) { // check last time and then start --race condition
                     MongoDBUtils.pushAndKeepSettings(partner, practiceId, logger, testCaseName, script, testCasesDB);
                     MongoDBUtils.deleteSingletonRecord("checkClearinghouseFtp");
-                    int exitStatus = sshUtils.runScriptsLogToFile(script, ip, testCaseName + "_checkClearingHouseFtp", testCasesDB);
+                    int exitStatus = SshUtils.runScriptsLogToFile(script, ip, testCaseName + "_checkClearingHouseFtp", testCasesDB);
                     if (exitStatus != 0) {
                         String filePath_CheckClearingHouse = "src/test/resources/Logs/" + testCaseName + "_checkClearingHouseFtp.log";
                         System.out.println("filePath_CheckClearingHouse = " + filePath_CheckClearingHouse);
-                        String checkClearingHouseScriptLog = fileUtils.readLogContent(filePath_CheckClearingHouse);
+                        String checkClearingHouseScriptLog = FileUtils.readLogContent(filePath_CheckClearingHouse);
                         System.out.println("checkClearingHouseScriptLog = " + checkClearingHouseScriptLog);
                         String singletonError = "Error: Another process is running, job is not executed";
                         if (checkClearingHouseScriptLog.contains(singletonError)) {
@@ -1398,12 +1398,12 @@ public class ERAAutomation_Defs {
                             System.out.println("------- Script run started from beginning ------- = ");
                             continue;
                         } else {
-                            logUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n " +
+                            LogUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n " +
                                     "Error is not Singleton Error \n " + script, 0, exitStatus);
 //                            break;
                         }
                     } else {
-                        logUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n" + script, 0, exitStatus);
+                        LogUtils.assertEquals("checkClearingHouseFtp run NOT Success!!! \n" + script, 0, exitStatus);
 //                        break;
                     }
                 }
@@ -1426,13 +1426,13 @@ public class ERAAutomation_Defs {
         String fileName820 = "";
         if (fileName835.contains("Test_Case_")) {
             fileName835 = fileName835.replace(testCaseName + "_", "");
-            fileName820 = testCaseName + "_CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            fileName820 = testCaseName + "_CDT.EDI_" + fileName835.replace(".835", ".820");
         } else {
-            fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
+            fileName820 = "CDT.EDI__" + fileName835.replace(".835", ".820");
         }
         System.out.println("fileName820 = " + fileName820);
         String ip = serverIp;
-//        String script = "node background/process-hsbc.js --s3-bucket retrace-synthetic-bank-processing " +
+//        String script = "node background/process-hsbc.js --s3-bucket ret-synthetic-bank-processing " +
 //                "--prefix " +s3TestFolderName+ " --file "+fileName820;
         String filePathServer820 = server820UploadPath + "/" + fileName820;
         String script = "node background/process-hsbc.js --file " + filePathServer820;
@@ -1443,13 +1443,13 @@ public class ERAAutomation_Defs {
                 System.out.println("----started- for singleton script run process820----");
                 if (!MongoDBUtils.getSingletonSettings()) {
                     MongoDBUtils.pushAndKeepSettings(partner, practiceId, logger, testCaseName, script, testCasesDB);
-                    int exitStatus = sshUtils.runScriptsLogToFile(script, ip, testCaseName + "_process820", testCasesDB);
+                    int exitStatus = SshUtils.runScriptsLogToFile(script, ip, testCaseName + "_process820", testCasesDB);
                     BrowserUtils.waitFor(0.5);
                     MongoDBUtils.setSingletonSettings(false, "notKept", "none", testCasesDB);
                     BrowserUtils.waitFor(1);
-                    logUtils.assertEquals("process820 run NOT Success!!! \n" + script, 0, exitStatus);
+                    LogUtils.assertEquals("process820 run NOT Success!!! \n" + script, 0, exitStatus);
                 }
-                eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "process820 script run", testCasesDB);
+                CycleUtils.updateTestCaseDoc(testId, "testStatus", "process820 script run", testCasesDB);
                 break;
             } else {
                 System.out.println("----waiting for singleton script run process820----");
@@ -1457,49 +1457,15 @@ public class ERAAutomation_Defs {
             }
         }
         try {
-            boolean settingsMatched = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatched = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatched before background/process-hsbc script run " + settingsMatched);
-            logUtils.assertTrue(settingsMatched, "settings NOT Matched before background/process-hsbc script run ");
+            LogUtils.assertTrue(settingsMatched, "settings NOT Matched before background/process-hsbc script run ");
         } catch (AssertionError e) {
-            boolean settingsMatchedCatchBlok = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatchedCatchBlok = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatchedCatchBlok = " + settingsMatchedCatchBlok);
             throw e;  // Rethrow the exception so the test still fails
         }
     }
-
-//    @And("run process 820 script for {string}")
-//    public void runProcess820Script(String testCaseName) {
-////        fileName837 = "2024071009059684149.837";
-//        String fileName835 = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("fileName835");
-//        String fileName820 = "CDT04FU8.RETRACE.EDI_" + fileName835.replace(".835", ".820");
-//        System.out.println("fileName820 = " + fileName820);
-////        fileName820 ="CDT04FU8.RETRACE.EDI_2024071009059684149.820";
-//        String ip = serverIp;
-////        String script = "node background/process-hsbc.js --s3-bucket retrace-synthetic-bank-processing " +
-////                "--prefix " +s3TestFolderName+ " --file "+fileName820;
-//        String filePathServer820 = server820UploadPath + "/" + fileName820;
-//        String script = "node background/process-hsbc.js --file " + filePathServer820;
-//        System.out.println("script = " + script);
-//
-//        testCaseName = testCaseName.replace(" ", "_");
-//        for (int i = 0; i < 200; i++) {
-//            if (!MongoDBUtils.getSingletonSettings()) {
-//                System.out.println("----started- for singleton script run process820----");
-//                if (!MongoDBUtils.getSingletonSettings()) {
-//                    MongoDBUtils.pushAndKeepSettings(partner, practiceId, logger, testCaseName, script, testCasesDB);
-//                    int exitStatus = sshUtils.runScriptsLogToFile(script, ip, testCaseName + "_process820", testCasesDB);
-//                    BrowserUtils.waitFor(0.5);
-//                    MongoDBUtils.setSingletonSettings(false, "notKept", "none", testCasesDB);
-//                    BrowserUtils.waitFor(1);
-//                    logUtils.assertEquals("process820 run NOT Success!!! \n" + script, 0, exitStatus);
-//                }
-//                break;
-//            } else {
-//                System.out.println("----waiting for singleton script run process820----");
-//                BrowserUtils.waitFor(3);
-//            }
-//        }
-//    }
 
     @Given("find check number from 835 file and match with claim")
     public void findCheckNumberFrom835FileAndMatchWithClaim() {
@@ -1510,7 +1476,7 @@ public class ERAAutomation_Defs {
                 System.out.println("fileName835 = " + fileName835);
                 String filePath = "/synthetic-chi/era_outbound";
 
-                String fileContent835 = sshUtils.readFile(filePath, fileName835);
+                String fileContent835 = SshUtils.readFile(filePath, fileName835);
                 System.out.println("fileContent835 = " + fileContent835);
                 int fileContentSize = fileContent835.length();
                 if (fileContentSize > 0) {
@@ -1558,7 +1524,7 @@ public class ERAAutomation_Defs {
         System.out.println("restoreTimeStamp = " + restoreTimeStamp);
 //        List<String> newFileNameList837 = new ArrayList<>();
 //        List<String> newFileNameList837 = new ArrayList<>();
-        List<String> sftpFileNameList835 = sshUtils.sftpGet835FileNameList(filePath);
+        List<String> sftpFileNameList835 = SshUtils.sftpGet835FileNameList(filePath);
         System.out.println("sftpFileNameList835.size() = " + sftpFileNameList835.size());
         for (String s : sftpFileNameList835) {
             System.out.println("fileName = " + s);
@@ -1589,7 +1555,7 @@ public class ERAAutomation_Defs {
 
                     if (inThisCycle) {
                         MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, collectionName);
-                        String fileContent835 = sshUtils.readFile(filePath, sftpFileName);
+                        String fileContent835 = SshUtils.readFile(filePath, sftpFileName);
                         boolean isNpiMatch = fileContent835.contains(npi);
                         System.out.println("isNpiMatch = " + isNpiMatch);
 
@@ -1712,8 +1678,8 @@ public class ERAAutomation_Defs {
         postBody.put("practice_id", practiceId);
 
         System.out.println("postBody = " + postBody);
-        apiUtils.reconcileLedger(partner, postBody);
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "ledger reconciled", testCasesDB);
+        ApiUtils.reconcileLedger(partner, postBody);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "ledger reconciled", testCasesDB);
         BrowserUtils.waitFor(10);
     }
 
@@ -1724,7 +1690,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> ledgerColl = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
 //        checkNumber= "3uTdUXmYq2Cj";  //check Number for Test
         Document filter = new Document("reference", checkNumber);
@@ -1761,12 +1727,12 @@ public class ERAAutomation_Defs {
         postBody.put("practice_id", practiceId);
 
         System.out.println("postBody = " + postBody);
-        apiUtils.reconcileLedger(partner, postBody);
+        ApiUtils.reconcileLedger(partner, postBody);
         BrowserUtils.waitFor(10);
     }
 
-    @And("retrace approve")
-    public void retraceApprove() {
+    @And("ret approve")
+    public void retApprove() {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
@@ -1784,30 +1750,30 @@ public class ERAAutomation_Defs {
 
 //        eraSplitFileAssignedId = "tAZNXdF5HBGaojiP";
 
-            JsonPath sweepEra = apiUtils.retApproveERA(partner, eraSplitFileAssignedId);
+            JsonPath sweepEra = ApiUtils.retApproveERA(partner, eraSplitFileAssignedId);
 //            sweepEra.prettyPrint();
             approveSuccess = sweepEra.get("success");
             System.out.println("approveSuccess = " + approveSuccess);
 
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("error : retraceApprove step failed --> " + Arrays.toString(e.getStackTrace()));
+            logger.error("error : retApprove step failed --> " + Arrays.toString(e.getStackTrace()));
             throw e;
         } finally {
             mongoClient.close();
         }
-        logUtils.assertNotNull(approveSuccess, "Retrace approve process is not success!!!");
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "retraceApproved", testCasesDB);
+        LogUtils.assertNotNull(approveSuccess, "Ret approve process is not success!!!");
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "retApproved", testCasesDB);
         BrowserUtils.waitFor(10);
     }
 
-    @And("retrace approve for {string}")
-    public void retraceApproveFor(String testCaseName) {
+    @And("ret approve for {string}")
+    public void retApproveFor(String testCaseName) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
@@ -1823,26 +1789,26 @@ public class ERAAutomation_Defs {
 
 //        eraSplitFileAssignedId = "tAZNXdF5HBGaojiP";
 
-            JsonPath sweepEra = apiUtils.retApproveERA(partner, eraSplitFileAssignedId);
+            JsonPath sweepEra = ApiUtils.retApproveERA(partner, eraSplitFileAssignedId);
 //            sweepEra.prettyPrint();
             approveSuccess = sweepEra.get("success");
             System.out.println("approveSuccess = " + approveSuccess);
 
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("error : retraceApprove step failed --> " + Arrays.toString(e.getStackTrace()));
+            logger.error("error : retApprove step failed --> " + Arrays.toString(e.getStackTrace()));
             throw e;
         } finally {
             mongoClient.close();
         }
-        logUtils.assertNotNull(approveSuccess, "Retrace approve process is not success!!!");
+        LogUtils.assertNotNull(approveSuccess, "Ret approve process is not success!!!");
         BrowserUtils.waitFor(10);
     }
 
-    @And("retrace disapprove")
-    public void retraceDisapprove() {
+    @And("ret disapprove")
+    public void retDisapprove() {
 
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapprove inprogress", testCasesDB);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapprove inprogress", testCasesDB);
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -1857,28 +1823,28 @@ public class ERAAutomation_Defs {
 
 //        eraSplitFileAssignedId = "tAZNXdF5HBGaojiP";
 
-            JsonPath sweepEra = apiUtils.retDisapproveERA(partner, eraSplitFileAssignedId);
+            JsonPath sweepEra = ApiUtils.retDisapproveERA(partner, eraSplitFileAssignedId);
 //            sweepEra.prettyPrint();
             Object approveSuccess = sweepEra.get("success");
             System.out.println("approveSuccess = " + approveSuccess);
 
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("error : retraceDisApprove step failed --> " + Arrays.toString(e.getStackTrace()));
+            logger.error("error : retDisApprove step failed --> " + Arrays.toString(e.getStackTrace()));
             throw e;
         } finally {
             mongoClient.close();
         }
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapproved", testCasesDB);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapproved", testCasesDB);
     }
 
-    @Then("retrace disapprove for {string}")
-    public void retraceDisapproveFor(String testCaseName) {
+    @Then("ret disapprove for {string}")
+    public void retDisapproveFor(String testCaseName) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
         Document eraSplitFileAssignedDoc = eraSplitFileAssignedColl.find(query).first();
@@ -1892,22 +1858,22 @@ public class ERAAutomation_Defs {
 
 //        eraSplitFileAssignedId = "tAZNXdF5HBGaojiP";
 
-            JsonPath sweepEra = apiUtils.retDisapproveERA(partner, eraSplitFileAssignedId);
+            JsonPath sweepEra = ApiUtils.retDisapproveERA(partner, eraSplitFileAssignedId);
 //            sweepEra.prettyPrint();
             Object approveSuccess = sweepEra.get("success");
             System.out.println("approveSuccess = " + approveSuccess);
 
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("error : retraceDisApprove step failed --> " + Arrays.toString(e.getStackTrace()));
+            logger.error("error : retDisApprove step failed --> " + Arrays.toString(e.getStackTrace()));
             throw e;
         } finally {
             mongoClient.close();
         }
     }
 
-    @And("retrace sweep")
-    public void retraceSweep() {
+    @And("ret sweep")
+    public void retSweep() {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
@@ -1970,7 +1936,7 @@ public class ERAAutomation_Defs {
         try {
             String dfiAccount = dfiAccountDoc.getString("dfi_account_id");
             System.out.println("dfiAccount = " + dfiAccount);
-            Response sweepResponse = apiUtils.getSweepResponse(partner, dfiAccount);
+            Response sweepResponse = ApiUtils.getSweepResponse(partner, dfiAccount);
             sweepResponseBody = sweepResponse.getBody().toString();
             responseStatusCode = sweepResponse.statusCode();
 
@@ -1982,7 +1948,7 @@ public class ERAAutomation_Defs {
                     sweepResponseBody.contains("is currently not available.  Please wait and try again later")) {
                 BrowserUtils.waitFor(10);
                 i++;
-                sweepResponse = apiUtils.getSweepResponse(partner, dfiAccount);
+                sweepResponse = ApiUtils.getSweepResponse(partner, dfiAccount);
                 sweepResponseBody = sweepResponse.getBody().toString();
                 responseStatusCode = sweepResponse.statusCode();
 
@@ -2012,19 +1978,19 @@ public class ERAAutomation_Defs {
 //            System.out.println("sweepResponseBody = " + sweepResponseBody);
             System.out.println("responseStatusCode = " + responseStatusCode);
         }
-        logUtils.assertEquals("Sweep is not success!!!", 200, responseStatusCode);
+        LogUtils.assertEquals("Sweep is not success!!!", 200, responseStatusCode);
 
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "retraceSweeped", testCasesDB);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "retSweeped", testCasesDB);
         BrowserUtils.waitFor(5);
     }
 
 
-    @And("retrace sweep for {string}")
-    public void retraceSweepFor(String testCaseName) {
+    @And("ret sweep for {string}")
+    public void retSweepFor(String testCaseName) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query2 = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
         Document eraSplitFileAssignedDoc = eraSplitFileAssignedColl.find(query2).first();
@@ -2084,7 +2050,7 @@ public class ERAAutomation_Defs {
         try {
             String dfiAccount = dfiAccountDoc.getString("dfi_account_id");
             System.out.println("dfiAccount = " + dfiAccount);
-            Response sweepResponse = apiUtils.getSweepResponse(partner, dfiAccount);
+            Response sweepResponse = ApiUtils.getSweepResponse(partner, dfiAccount);
             sweepResponseBody = sweepResponse.getBody().toString();
             responseStatusCode = sweepResponse.statusCode();
 
@@ -2096,7 +2062,7 @@ public class ERAAutomation_Defs {
                     sweepResponseBody.contains("is currently not available.  Please wait and try again later")) {
                 BrowserUtils.waitFor(20);
                 i++;
-                sweepResponse = apiUtils.getSweepResponse(partner, dfiAccount);
+                sweepResponse = ApiUtils.getSweepResponse(partner, dfiAccount);
                 sweepResponseBody = sweepResponse.getBody().toString();
                 responseStatusCode = sweepResponse.statusCode();
 
@@ -2121,9 +2087,9 @@ public class ERAAutomation_Defs {
             System.out.println("sweepResponseBody = " + sweepResponseBody);
             System.out.println("responseStatusCode = " + responseStatusCode);
         }
-        logUtils.assertEquals("Sweep is not success!!!", 200, responseStatusCode);
+        LogUtils.assertEquals("Sweep is not success!!!", 200, responseStatusCode);
 
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "retraceSweeped", testCasesDB);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "retSweeped", testCasesDB);
         BrowserUtils.waitFor(5);
     }
 
@@ -2150,13 +2116,13 @@ public class ERAAutomation_Defs {
             mongoClient.close();
         }
 
-        JsonPath finalizeEra = apiUtils.providerApproveERA(partner, eraSplitFileAssignedId);
+        JsonPath finalizeEra = ApiUtils.providerApproveERA(partner, eraSplitFileAssignedId);
         boolean finalizeEraSuccess = false;
         if (finalizeEra != null) {
             finalizeEraSuccess = finalizeEra.get("success");
         }
-        logUtils.assertTrue(finalizeEraSuccess, "Provider Approve process NOT success!!!");
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "providerApproved", testCasesDB);
+        LogUtils.assertTrue(finalizeEraSuccess, "Provider Approve process NOT success!!!");
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "providerApproved", testCasesDB);
         BrowserUtils.waitFor(10);
         System.out.println("finalizeEraSuccess = " + finalizeEraSuccess);
     }
@@ -2168,7 +2134,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
@@ -2189,12 +2155,12 @@ public class ERAAutomation_Defs {
             mongoClient.close();
         }
 
-        JsonPath finalizeEra = apiUtils.providerApproveERA(partner, eraSplitFileAssignedId);
+        JsonPath finalizeEra = ApiUtils.providerApproveERA(partner, eraSplitFileAssignedId);
         boolean finalizeEraSuccess = false;
         if (finalizeEra != null) {
             finalizeEraSuccess = finalizeEra.get("success");
         }
-        logUtils.assertTrue(finalizeEraSuccess, "Provider Approve process NOT success!!!");
+        LogUtils.assertTrue(finalizeEraSuccess, "Provider Approve process NOT success!!!");
         BrowserUtils.waitFor(10);
         System.out.println("finalizeEraSuccess = " + finalizeEraSuccess);
     }
@@ -2202,12 +2168,12 @@ public class ERAAutomation_Defs {
     @And("provider disapprove")
     public void providerDisapprove() {
         // check era split file assign -> status wait until ---->auto_finalize then sweep
-        JsonPath finalizeEra = apiUtils.providerDisapproveERA(partner, eraSplitFileAssignedId);
+        JsonPath finalizeEra = ApiUtils.providerDisapproveERA(partner, eraSplitFileAssignedId);
         boolean finalizeEraSuccess = false;
         if (finalizeEra != null) {
             finalizeEraSuccess = finalizeEra.get("success");
         }
-        eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapproved", testCasesDB);
+        CycleUtils.updateTestCaseDoc(testId, "testStatus", "providerDisapproved", testCasesDB);
         System.out.println("finalizeEraSuccess = " + finalizeEraSuccess);
     }
 
@@ -2219,7 +2185,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
@@ -2229,7 +2195,7 @@ public class ERAAutomation_Defs {
         JsonPath eraForSweep = JsonPath.from(eraSplitFileAssignedDoc.toJson());
         eraSplitFileAssignedId = eraForSweep.get("era_split_file_assigned_id");
 
-        JsonPath finalizeEra = apiUtils.providerDisapproveERA(partner, eraSplitFileAssignedId);
+        JsonPath finalizeEra = ApiUtils.providerDisapproveERA(partner, eraSplitFileAssignedId);
         boolean finalizeEraSuccess = false;
         if (finalizeEra != null) {
             finalizeEraSuccess = finalizeEra.get("success");
@@ -2336,7 +2302,7 @@ public class ERAAutomation_Defs {
 //        reference= "jIdsAiBq76CS";
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject eraQuery = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(eraQuery).first();
 
@@ -2413,7 +2379,7 @@ public class ERAAutomation_Defs {
 //        reference= "jIdsAiBq76CS";
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> ledger1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject ledgerQuery = BasicDBObject.parse("{reference:'" + checkNumber + "'}");
         Document ledger1Doc = ledger1Coll.find(ledgerQuery).first();
 
@@ -2465,7 +2431,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject eraQuery = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(eraQuery).first();
@@ -2578,7 +2544,7 @@ public class ERAAutomation_Defs {
         System.out.println("providerApprove = " + providerApproval);
 //            JsonPath eraSplitFileJson = JsonPath.from(eraSplitFileDoc.toJson());
 
-        logUtils.assertEquals("Provider Approval Status not Approved", "Approved", providerApproval);
+        LogUtils.assertEquals("Provider Approval Status not Approved", "Approved", providerApproval);
 
         mongoClient.close();
 
@@ -2592,7 +2558,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
 
@@ -2664,7 +2630,7 @@ public class ERAAutomation_Defs {
 //                BrowserUtils.waitFor(0.5);
 ////                MongoDBUtils.setSingletonSettings(false, "notKept", "none", testCasesDB);
 //                BrowserUtils.waitFor(1);
-                eraCycleUtils.updateTestCaseDoc(testId, "testStatus", "apply settings step", testCasesDB);
+                CycleUtils.updateTestCaseDoc(testId, "testStatus", "apply settings step", testCasesDB);
 //                break;
 //            } else {
 //                System.out.println("----waiting for singleton script run checkclearingHouseFtp----");
@@ -2696,7 +2662,7 @@ public class ERAAutomation_Defs {
     public void applyAutomationSettingsForTestFor(String testCaseName) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
-        Document testDoc = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB);
+        Document testDoc = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB);
 
         Document settings = (Document) testDoc.get("settings");
         System.out.println("settings = " + settings.toJson());
@@ -2731,9 +2697,9 @@ public class ERAAutomation_Defs {
     public void waitForReprocess() {
 
         BrowserUtils.waitFor(10);
-        System.out.println(apiUtils.ANSI_YELLOW_BACKGROUND + apiUtils.ANSI_RED + "------------------Wait for Reprocess Started------------------" + apiUtils.ANSI_RESET);
+        System.out.println(ApiUtils.ANSI_YELLOW_BACKGROUND + ApiUtils.ANSI_RED + "------------------Wait for Reprocess Started------------------" + ApiUtils.ANSI_RESET);
         try {
-            JsonPath reprocessStatusJson = apiUtils.getReprocessStatus(partner, integrationId);
+            JsonPath reprocessStatusJson = ApiUtils.getReprocessStatus(partner, integrationId);
 //          reprocessStatusJson.prettyPrint();
             List<String> tablesToProcess = reprocessStatusJson.getList("custom_reprocess.tables_to_process");
             int tableSize = tablesToProcess.size();
@@ -2742,7 +2708,7 @@ public class ERAAutomation_Defs {
                 if (tableSize > 0) {
                     System.out.println("Waiting for reprocess");
                     BrowserUtils.waitFor(5);
-                    reprocessStatusJson = apiUtils.getReprocessStatus(partner, integrationId);
+                    reprocessStatusJson = ApiUtils.getReprocessStatus(partner, integrationId);
                     tablesToProcess = reprocessStatusJson.getList("custom_reprocess.tables_to_process");
                     tableSize = tablesToProcess.size();
                 } else {
@@ -2760,16 +2726,16 @@ public class ERAAutomation_Defs {
 
     @Given("delete old sftp records")
     public void deleteOldSftpRecords() {
-        sshUtils.sftpDeleteFilesInFolder("/synthetic-chi/inbound");
+        SshUtils.sftpDeleteFilesInFolder("/synthetic-chi/inbound");
 //        sshUtils.sftpDeleteFilesInFolder("/synthetic-chi/era_outbound");
-        sshUtils.sftpDeleteFilesInFolder("/synthetic-chi/outbound");
-        sshUtils.sftpDeleteFilesInFolder("/synthetic-chi/processed_inbound");
-        sshUtils.sftpDeleteFilesInFolder("/synthetic-chi/status_outbound");
+        SshUtils.sftpDeleteFilesInFolder("/synthetic-chi/outbound");
+        SshUtils.sftpDeleteFilesInFolder("/synthetic-chi/processed_inbound");
+        SshUtils.sftpDeleteFilesInFolder("/synthetic-chi/status_outbound");
 
-        sshUtils.sftpDelete820FilesInFolder("/hsbc-chi/pymt_outbound", "hsbc-chi");
+        SshUtils.sftpDelete820FilesInFolder("/hsbc-chi/pymt_outbound", "hsbc-chi");
 
         String filePath = "/synthetic-chi/era_outbound";
-        sshUtils.sftpDeleteXDayOldRecords(filePath,"synthetic-chi",2);
+        SshUtils.sftpDeleteXDayOldRecords(filePath,"synthetic-chi",2);
 
 
 
@@ -2891,11 +2857,11 @@ public class ERAAutomation_Defs {
         String actualAutoPostQualifiedStatus = String.valueOf(isAutoPostQualified);
         System.out.println("actualAutoPostQualifiedStatus = " + actualAutoPostQualifiedStatus);
         try {
-            boolean settingsMatched = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatched = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatched = " + settingsMatched);
 //            Assert.assertTrue(settingsMatched);
         } catch (AssertionError e) {
-            boolean settingsMatchedCatchBlok = eraCycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
+            boolean settingsMatchedCatchBlok = CycleUtils.isAutomationSettingsMatching(partner, practiceId, testCasesDB, testCaseName);
             System.out.println("settingsMatchedCatchBlok = " + settingsMatchedCatchBlok);
             logger.error("auto_post.qualified is False which is not expected " + Arrays.toString(e.getStackTrace()), expectedQualifiedStatus, actualAutoPostQualifiedStatus, e);
             throw e;  // Rethrow the exception so the test still fails
@@ -2905,7 +2871,7 @@ public class ERAAutomation_Defs {
 
         String actualStatus = (String) eraSplitFileDoc.get("status");
         System.out.println("actualStatus = " + actualStatus);
-        logUtils.assertEquals("status is not created", expectedStatus, actualStatus);
+        LogUtils.assertEquals("status is not created", expectedStatus, actualStatus);
 
         mongoClient.close();
     }
@@ -2915,7 +2881,7 @@ public class ERAAutomation_Defs {
     public void verifyEra_split_file_assignedCollectionStatusAuto_postQualifiedFor(String expectedStatus, String expectedQualifiedStatus, String testCaseName) {
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
         MongoCollection<Document> testColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, collectionName);
         String filter = "{check_number:'" + checkNumber + "'}";
@@ -3017,7 +2983,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         System.out.println("query = " + query);
@@ -3072,7 +3038,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferring check= " + actualStatus);
 
 //            Assert.assertTrue(actualStatus+" is actualStatus ---- Status is neither 'transferring' nor 'transferred'",firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus));
-            logUtils.assertTrue(firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus), actualStatus + " is actualStatus ---- Status is neither 'transferring' nor 'transferred'");
+            LogUtils.assertTrue(firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus), actualStatus + " is actualStatus ---- Status is neither 'transferring' nor 'transferred'");
 
             eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
             actualStatus = (String) eraSplitFileDoc.get("status");
@@ -3089,7 +3055,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferred check= " + actualStatus);
 
 //            Assert.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
-            logUtils.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
+            LogUtils.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -3106,7 +3072,7 @@ public class ERAAutomation_Defs {
         //checkNumber= "jIdsAiBq76CS";
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
         try {
@@ -3126,7 +3092,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferring check= " + actualStatus);
 
 //            Assert.assertTrue(actualStatus+" is actualStatus ---- Status is neither 'transferring' nor 'transferred'",firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus));
-            logUtils.assertTrue(firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus), actualStatus + " is actualStatus ---- Status is neither 'transferring' nor 'transferred'");
+            LogUtils.assertTrue(firstExpectedStatus.equals(actualStatus) || secondExpectedStatus.equals(actualStatus), actualStatus + " is actualStatus ---- Status is neither 'transferring' nor 'transferred'");
 
             eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
             actualStatus = (String) eraSplitFileDoc.get("status");
@@ -3143,7 +3109,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferred check= " + actualStatus);
 
 //            Assert.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
-            logUtils.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
+            LogUtils.assertEquals("Status is not 'transferred'", secondExpectedStatus, actualStatus);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -3205,7 +3171,7 @@ public class ERAAutomation_Defs {
                 }
             }
 
-            logUtils.assertEquals("categories are not matched", expectedCategory, actualCategory);
+            LogUtils.assertEquals("categories are not matched", expectedCategory, actualCategory);
 
             if (Objects.equals(actualCategory, "fees")) {
                 String actualFees = ledgerJson.get("amount.$numberDecimal");
@@ -3229,7 +3195,7 @@ public class ERAAutomation_Defs {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> ledger_1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{reference:'" + checkNumber + "',category:'" + expectedCategory + "'}");
         System.out.println("query = " + query);
@@ -3254,7 +3220,7 @@ public class ERAAutomation_Defs {
             }
 
 //            Assert.assertEquals(expectedCategory, actualCategory);
-            logUtils.assertEquals("categories are not matched", expectedCategory, actualCategory);
+            LogUtils.assertEquals("categories are not matched", expectedCategory, actualCategory);
 
             if (Objects.equals(actualCategory, "fees")) {
                 String actualFees = ledgerJson.get("amount.$numberDecimal");
@@ -3285,7 +3251,7 @@ public class ERAAutomation_Defs {
         JsonPath ledgerJson = JsonPath.from(ledgerDoc.toJson());
         String actualStatus = ledgerJson.get("status");
         System.out.println("actualStatus = " + actualStatus);
-        logUtils.assertEquals("expected status " + expectedStatus + " not matched with actual " + expectedStatus + " ", expectedStatus, actualStatus);
+        LogUtils.assertEquals("expected status " + expectedStatus + " not matched with actual " + expectedStatus + " ", expectedStatus, actualStatus);
     }
 
 
@@ -3293,7 +3259,7 @@ public class ERAAutomation_Defs {
     public void verifyLegder_1CollectionStatusFor(String expectedStatus, String testCaseName) {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> ledger_1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         BasicDBObject query = BasicDBObject.parse("{reference:'" + checkNumber + "'}");
         System.out.println("query = " + query);
@@ -3303,7 +3269,7 @@ public class ERAAutomation_Defs {
         JsonPath ledgerJson = JsonPath.from(ledgerDoc.toJson());
         String actualStatus = ledgerJson.get("status");
         System.out.println("actualStatus = " + actualStatus);
-        logUtils.assertEquals("expected status " + expectedStatus + " not matched with actual " + expectedStatus + " ", expectedStatus, actualStatus);
+        LogUtils.assertEquals("expected status " + expectedStatus + " not matched with actual " + expectedStatus + " ", expectedStatus, actualStatus);
     }
 
     @Then("verify legder_1 collection does not have category {string}")
@@ -3326,7 +3292,7 @@ public class ERAAutomation_Defs {
                 }
             }
 //            Assert.assertFalse("There is a record with unexpectedCategory", categoryFound);
-            logUtils.assertFalse(categoryFound, "There is a record with unexpectedCategory");
+            LogUtils.assertFalse(categoryFound, "There is a record with unexpectedCategory");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("Error in line 1987 : " + Arrays.toString(e.getStackTrace()));
@@ -3339,7 +3305,7 @@ public class ERAAutomation_Defs {
     public void verifyLegder_1CollectionDoesNotHaveCategoryFor(String unexpectedCategory, String testCaseName) {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> ledger_1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query = BasicDBObject.parse("{reference:'" + checkNumber + "'}");
         System.out.println("query = " + query);
         FindIterable<Document> ledgerDocs = ledger_1Coll.find(query);
@@ -3356,15 +3322,15 @@ public class ERAAutomation_Defs {
                 }
             }
 //            Assert.assertFalse("There is a record with unexpectedCategory", categoryFound);
-            logUtils.assertFalse(categoryFound, "There is a record with unexpectedCategory");
+            LogUtils.assertFalse(categoryFound, "There is a record with unexpectedCategory");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("Error : " + Arrays.toString(e.getStackTrace()));
         }
     }
 
-    @Then("verify retrace approval status as {string}")
-    public void verifyRetraceApprovalStatusAs(String expectedApprovalStatus) throws Exception {
+    @Then("verify ret approval status as {string}")
+    public void verifyretApprovalStatusAs(String expectedApprovalStatus) throws Exception {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
         BasicDBObject eraQuery = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -3382,19 +3348,19 @@ public class ERAAutomation_Defs {
             e.printStackTrace();
             // Log the exception with method name and line number
             StackTraceElement[] stackTrace = e.getStackTrace();
-            logUtils.logError(stackTrace, e);
+            LogUtils.logError(stackTrace, e);
         } finally {
             mongoClient.close();
         }
-        logUtils.assertEquals("auto_post approval status does not match", expectedApprovalStatus, autoPost_Approval);
+        LogUtils.assertEquals("auto_post approval status does not match", expectedApprovalStatus, autoPost_Approval);
 
     }
 
-    @Then("verify retrace approval status as {string} for {string}")
-    public void verifyRetraceApprovalStatusAsFor(String expectedApprovalStatus, String testCaseName) throws Exception {
+    @Then("verify ret approval status as {string} for {string}")
+    public void verifyretApprovalStatusAsFor(String expectedApprovalStatus, String testCaseName) throws Exception {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject eraQuery = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(eraQuery).first();
 
@@ -3403,12 +3369,12 @@ public class ERAAutomation_Defs {
             String autoPost_Approval = eraSplitFileJson.get("auto_post.approval");
             System.out.println("autoPost_Approval = " + autoPost_Approval);
 //            Assert.assertEquals("auto_post approval status does not match",expectedApprovalStatus,autoPost_Approval );
-            logUtils.assertEquals("auto_post approval status does not match", expectedApprovalStatus, autoPost_Approval);
+            LogUtils.assertEquals("auto_post approval status does not match", expectedApprovalStatus, autoPost_Approval);
         } catch (Exception e) {
             e.printStackTrace();
             // Log the exception with method name and line number
             StackTraceElement[] stackTrace = e.getStackTrace();
-            logUtils.logError(stackTrace, e);
+            LogUtils.logError(stackTrace, e);
         } finally {
             mongoClient.close();
         }
@@ -3439,7 +3405,7 @@ public class ERAAutomation_Defs {
     public void verifyProviderApprovalStatusAsFor(String expectedApprovalStatus, String testCaseName) {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
 
@@ -3479,7 +3445,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferring check= " + actualStatus);
 //            Assert.assertTrue("Status is neither 'transferring' nor 'transferred'",transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus));
 
-            logUtils.assertTrue(transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus),
+            LogUtils.assertTrue(transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus),
                     "Status is neither 'transferring' nor 'transferred'");
 
             eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
@@ -3525,7 +3491,7 @@ public class ERAAutomation_Defs {
             }
         } catch (Exception e) {
             StackTraceElement[] stackTrace = e.getStackTrace();
-            logUtils.logError(stackTrace, e);
+            LogUtils.logError(stackTrace, e);
             e.printStackTrace();
         } finally {
             mongoClient.close();
@@ -3537,7 +3503,7 @@ public class ERAAutomation_Defs {
     public void verifyEra_split_file_assignedCollectionStatusAndFor(String transferringExpectedStatus, String transferredExpectedStatus, String receivedExpectedStatus, String testCaseName) throws Exception {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         Document eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
         try {
@@ -3557,7 +3523,7 @@ public class ERAAutomation_Defs {
             System.out.println("actualStatus before transferring check= " + actualStatus);
 //            Assert.assertTrue("Status is neither 'transferring' nor 'transferred'",transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus));
 
-            logUtils.assertTrue(transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus),
+            LogUtils.assertTrue(transferringExpectedStatus.equals(actualStatus) || transferredExpectedStatus.equals(actualStatus),
                     "Status is neither 'transferring' nor 'transferred'");
 
             eraSplitFileDoc = eraSplitFileAssignedColl.find(query).first();
@@ -3604,7 +3570,7 @@ public class ERAAutomation_Defs {
         } catch (Exception e) {
             StackTraceElement[] stackTrace = e.getStackTrace();
             e.printStackTrace();
-            logUtils.logError(stackTrace, e);
+            LogUtils.logError(stackTrace, e);
         } finally {
             mongoClient.close();
         }
@@ -3615,11 +3581,11 @@ public class ERAAutomation_Defs {
     public void verify_writeback_from_mongo_db_and_my_sql() {
 //        checkNumber = "J3ruUNXGPu5x";
         SyncUtils.waitForMongoOdWriteback1Sync(partner, practiceId);
-        System.out.println(textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED + "***************  Verify Writeback Step Started  ***************" + textColorUtils.ANSI_RESET);
+        System.out.println(TextColorUtils.ANSI_YELLOW_BACKGROUND + TextColorUtils.ANSI_RED + "***************  Verify Writeback Step Started  ***************" + TextColorUtils.ANSI_RESET);
         BrowserUtils.waitFor(5);
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
-        sqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "retrace123");
+        SqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "xxxx123");
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
         MongoCollection<Document> opendentalWritebackArchive1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "opendental_writeback_archive_1");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -3634,32 +3600,32 @@ public class ERAAutomation_Defs {
         System.out.println("writeBackMethod = " + writeBackMethod);
         System.out.println("eraSplitFileAssignedId = " + eraSplitFileAssignedId);
 
-        List<String> retraceIdList = new ArrayList<>();
+        List<String> retIdList = new ArrayList<>();
         List<Map<String, Object>> writebackListEraSplitFileAssigned = eraSplitFileJson.getList("writeback_records");
         if (writeBackMethod.equals("auto_post")) {
             for (Map<String, Object> recordMap : writebackListEraSplitFileAssigned) {
                 System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //                System.out.println("recordMap = " + recordMap);
-                String getClass = recordMap.get("retrace_id").getClass().getSimpleName();
+                String getClass = recordMap.get("ret_id").getClass().getSimpleName();
 //                System.out.println("getClass = " + getClass);
-                JsonPath mapWritebackEraSplitFileJson = convertUtils.mapToJsonpath(recordMap);
+                JsonPath mapWritebackEraSplitFileJson = ConvertUtils.mapToJsonpath(recordMap);
 //                mapWritebackEraSplitFileJson.prettyPrint();
                 boolean blocked = mapWritebackEraSplitFileJson.getBoolean("blocked");
 
-                String retraceId = "";
+                String retId = "";
                 if (getClass.equals("String")) {
-                    retraceId = mapWritebackEraSplitFileJson.getString("retrace_id");
+                    retId = mapWritebackEraSplitFileJson.getString("ret_id");
                 } else {
-                    Map<String, Object> retraceIdMap = mapWritebackEraSplitFileJson.get("retrace_id");
-                    retraceId = (String) retraceIdMap.get("$oid");
+                    Map<String, Object> retIdMap = mapWritebackEraSplitFileJson.get("ret_id");
+                    retId = (String) retIdMap.get("$oid");
                 }
-                retraceIdList.add(retraceId);
-                System.out.println("retraceId = " + retraceId);
+                retIdList.add(retId);
+                System.out.println("retId = " + retId);
 
 //                System.out.println("---------------------------------------------------------");
 
                 ////////////////verify from opendental_writeback_archive_1 collection//////////////////
-                BasicDBObject queryWriteback = BasicDBObject.parse("{retrace_id:'" + retraceId + "'}");
+                BasicDBObject queryWriteback = BasicDBObject.parse("{ret_id:'" + retId + "'}");
 //                System.out.println("queryWriteback = " + queryWriteback);
 
                 Document writebackRecord = opendentalWritebackArchive1Coll.find(queryWriteback).first();
@@ -3684,8 +3650,8 @@ public class ERAAutomation_Defs {
 //                            Assert.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
 //                            Assert.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!","write_back_835_archive",writeBackAction);
 
-                        logUtils.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
-                        logUtils.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!", "write_back_835_archive", writeBackAction);
+                        LogUtils.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
+                        LogUtils.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!", "write_back_835_archive", writeBackAction);
 
                         String accessKey = ConfigurationReader.get("accessKeyStaging");
                         String secretKey = ConfigurationReader.get("secretKeyStaging");
@@ -3720,7 +3686,7 @@ public class ERAAutomation_Defs {
                                 "WHERE TABLE_NAME = '" + tableName + "'\n" +
                                 "  AND CONSTRAINT_NAME = 'PRIMARY'\n" +
                                 "  AND TABLE_SCHEMA = '" + mysqlDbName + "';";
-                        String primaryKey = (String) sqlUtils.getCellValue(priKeyQuery);
+                        String primaryKey = (String) SqlUtils.getCellValue(priKeyQuery);
                         System.out.println("primaryKey = " + primaryKey);
 
                         Object primaryValue = dataMapMongo.get(primaryKey);
@@ -3728,7 +3694,7 @@ public class ERAAutomation_Defs {
 
                         String mySqlQuery = "select * from " + tableName + " where " + primaryKey + " = " + primaryValue + ";";
                         System.out.println("mySqlQuery = " + mySqlQuery);
-                        Map<String, Object> dataMapMySQL = sqlUtils.getRowMap(mySqlQuery);
+                        Map<String, Object> dataMapMySQL = SqlUtils.getRowMap(mySqlQuery);
                         System.out.println("dataMapMySQL = " + dataMapMySQL);
                         Set<String> keySetList = dataMapMongo.keySet();
                         String getClassMySQL = "";
@@ -3796,17 +3762,17 @@ public class ERAAutomation_Defs {
                                 boolean isEqual = mongoDate.equals(mysqlDate);
 
                                 System.out.println("Are the dates equal? " + isEqual);
-                                logUtils.assertTrue(isEqual, "Dates are not matched");
+                                LogUtils.assertTrue(isEqual, "Dates are not matched");
                             } else if (getClassMySQL.equals("Double")) {
                                 double valueMongoDouble = Double.parseDouble(valueMongo.toString());
 //                            System.out.println("valueMongoDouble = " + valueMongoDouble);
-                                logUtils.assertEquals("Records for ***" + key + "*** NOT matched", valueMongoDouble, valueMySQL);
+                                LogUtils.assertEquals("Records for ***" + key + "*** NOT matched", valueMongoDouble, valueMySQL);
                             } else if (getClassMySQL.equals("String") && key.equals("Remarks") && valueMongo.toString().length()>255) {
                                 String valueMongoStringShort = valueMongo.toString().substring(0,255);
 //                            System.out.println("valueMongoStringShort = " + valueMongoStringShort);
-                                logUtils.assertEquals("Records for ***" + key + "*** NOT matched", valueMongoStringShort, valueMySQL);
+                                LogUtils.assertEquals("Records for ***" + key + "*** NOT matched", valueMongoStringShort, valueMySQL);
                             } else {
-                                logUtils.assertEquals("Records for ***" + key + "*** NOT matched", dataMapMongo.get(key).toString(), dataMapMySQL.get(key).toString());
+                                LogUtils.assertEquals("Records for ***" + key + "*** NOT matched", dataMapMongo.get(key).toString(), dataMapMySQL.get(key).toString());
                             }
 
                         }
@@ -3821,12 +3787,12 @@ public class ERAAutomation_Defs {
 
                     for (String key : keys) {
 //                        System.out.println("key = " + key);
-                        logUtils.assertEquals("Records for ***" + key + "*** NOT matched", mapWritebackEraSplitFileJson.getString(key), mapOdWritebackArchive.getString(key));
+                        LogUtils.assertEquals("Records for ***" + key + "*** NOT matched", mapWritebackEraSplitFileJson.getString(key), mapOdWritebackArchive.getString(key));
                     }
 
-                    logUtils.assertEquals("Records for *** Transaction id *** NOT matched", eraSplitFileJson.getString("writeback_transaction_id"), mapOdWritebackArchive.getString("transaction_id"));
+                    LogUtils.assertEquals("Records for *** Transaction id *** NOT matched", eraSplitFileJson.getString("writeback_transaction_id"), mapOdWritebackArchive.getString("transaction_id"));
 
-                    logUtils.assertEquals("Writeback NOT successful!!!", "success", mapOdWritebackArchive.getString("execution_status"));
+                    LogUtils.assertEquals("Writeback NOT successful!!!", "success", mapOdWritebackArchive.getString("execution_status"));
                 }
             }
         } else if (writeBackMethod.equals("file")) {
@@ -3852,7 +3818,7 @@ public class ERAAutomation_Defs {
             Map<String, Object> dataMapMongo = opendentalWritebackArchive1Json.getMap("data");
             System.out.println("dataMapMongo = " + dataMapMongo);
 
-            logUtils.assertEquals("era_split_file_assigned_id NOT matched",
+            LogUtils.assertEquals("era_split_file_assigned_id NOT matched",
                     eraSplitFileJson.getString("era_split_file_assigned_id"),
                     dataMapMongo.get("era_file_id"));
 
@@ -3876,7 +3842,7 @@ public class ERAAutomation_Defs {
             System.out.println("file835Content from opendental era file = " + file835ContentFromOD);
             System.out.println("file835Content from mongodb    era file = " + file835ContentFromMongo);
 
-            logUtils.assertEquals("835 file content NOT matched! ", file835ContentFromMongo, file835ContentFromOD);
+            LogUtils.assertEquals("835 file content NOT matched! ", file835ContentFromMongo, file835ContentFromOD);
 
 
         } else System.out.println("Writeback Method Not Populated!!!!");
@@ -3890,12 +3856,12 @@ public class ERAAutomation_Defs {
     public void verifyWritebackFromMongoDBAndMySQLFor(String testCaseName) {
 //        checkNumber = "J3ruUNXGPu5x";
         SyncUtils.waitForMongoOdWriteback1Sync(partner, practiceId);
-        System.out.println(textColorUtils.ANSI_YELLOW_BACKGROUND + textColorUtils.ANSI_RED + "***************  Verify Writeback Step Started  ***************" + textColorUtils.ANSI_RESET);
+        System.out.println(TextColorUtils.ANSI_YELLOW_BACKGROUND + TextColorUtils.ANSI_RED + "***************  Verify Writeback Step Started  ***************" + TextColorUtils.ANSI_RESET);
         BrowserUtils.waitFor(5);
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         try (MongoClient mongoClient = MongoDBUtils.getMongoClient()) {
-            sqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "retrace123");
+            SqlUtils.createConnection(mysqlIp, mysqlDbName, "root", "ret123");
             MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
             MongoCollection<Document> opendentalWritebackArchive1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "opendental_writeback_archive_1");
             BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -3910,32 +3876,32 @@ public class ERAAutomation_Defs {
             System.out.println("writeBackMethod = " + writeBackMethod);
             System.out.println("eraSplitFileAssignedId = " + eraSplitFileAssignedId);
 
-            List<String> retraceIdList = new ArrayList<>();
+            List<String> retIdList = new ArrayList<>();
             List<Map<String, Object>> writebackListEraSplitFileAssigned = eraSplitFileJson.getList("writeback_records");
             if (writeBackMethod.equals("auto_post")) {
                 for (Map<String, Object> recordMap : writebackListEraSplitFileAssigned) {
                     System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //                System.out.println("recordMap = " + recordMap);
-                    String getClass = recordMap.get("retrace_id").getClass().getSimpleName();
+                    String getClass = recordMap.get("ret_id").getClass().getSimpleName();
 //                System.out.println("getClass = " + getClass);
-                    JsonPath mapWritebackEraSplitFileJson = convertUtils.mapToJsonpath(recordMap);
+                    JsonPath mapWritebackEraSplitFileJson = ConvertUtils.mapToJsonpath(recordMap);
 //                mapWritebackEraSplitFileJson.prettyPrint();
                     boolean blocked = mapWritebackEraSplitFileJson.getBoolean("blocked");
 
-                    String retraceId = "";
+                    String retId = "";
                     if (getClass.equals("String")) {
-                        retraceId = mapWritebackEraSplitFileJson.getString("retrace_id");
+                        retId = mapWritebackEraSplitFileJson.getString("ret_id");
                     } else {
-                        Map<String, Object> retraceIdMap = mapWritebackEraSplitFileJson.get("retrace_id");
-                        retraceId = (String) retraceIdMap.get("$oid");
+                        Map<String, Object> retIdMap = mapWritebackEraSplitFileJson.get("ret_id");
+                        retId = (String) retIdMap.get("$oid");
                     }
-                    retraceIdList.add(retraceId);
-                    System.out.println("retraceId = " + retraceId);
+                    retIdList.add(retId);
+                    System.out.println("retId = " + retId);
 
 //                System.out.println("---------------------------------------------------------");
 
                     ////////////////verify from opendental_writeback_archive_1 collection//////////////////
-                    BasicDBObject queryWriteback = BasicDBObject.parse("{retrace_id:'" + retraceId + "'}");
+                    BasicDBObject queryWriteback = BasicDBObject.parse("{ret_id:'" + retId + "'}");
 //                System.out.println("queryWriteback = " + queryWriteback);
 
                     Document writebackRecord = opendentalWritebackArchive1Coll.find(queryWriteback).first();
@@ -3960,8 +3926,8 @@ public class ERAAutomation_Defs {
 //                            Assert.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
 //                            Assert.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!","write_back_835_archive",writeBackAction);
 
-                            logUtils.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
-                            logUtils.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!", "write_back_835_archive", writeBackAction);
+                            LogUtils.assertEquals("era_split_file_assigned_id NOT matched", eraSplitFileAssignedId, dataMapMongo.get("era_file_id"));
+                            LogUtils.assertEquals("Writeback Action Has to be 'write_back_835_archive' but NOT!!", "write_back_835_archive", writeBackAction);
 
                             String accessKey = ConfigurationReader.get("accessKeyStaging");
                             String secretKey = ConfigurationReader.get("secretKeyStaging");
@@ -3996,14 +3962,14 @@ public class ERAAutomation_Defs {
                                     "WHERE TABLE_NAME = '" + tableName + "'\n" +
                                     "  AND CONSTRAINT_NAME = 'PRIMARY'\n" +
                                     "  AND TABLE_SCHEMA = '" + mysqlDbName + "';";
-                            String primaryKey = (String) sqlUtils.getCellValue(priKeyQuery);
+                            String primaryKey = (String) SqlUtils.getCellValue(priKeyQuery);
                             System.out.println("primaryKey = " + primaryKey);
 
                             Object primaryValue = dataMapMongo.get(primaryKey);
                             System.out.println("primaryValue = " + primaryValue);
 
                             String mySqlQuery = "select * from " + tableName + " where " + primaryKey + " = " + primaryValue + ";";
-                            Map<String, Object> dataMapMySQL = sqlUtils.getRowMap(mySqlQuery);
+                            Map<String, Object> dataMapMySQL = SqlUtils.getRowMap(mySqlQuery);
                             System.out.println("dataMapMySQL = " + dataMapMySQL);
                             Set<String> keySetList = dataMapMongo.keySet();
                             String getClassMySQL = "";
@@ -4278,7 +4244,7 @@ public class ERAAutomation_Defs {
 
         SyncUtils.waitForWritebackSync(partner, practiceId);
         BrowserUtils.waitFor(2);
-        SyncUtils.waitForSyncOdToRetrace(mysqlIp, partner, practiceId, mysqlDbName);
+        SyncUtils.waitForSyncOdToMongo(mysqlIp, partner, practiceId, mysqlDbName);
         BrowserUtils.waitFor(2);
         int expectedTableCount = writebackTablesList.size();
 //            System.out.println("writebackTablesList.size() = " + expectedTableCount);
@@ -4350,8 +4316,8 @@ public class ERAAutomation_Defs {
                 differences.addAll(tempSet2);
                 System.out.println("differences = " + differences);
             }
-            logUtils.assertTrue(isEqual, differences + " table/s NOT matched ");
-            logUtils.assertEquals("Table content NOT matched! ", expectedTableCount, tableCount);
+            LogUtils.assertTrue(isEqual, differences + " table/s NOT matched ");
+            LogUtils.assertEquals("Table content NOT matched! ", expectedTableCount, tableCount);
 
         }
     }
@@ -4362,7 +4328,7 @@ public class ERAAutomation_Defs {
 
         SyncUtils.waitForWritebackSync(partner, practiceId);
         BrowserUtils.waitFor(2);
-        SyncUtils.waitForSyncOdToRetrace(mysqlIp, partner, practiceId, mysqlDbName);
+        SyncUtils.waitForSyncOdToMongo(mysqlIp, partner, practiceId, mysqlDbName);
         BrowserUtils.waitFor(2);
         int expectedTableCount = writebackTablesList.size();
 //            System.out.println("writebackTablesList.size() = " + expectedTableCount);
@@ -4370,7 +4336,7 @@ public class ERAAutomation_Defs {
 //        BrowserUtils.waitFor(1);
         try (MongoClient mongoClient = MongoDBUtils.getMongoClient()) {
 
-            String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+            String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
             MongoCollection<Document> opendentalWritebackArchive1Coll = MongoDBUtils.connectMongodb(mongoClient, partner, "opendental_writeback_archive_1");
             MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
             BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -4464,26 +4430,26 @@ public class ERAAutomation_Defs {
         writebackListEraSplitFileAssigned = eraSplitFileJson.getList("writeback_records");
         for (Map<String, Object> recordMap : writebackListEraSplitFileAssigned) {
 //            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            String getClass = recordMap.get("retrace_id").getClass().getSimpleName();
-            JsonPath mapWritebackEraSplitFileJson = convertUtils.mapToJsonpath(recordMap);
-            String retraceId = "";
+            String getClass = recordMap.get("ret_id").getClass().getSimpleName();
+            JsonPath mapWritebackEraSplitFileJson = ConvertUtils.mapToJsonpath(recordMap);
+            String retId = "";
             if (getClass.equals("String")) {
-                retraceId = mapWritebackEraSplitFileJson.getString("retrace_id");
+                retId = mapWritebackEraSplitFileJson.getString("ret_id");
             } else {
-                Map<String, Object> retraceIdMap = mapWritebackEraSplitFileJson.get("retrace_id");
-                retraceId = (String) retraceIdMap.get("$oid");
+                Map<String, Object> retIdMap = mapWritebackEraSplitFileJson.get("ret_id");
+                retId = (String) retIdMap.get("$oid");
             }
             String tableName = (String) recordMap.get("table_name");
 
             if (tableName.equals("etrans835")) {
                 System.out.println("tableName = " + tableName);
-                BasicDBObject queryetrans835 = BasicDBObject.parse("{_id:ObjectId('" + retraceId + "')}");
+                BasicDBObject queryetrans835 = BasicDBObject.parse("{_id:ObjectId('" + retId + "')}");
                 Document etrans835Record = etrans835Coll.find(queryetrans835).first();
                 System.out.println("etrans835Record.toJson() = " + etrans835Record.toJson());
                 JsonPath jsonEtrans835Record = JsonPath.from(etrans835Record.toJson());
 //                jsonEtrans835Record.prettyPrint();
 
-                logUtils.assertEquals("etrans835 status does NOT match", expectedEtrans835Status, jsonEtrans835Record.getString("status"));
+                LogUtils.assertEquals("etrans835 status does NOT match", expectedEtrans835Status, jsonEtrans835Record.getString("status"));
 
             }
         }
@@ -4492,7 +4458,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify etrans835_1.status as {string} for {string}")
     public void verifyEtrans835_1StatusAs(String expectedEtrans835Status, String testCaseName) {
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
 
         try (MongoClient mongoClient = MongoDBUtils.getMongoClient()) {
             MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
@@ -4508,20 +4474,20 @@ public class ERAAutomation_Defs {
             writebackListEraSplitFileAssigned = eraSplitFileJson.getList("writeback_records");
             for (Map<String, Object> recordMap : writebackListEraSplitFileAssigned) {
                 System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                String getClass = recordMap.get("retrace_id").getClass().getSimpleName();
-                JsonPath mapWritebackEraSplitFileJson = convertUtils.mapToJsonpath(recordMap);
-                String retraceId = "";
+                String getClass = recordMap.get("ret_id").getClass().getSimpleName();
+                JsonPath mapWritebackEraSplitFileJson = ConvertUtils.mapToJsonpath(recordMap);
+                String retId = "";
                 if (getClass.equals("String")) {
-                    retraceId = mapWritebackEraSplitFileJson.getString("retrace_id");
+                    retId = mapWritebackEraSplitFileJson.getString("ret_id");
                 } else {
-                    Map<String, Object> retraceIdMap = mapWritebackEraSplitFileJson.get("retrace_id");
-                    retraceId = (String) retraceIdMap.get("$oid");
+                    Map<String, Object> retIdMap = mapWritebackEraSplitFileJson.get("ret_id");
+                    retId = (String) retIdMap.get("$oid");
                 }
                 String tableName = (String) recordMap.get("table_name");
                 System.out.println("tableName = " + tableName);
 
                 if (tableName.equals("etrans835")) {
-                    BasicDBObject queryetrans835 = BasicDBObject.parse("{_id:'ObjectId('" + retraceId + "')}");
+                    BasicDBObject queryetrans835 = BasicDBObject.parse("{_id:'ObjectId('" + retId + "')}");
                     Document etrans835Record = etrans835Coll.find(queryetrans835).first();
                     JsonPath jsonEtrans835Record = JsonPath.from(etrans835Record.toJson());
 
@@ -4711,28 +4677,28 @@ public class ERAAutomation_Defs {
         //        era_split_file_assigned assertions
         String eraEraSplitFileAssignedId = eraSplitFileDoc.getString("era_split_file_assigned_id");
         System.out.println("eraSplitFileAssignedId = " + eraEraSplitFileAssignedId);
-        logUtils.assertNotNull(eraEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in era_split_file_assigned Collection");
+        LogUtils.assertNotNull(eraEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in era_split_file_assigned Collection");
 //        Assert.assertNotNull(eraEraSplitFileAssignedId);
         ObjectId eraSplitFileAssignedledgerObjId = eraSplitFileDoc.getObjectId("ledger_objid");
-        logUtils.assertNotNull(eraSplitFileAssignedledgerObjId, "ledger_objid NOT found in era_split_file_assigned Collection");
+        LogUtils.assertNotNull(eraSplitFileAssignedledgerObjId, "ledger_objid NOT found in era_split_file_assigned Collection");
 //        Assert.assertNotNull(eraSplitFileAssignedLedgerId);
         boolean matching_bpr_835_820 = (boolean) eraSplitFileDoc.get("matching_bpr_835_820");
 //        Assert.assertTrue(matching_bpr_835_820);
-        logUtils.assertTrue(matching_bpr_835_820, "matching_bpr_835_820 NOT true in era_split_file_assigned Collection");
+        LogUtils.assertTrue(matching_bpr_835_820, "matching_bpr_835_820 NOT true in era_split_file_assigned Collection");
 
         //        ledger_1 assertions
 
         String ledgerEraSplitFileAssignedId = ledgerJson.getString("era_split_file_assigned_id");
         System.out.println("ledgerEraSplitFileAssignedId = " + ledgerEraSplitFileAssignedId);
-        logUtils.assertNotNull(ledgerEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in ledger_1 Collection");
+        LogUtils.assertNotNull(ledgerEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in ledger_1 Collection");
         ObjectId ledgerLedgerObjId = ledgerDoc.getObjectId("_id");
-        logUtils.assertNotNull(ledgerLedgerObjId, "ledger_id NOT found in ledger_1 Collection");
+        LogUtils.assertNotNull(ledgerLedgerObjId, "ledger_id NOT found in ledger_1 Collection");
         boolean tin_mismatch = ledgerJson.get("tin_mismatch");
-        logUtils.assertFalse(tin_mismatch, "tin_mismatch NOT false in ledger_1 Collection");
+        LogUtils.assertFalse(tin_mismatch, "tin_mismatch NOT false in ledger_1 Collection");
 
 
-        logUtils.assertEquals("era_split_file_assigned_id does not match", eraEraSplitFileAssignedId, ledgerEraSplitFileAssignedId);
-        logUtils.assertEquals("ledger_id does not match", eraSplitFileAssignedledgerObjId, ledgerLedgerObjId);
+        LogUtils.assertEquals("era_split_file_assigned_id does not match", eraEraSplitFileAssignedId, ledgerEraSplitFileAssignedId);
+        LogUtils.assertEquals("ledger_id does not match", eraSplitFileAssignedledgerObjId, ledgerLedgerObjId);
 
 
         String ledgerId = ledgerLedgerObjId.toHexString();;
@@ -4754,7 +4720,7 @@ public class ERAAutomation_Defs {
         MongoCollection<Document> ledgerColl = MongoDBUtils.connectMongodb(mongoClient, partner, "ledger_1");
         MongoCollection<Document> testColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, collectionName);
 
-        String checkNumber = eraCycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
+        String checkNumber = CycleUtils.getTestCase(testCaseName, collectionName, testCasesDB).getString("checkNumber");
         BasicDBObject eraQuery = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
         BasicDBObject ledgerQuery = BasicDBObject.parse("{reference:'" + checkNumber + "',category:'inspay'}");
         System.out.println("eraQuery = " + eraQuery);
@@ -4769,31 +4735,31 @@ public class ERAAutomation_Defs {
         //        era_split_file_assigned assertions
         String eraEraSplitFileAssignedId = eraSplitFileJson.getString("era_split_file_assigned_id");
         System.out.println("eraSplitFileAssignedId = " + eraEraSplitFileAssignedId);
-        logUtils.assertNotNull(eraEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in era_split_file_assigned Collection");
+        LogUtils.assertNotNull(eraEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in era_split_file_assigned Collection");
 //        Assert.assertNotNull(eraEraSplitFileAssignedId);
         String eraSplitFileAssignedLedgerId = eraSplitFileJson.getString("ledger_id");
-        logUtils.assertNotNull(eraSplitFileAssignedLedgerId, "ledger_id NOT found in era_split_file_assigned Collection");
+        LogUtils.assertNotNull(eraSplitFileAssignedLedgerId, "ledger_id NOT found in era_split_file_assigned Collection");
 //        Assert.assertNotNull(eraSplitFileAssignedLedgerId);
         boolean matching_bpr_835_820 = eraSplitFileJson.get("matching_bpr_835_820");
 //        Assert.assertTrue(matching_bpr_835_820);
-        logUtils.assertTrue(matching_bpr_835_820, "matching_bpr_835_820 NOT true in era_split_file_assigned Collection");
+        LogUtils.assertTrue(matching_bpr_835_820, "matching_bpr_835_820 NOT true in era_split_file_assigned Collection");
 
         //        ledger_1 assertions
 
         String ledgerEraSplitFileAssignedId = ledgerJson.getString("era_split_file_assigned_id");
         System.out.println("ledgerEraSplitFileAssignedId = " + ledgerEraSplitFileAssignedId);
-        logUtils.assertNotNull(ledgerEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in ledger_1 Collection");
+        LogUtils.assertNotNull(ledgerEraSplitFileAssignedId, "era_split_file_assigned_id NOT found in ledger_1 Collection");
 //        Assert.assertNotNull(ledgerEraSplitFileAssignedId);
         String ledgerLedgerId = ledgerJson.getString("ledger_id");
-        logUtils.assertNotNull(ledgerLedgerId, "ledger_id NOT found in ledger_1 Collection");
+        LogUtils.assertNotNull(ledgerLedgerId, "ledger_id NOT found in ledger_1 Collection");
 //        Assert.assertNotNull(ledgerLedgerId);
         boolean tin_mismatch = ledgerJson.get("tin_mismatch");
-        logUtils.assertFalse(tin_mismatch, "tin_mismatch NOT false in ledger_1 Collection");
+        LogUtils.assertFalse(tin_mismatch, "tin_mismatch NOT false in ledger_1 Collection");
 //        Assert.assertFalse(tin_mismatch);
 
 
-        logUtils.assertEquals("era_split_file_assigned_id does not match", eraEraSplitFileAssignedId, ledgerEraSplitFileAssignedId);
-        logUtils.assertEquals("ledger_id does not match", eraSplitFileAssignedLedgerId, ledgerLedgerId);
+        LogUtils.assertEquals("era_split_file_assigned_id does not match", eraEraSplitFileAssignedId, ledgerEraSplitFileAssignedId);
+        LogUtils.assertEquals("ledger_id does not match", eraSplitFileAssignedLedgerId, ledgerLedgerId);
 
 //        Assert.assertEquals("era_split_file_assigned_id does not match",eraEraSplitFileAssignedId,ledgerEraSplitFileAssignedId );
 //        Assert.assertEquals("ledger_id does not match",eraSplitFileAssignedLedgerId,ledgerLedgerId );
@@ -4812,12 +4778,12 @@ public class ERAAutomation_Defs {
 
     @Given("delete downloaded old 820 files")
     public void deleteDownloadedOld820Files() {
-        fileUtils.deleteFileEndsWith(".820", BrowserUtils.getDownloadPath());
+        FileUtils.deleteFileEndsWith(".820", BrowserUtils.getDownloadPath());
     }
 
     @Given("delete old 820 files from server")
     public void deleteOld820FilesFromServer() {
-        sshUtils.emptyDirectoryOnServer(serverIp, server820UploadPath);
+        SshUtils.emptyDirectoryOnServer(serverIp, server820UploadPath);
     }
 
     @Given("archive old test data database {string}")
@@ -5035,7 +5001,7 @@ public class ERAAutomation_Defs {
 //            if (!MongoDBUtils.getSingletonSettings()) {
                 System.out.println("----started- script run to auto-post qualify----");
                 MongoDBUtils.pushAndKeepSettings(partner, practiceId, logger, testCaseName, script, testCasesDB);
-                sshUtils.runScriptsLogToFile(script, ip, testCaseName + "_autoPostQualify", testCasesDB);
+                SshUtils.runScriptsLogToFile(script, ip, testCaseName + "_autoPostQualify", testCasesDB);
                 BrowserUtils.waitFor(0.5);
                 MongoDBUtils.setSingletonSettings(false, "notKept", "none", testCasesDB);
                 BrowserUtils.waitFor(1);
@@ -5112,7 +5078,7 @@ public class ERAAutomation_Defs {
     public void verifyERAIsEmbargoed() {
         BrowserUtils.waitFor(300);
 
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned(partner, checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned(partner, checkNumber);
         String status = eraSplitFileDoc.getString("status");
         System.out.println("assignedCollectionStatus = " + status);
         BrowserUtils.waitFor(5);
@@ -5211,18 +5177,18 @@ public class ERAAutomation_Defs {
         String testCaseNameForQuery = testCaseName.replace("_", " ");
         String filterStr = "{testCaseName:'" + testCaseNameForQuery + "'}";
 
-        String fileName820ToDelete = eraCycleUtils.getTestCase(testCaseNameForQuery, collectionName, testCasesDB).getString("fileName820");
-        String fileName835ToDelete = eraCycleUtils.getTestCase(testCaseNameForQuery, collectionName, testCasesDB).getString("fileName835");
+        String fileName820ToDelete = CycleUtils.getTestCase(testCaseNameForQuery, collectionName, testCasesDB).getString("fileName820");
+        String fileName835ToDelete = CycleUtils.getTestCase(testCaseNameForQuery, collectionName, testCasesDB).getString("fileName835");
 
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraTestColl = MongoDBUtils.connectMongodb(mongoClient, testCasesDB, collectionName);
 
         System.out.println("server820UploadPath = " + server820UploadPath);
         System.out.println(fileName820ToDelete + "\n" + fileName835ToDelete);
-        sshUtils.deleteFileFromServer(serverIp, fileName820ToDelete, server820UploadPath);
+        SshUtils.deleteFileFromServer(serverIp, fileName820ToDelete, server820UploadPath);
 //        sshUtils.deleteFileFromServer("10.200.15.53",fileName835ToDelete,"/synthetic-chi/era_outbound");
 
-        sshUtils.deleteFileFromSftp(fileName835ToDelete, "/synthetic-chi/era_outbound");
+        SshUtils.deleteFileFromSftp(fileName835ToDelete, "/synthetic-chi/era_outbound");
 //        sshUtils.sftpDownloadFile();
 
         String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" +
@@ -5236,7 +5202,7 @@ public class ERAAutomation_Defs {
                     System.out.println("file name = " + fileName);
                     if (fileName.endsWith(".820")) {
                         List<String> fileNameList = Arrays.asList(fileName);
-                        sshUtils.uploadFileToServerFromProjectPath(serverIp, fileNameList, server820UploadPath, filePath);
+                        SshUtils.uploadFileToServerFromProjectPath(serverIp, fileNameList, server820UploadPath, filePath);
                         String fileContent820 = readFile(filePath, fileName);
                         System.out.println("fileContent820 = " + fileContent820);
 
@@ -5251,7 +5217,7 @@ public class ERAAutomation_Defs {
 
                     } else if (fileName.endsWith(".835")) {
                         fileName835 = fileName;
-                        sshUtils.uploadFileToSftp(filePath, fileName, "/synthetic-chi/era_outbound");
+                        SshUtils.uploadFileToSftp(filePath, fileName, "/synthetic-chi/era_outbound");
 
                         String fileContent835 = readFile(filePath, fileName);
                         System.out.println("fileContent835 = " + fileContent835);
@@ -5409,8 +5375,8 @@ public class ERAAutomation_Defs {
         Assert.assertTrue("auto_post.approvalProvider field is not null", approvalProvider);
     }
 
-    @Then("verify ERA is not auto-approved by the retrace")
-    public void verifyERAIsNotAutoApprovedByTheRetrace() {
+    @Then("verify ERA is not auto-approved by the ret")
+    public void verifyERAIsNotAutoApprovedByTheret() {
         MongoClient mongoClient = MongoDBUtils.getMongoClient();
         MongoCollection<Document> eraSplitFileAssignedColl = MongoDBUtils.connectMongodb(mongoClient, partner, "era_split_file_assigned");
         BasicDBObject query = BasicDBObject.parse("{check_number:'" + checkNumber + "'}");
@@ -5633,11 +5599,11 @@ public class ERAAutomation_Defs {
 
     @When("delete record from sql db with claim as {string}")
     public void deleteRecordFromSqlDbWithClaimAs(String givenClaimNum) {
-        sqlUtils.createConnection(mysqlIp, mysqlDbName);
-        List<Map<String, Object>> mapQueryResult = sqlUtils.getQueryResultMap("SELECT ClaimNum, ClaimFee FROM claim WHERE ClaimNum = " + givenClaimNum + ";");
+        SqlUtils.createConnection(mysqlIp, mysqlDbName);
+        List<Map<String, Object>> mapQueryResult = SqlUtils.getQueryResultMap("SELECT ClaimNum, ClaimFee FROM claim WHERE ClaimNum = " + givenClaimNum + ";");
         Object claimNum = mapQueryResult.get(0).get("ClaimNum");
         System.out.println("claimNum before delete = " + claimNum.toString());
-        sqlUtils.queryExecuter("DELETE FROM claim WHERE ClaimNum = " + givenClaimNum + ";");
+        SqlUtils.queryExecuter("DELETE FROM claim WHERE ClaimNum = " + givenClaimNum + ";");
     }
 
     @Then("verify claim writeback error")
@@ -5663,7 +5629,7 @@ public class ERAAutomation_Defs {
         String actualClaimTableError = opendentalWritebackArchiveJson.get("error");
         String expectedClaimTableError = "claim could not update. claim does not exist on mysql";
 
-        logUtils.assertEquals("categories are not matched", actualClaimTableError, expectedClaimTableError);
+        LogUtils.assertEquals("categories are not matched", actualClaimTableError, expectedClaimTableError);
     }
 
     @Then("verify claim writeback error as {string}")
@@ -5699,11 +5665,11 @@ public class ERAAutomation_Defs {
 
     @When("delete record from mysql db with claimprocId as {string}")
     public void deleteRecordFromMysqlDbWithClaimprocIdAs(String claimProcNum) {
-        sqlUtils.createConnection(mysqlIp, mysqlDbName);
-        List<Map<String, Object>> mapQueryResult = sqlUtils.getQueryResultMap("SELECT * FROM claimproc WHERE ClaimProcNum = " + claimProcNum + ";");
+        SqlUtils.createConnection(mysqlIp, mysqlDbName);
+        List<Map<String, Object>> mapQueryResult = SqlUtils.getQueryResultMap("SELECT * FROM claimproc WHERE ClaimProcNum = " + claimProcNum + ";");
         Object claimprocNum = mapQueryResult.get(0).get("ClaimProcNum");
         System.out.println("ClaimProcNum before delete = " + claimprocNum.toString());
-        sqlUtils.queryExecuter("DELETE FROM claimproc WHERE ClaimProcNum = " + claimProcNum + ";");
+        SqlUtils.queryExecuter("DELETE FROM claimproc WHERE ClaimProcNum = " + claimProcNum + ";");
     }
 
     @Then("verify claimproc writeback error as {string}")
@@ -5761,7 +5727,7 @@ public class ERAAutomation_Defs {
     @Then("verify ledgers displayed on sweep page")
     public void verifyLedgersDisplayedOnSweepPage() {
 
-        JsonPath responseJson = apiUtils.getListOfSweep("qa-cls5");
+        JsonPath responseJson = ApiUtils.getListOfSweep("qa-cls5");
 
 // Get the list of JSON elements
         List<Map<String, Object>> items = responseJson.getList("$");
@@ -5793,7 +5759,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify {string} pre-ledger is displayed on sweep page")
     public void verifyPreLedgerIsDisplayedOnSweepPage(String expectedPreLedger) {
-        JsonPath responseJson = apiUtils.getListOfSweep(partner);
+        JsonPath responseJson = ApiUtils.getListOfSweep(partner);
 
 // Get the list of JSON elements
         List<Map<String, Object>> items = responseJson.getList("$");
@@ -5838,7 +5804,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify {string} pre-ledger is NOT displayed on sweep page")
     public void verifyPreLedgerIsNOTDisplayedOnSweepPage(String notExpectedPreLedger) {
-        JsonPath responseJson = apiUtils.getListOfSweep(partner);
+        JsonPath responseJson = ApiUtils.getListOfSweep(partner);
 //        responseJson.prettyPrint();
 
 // Get the list of JSON elements
@@ -6001,7 +5967,7 @@ public class ERAAutomation_Defs {
     public void getACH_OutListForPartnerAndDfi_account_id(String partner, String dfiAccountId) {
 //        BrowserUtils.waitFor(120);
         // Fetch the JSON response as a JsonPath object
-        listAchOut = apiUtils.GetFullListOfAch(partner, dfiAccountId);
+        listAchOut = ApiUtils.GetFullListOfAch(partner, dfiAccountId);
     }
 
     @Then("verify {string} has error")
@@ -6202,9 +6168,9 @@ public class ERAAutomation_Defs {
 
     @When("transfer ERA manually")
     public void transferERAManually() {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         String eraSplitFileAssignedId = eraSplitFileDoc.getString("era_split_file_assigned_id");
-        JsonPath jsonPath = apiUtils.manuallyTransferEra(eraSplitFileAssignedId, practiceId, practiceName, partner);
+        JsonPath jsonPath = ApiUtils.manuallyTransferEra(eraSplitFileAssignedId, practiceId, practiceName, partner);
         System.out.println("jsonPath = " + jsonPath);
     }
 
@@ -6233,17 +6199,17 @@ public class ERAAutomation_Defs {
         }
         mongoClient.close();
 
-        JsonPath jsonPath = apiUtils.enableNegativePatientResponsibility(partner, practiceId);
+        JsonPath jsonPath = ApiUtils.enableNegativePatientResponsibility(partner, practiceId);
     }
 
     @Then("verify svc835user_edit_log writeoff values previous writeoff {string} and new writeoff {string}")
     public void verifySvc835User_edit_logWriteoffValuesPreviousWriteoffAndNewWriteoff(String previousWriteoff, String newWriteoff) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         String contentHash = eraSplitFileDoc.getString("content_hash");
-        Document svc835AssignedDoc = eraCycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
+        Document svc835AssignedDoc = CycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
         String svcHash = svc835AssignedDoc.getString("svc_hash");
 
-        Document svc835UserEditLogDoc = eraCycleUtils.svc835UserEditLog(partner, svcHash);
+        Document svc835UserEditLogDoc = CycleUtils.svc835UserEditLog(partner, svcHash);
 
         double previousWriteoffValue = 0; // Default for previous write_off
         double newWriteoffValue = 0;      // Default for new write_off
@@ -6305,10 +6271,10 @@ public class ERAAutomation_Defs {
 
     @Then("verify svc835Assigned writeoff value Before_AdjustingWithPr {string} After_AdjustingWithPr {string}")
     public void verifySvc835AssignedWriteoffValueBefore_AdjustingWithPrAfter_AdjustingWithPr(String before, String after) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         String eraSplitFileAssignedId = eraSplitFileDoc.getString("era_split_file_assigned_id");
         String contentHash = eraSplitFileDoc.getString("content_hash");
-        Document svc835AssignedDoc = eraCycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
+        Document svc835AssignedDoc = CycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
 
         if (svc835AssignedDoc != null) {
             Document svc835Assigned = svc835AssignedDoc.get("write_off_computation", Document.class);
@@ -6332,7 +6298,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify era_Split_File_Assigned writeback claimproctable writeoff value {string}")
     public void verifyEra_Split_File_AssignedWritebackClaimproctableWriteoffValue(String expectedWriteoff) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         List<Document> writebackRecords = (List<Document>) eraSplitFileDoc.get("writeback_records");
 
         if (writebackRecords != null) {
@@ -6354,27 +6320,27 @@ public class ERAAutomation_Defs {
 
     @When("edit claim {string} -- PreWriteOff = {string}, Set Write-off = {string}")
     public void editClaimPreWriteOffSetWriteOff(String claimIdentifier, String preWriteoff, String writeoffValue) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         String eraSplitFileAssignedId = eraSplitFileDoc.getString("era_split_file_assigned_id");
         String contentHash = eraSplitFileDoc.getString("content_hash");
-        Document svc835AssignedDoc = eraCycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
+        Document svc835AssignedDoc = CycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
         String svcHash = svc835AssignedDoc.getString("svc_hash");
 
         double pre_writeoff = Double.parseDouble(preWriteoff);
         double edit_writeoff = Double.parseDouble(writeoffValue);
 
-        apiUtils.postWriteOffEdit(eraSplitFileAssignedId, partner, svcHash, claimIdentifier, pre_writeoff, edit_writeoff);
+        ApiUtils.postWriteOffEdit(eraSplitFileAssignedId, partner, svcHash, claimIdentifier, pre_writeoff, edit_writeoff);
     }
 
 
-    @And("retrace sweep without ERA")
-    public void retraceSweepWithoutERA() {
+    @And("ret sweep without ERA")
+    public void retSweepWithoutERA() {
         int responseStatusCode = 0;
 
         for (int i = 0; i < 5; i++) {
             if (responseStatusCode != 200) {
 //                String dfiAccount = "54f0a5e3-754e-4661-8f68-f81d5ff92e99";
-                Response sweepResponse = apiUtils.getSweepResponse(partner, dfiAccountId);
+                Response sweepResponse = ApiUtils.getSweepResponse(partner, dfiAccountId);
                 responseStatusCode = sweepResponse.statusCode();
                 System.out.println("sweep responseStatusCode.toString() = " + responseStatusCode);
             } else {
@@ -6388,16 +6354,16 @@ public class ERAAutomation_Defs {
 
     @When("edit claim {string} -- PreAdjustment = {string},  PostAdjustment = {string}")
     public void editClaimPreAdjustmentPostAdjustment(String claimIdentifier, String preAdj, String postAdj) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
         String eraSplitFileAssignedId = eraSplitFileDoc.getString("era_split_file_assigned_id");
         String contentHash = eraSplitFileDoc.getString("content_hash");
-        Document svc835AssignedDoc = eraCycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
+        Document svc835AssignedDoc = CycleUtils.getSvc835Assigned(partner, contentHash, claimIdentifier);
         String svcHash = svc835AssignedDoc.getString("svc_hash");
 
         double preAdjustment = Double.parseDouble(preAdj);
         double postAdjustment = Double.parseDouble(postAdj);
 
-        apiUtils.matchPayerPRAdjustment(eraSplitFileAssignedId, partner, svcHash, claimIdentifier, preAdjustment, postAdjustment);
+        ApiUtils.matchPayerPRAdjustment(eraSplitFileAssignedId, partner, svcHash, claimIdentifier, preAdjustment, postAdjustment);
     }
 
     @Then("verify opendental_writeback_archive_1 adjustment table AdjAmt is {string}")
@@ -6409,11 +6375,11 @@ public class ERAAutomation_Defs {
 
             for (int i = 0; i < 50; i++) {
                 // Fetch the document
-                Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+                Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
                 String transactionId = eraSplitFileDoc.getString("writeback_transaction_id");
 
                 // Fetch the adjustment table document
-                Document adjustmentTable = eraCycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
+                Document adjustmentTable = CycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
 
                 if (adjustmentTable != null) {
                     Document data = adjustmentTable.get("data", Document.class);
@@ -6448,8 +6414,8 @@ public class ERAAutomation_Defs {
 
     @Then("verify eraSplitFileAssigned writeback records adjustment table is created and AdjAmt is {string}")
     public void verifyEraSplitFileAssignedWritebackRecordsAdjustmentTableIsCreatedAndAdjAmtIs(String expectedAdjAmt) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
-        String adjAmt = eraCycleUtils.getEraSplitFileAssignedAdjustmentTableData(eraSplitFileDoc).getString("AdjAmt");
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        String adjAmt = CycleUtils.getEraSplitFileAssignedAdjustmentTableData(eraSplitFileDoc).getString("AdjAmt");
         Assert.assertNotNull("AdjAmt field is missing in the adjustment record.", adjAmt);
         Assert.assertEquals("AdjAmt value does not match the expected value.", expectedAdjAmt, adjAmt);
         System.out.println("AdjAmt matched successfully: " + adjAmt);
@@ -6458,13 +6424,13 @@ public class ERAAutomation_Defs {
     @Then("verify adjustment_1 has adjustment record with Id {string}, adjAmt {string}, adjType {string}")
     public void verifyAdjustment_1HasAdjustmentRecordWithIdAdjAmtAdjType(String adjId, String adjAmt, String adjType) {
         BrowserUtils.waitFor(5);
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned(partner, checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned(partner, checkNumber);
         String transactionId = eraSplitFileDoc.getString("writeback_transaction_id");
         System.out.println("transactionId = " + transactionId);
-        Document adjustmentTable = eraCycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
+        Document adjustmentTable = CycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
         String recordId = adjustmentTable.get("record_id").toString();
         System.out.println("recordId = " + recordId);
-        Document adjustment_1Doc = eraCycleUtils.getAdjustment1("qa-cls5", practiceId, recordId);
+        Document adjustment_1Doc = CycleUtils.getAdjustment1("qa-cls5", practiceId, recordId);
 
         String actualAdjId = adjustment_1Doc.getString("adjustment_id");
         System.out.println("actualAdjId = " + actualAdjId);
@@ -6478,7 +6444,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify claim level rejection reason as {string}")
     public void verifyClaimLevelRejectionReasonAs(String expectedErrorMessage) {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned(partner, checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned(partner, checkNumber);
         List<String> rejectionReasons = eraSplitFileDoc.getList("claim_level_rejection_reasons", String.class);
         System.out.println("Claim Level Rejection Reasons: " + rejectionReasons);
         Assert.assertTrue(rejectionReasons.get(0).contains(expectedErrorMessage));
@@ -6521,7 +6487,7 @@ public class ERAAutomation_Defs {
     public void verifyERAIsEmbargoedOrNotEmbargoed() {
         BrowserUtils.waitFor(200);
 
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned(partner, checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned(partner, checkNumber);
         String status = eraSplitFileDoc.getString("status");
         System.out.println("assignedCollectionStatus = " + status);
         BrowserUtils.waitFor(5);
@@ -6544,18 +6510,18 @@ public class ERAAutomation_Defs {
 
             for (int i = 0; i < 50; i++) {
                 // Fetch the ERA Split File document
-                Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned(partner, checkNumber);
+                Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned(partner, checkNumber);
                 String transactionId = eraSplitFileDoc.getString("writeback_transaction_id");
                 System.out.println("transactionId = " + transactionId);
 
                 // Fetch the adjustment table document
-                Document adjustmentTable = eraCycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
+                Document adjustmentTable = CycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
                 if (adjustmentTable != null) {
                     String recordId = adjustmentTable.get("record_id").toString();
                     System.out.println("recordId = " + recordId);
 
                     // Fetch the adjustment_1 document
-                    Document adjustment_1Doc = eraCycleUtils.getAdjustment1("qa-cls5", practiceId, recordId);
+                    Document adjustment_1Doc = CycleUtils.getAdjustment1("qa-cls5", practiceId, recordId);
 
                     if (adjustment_1Doc != null) {
                         actualAdjId = adjustment_1Doc.getString("adjustment_id");
@@ -6590,7 +6556,7 @@ public class ERAAutomation_Defs {
     public void verifyEraSplitFileAssignedWritebackRecordsAdjustmentTableIsCreated() {
         try {
             // Fetch the ERA Split File document
-            Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+            Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
 
             if (eraSplitFileDoc != null) {
                 // Fetch the writeback_records array
@@ -6630,7 +6596,7 @@ public class ERAAutomation_Defs {
     public void verifyOpendental_writeback_archive_1AdjustmentTableIsCreated() {
         try {
             // Fetch the ERA Split File document
-            Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+            Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
 
             if (eraSplitFileDoc != null) {
                 // Get the transaction ID from the document
@@ -6640,7 +6606,7 @@ public class ERAAutomation_Defs {
                 // Wait loop to give time for the adjustment table to be created
                 Document adjustmentTable = null;
                 for (int attempt = 0; attempt < 300; attempt++) {
-                    adjustmentTable = eraCycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
+                    adjustmentTable = CycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
                     if (adjustmentTable != null) {
                         break;
                     } else {
@@ -6670,7 +6636,7 @@ public class ERAAutomation_Defs {
     public void verifyEraSplitFileAssignedWritebackRecordsAdjustmentTableIsNotCreated() {
         try {
             // Fetch the ERA Split File document
-            Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+            Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
 
             if (eraSplitFileDoc != null) {
                 // Fetch the writeback_records array
@@ -6709,7 +6675,7 @@ public class ERAAutomation_Defs {
     public void verifyOpendental_writeback_archive_1AdjustmentTableIsNotCreated() {
         try {
             // Fetch the ERA Split File document
-            Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+            Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
 
             if (eraSplitFileDoc != null) {
                 // Get the transaction ID from the document
@@ -6717,7 +6683,7 @@ public class ERAAutomation_Defs {
                 System.out.println("Transaction ID: " + transactionId);
 
                 // Retrieve the adjustment table from the opendental_writeback_archive_1 collection
-                Document adjustmentTable = eraCycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
+                Document adjustmentTable = CycleUtils.getOpendentalWritebackArchive_1Table("qa-cls5", transactionId, "adjustment");
 
                 // Check if the adjustment table is absent
                 if (adjustmentTable == null) {
@@ -6738,7 +6704,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify plb_adjustment_835_assigned record is created")
     public void verifyPlb_adjustment_835_assignedRecordIsCreated() {
-        Document eraSplitFileDoc = eraCycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
+        Document eraSplitFileDoc = CycleUtils.getEraSplitFileAssigned("qa-cls5", checkNumber);
 
         if (eraSplitFileDoc != null) {
             // Get the content_hash from the document
@@ -6746,7 +6712,7 @@ public class ERAAutomation_Defs {
             System.out.println("stHash: " + stHash);
 
             // Retrieve the adjustment table from the opendental_writeback_archive_1 collection
-            Document getPlbAdjustment835Assigned = eraCycleUtils.getPlbAdjustment835Assigned("qa-cls5", stHash);
+            Document getPlbAdjustment835Assigned = CycleUtils.getPlbAdjustment835Assigned("qa-cls5", stHash);
 
             // Check if the adjustment table is absent
             if (getPlbAdjustment835Assigned == null) {
@@ -6773,7 +6739,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify ERA is disqualified due to negative amount")
     public void verifyERAIsDisqualifiedDueToNegativeAmount() {
-        Document eraSplitFileAssignedDoc = eraCycleUtils.getEraSplitFileAssigned(partner,checkNumber);
+        Document eraSplitFileAssignedDoc = CycleUtils.getEraSplitFileAssigned(partner,checkNumber);
         // Extract the first element of the claim_level_rejection_reasons array
         List<String> rejectionReasons = (List<String>) eraSplitFileAssignedDoc.get("rejection_reasons");
         String firstRejectionReason = "";
@@ -6789,7 +6755,7 @@ public class ERAAutomation_Defs {
 
     @Then("verify CLP is disqualified due to {string}")
     public void verifyCLPIsDisqualifiedDueTo(String claimLevelRejectionReason) {
-        Document eraSplitFileAssignedDoc = eraCycleUtils.getEraSplitFileAssigned(partner,checkNumber);
+        Document eraSplitFileAssignedDoc = CycleUtils.getEraSplitFileAssigned(partner,checkNumber);
         // Extract the first element of the claim_level_rejection_reasons array
         List<String> rejectionReasons = (List<String>) eraSplitFileAssignedDoc.get("claim_level_rejection_reasons");
         String firstRejectionReason = "";
@@ -6821,7 +6787,7 @@ public class ERAAutomation_Defs {
     @When("set workable denial entry for {string} code {string} as {string}")
     public void setWorkableDenialEntryForCodeAs(String practiceId, String codeNumber, String codeStatus) {
         boolean codeBooleanStatus = Boolean.parseBoolean(codeStatus);  // Convert string to boolean
-        eraCycleUtils.setWorkableDenialEntry(partner, practiceId, codeNumber, codeBooleanStatus);
+        CycleUtils.setWorkableDenialEntry(partner, practiceId, codeNumber, codeBooleanStatus);
     }
 
     @Then("verify era_split_file_assigned collection status wait three minutes: {string}")
@@ -6878,7 +6844,7 @@ public class ERAAutomation_Defs {
     public void getACH_Out_DetailsForPartner(String partner) {
 //        BrowserUtils.waitFor(30);
         // Fetch the JSON response as a JsonPath object
-        achOutList = apiUtils.getAchOutList(endToEndId,partner);
+        achOutList = ApiUtils.getAchOutList(endToEndId,partner);
     }
 
     @Then("verify ACH Out Details Category: {string} and Amount: {string}")
@@ -6912,9 +6878,9 @@ public class ERAAutomation_Defs {
 
     @When("reconcile {string} ledger")
     public void reconcileLedger(String ledgerCategory) {
-        String hsbcPayableSubmissionId = apiUtils.getAchOutField(listAchOut,endToEndId,"hsbc_payables_submission_id");
+        String hsbcPayableSubmissionId = ApiUtils.getAchOutField(listAchOut,endToEndId,"hsbc_payables_submission_id");
         System.out.println("hsbcPayableSubmissionId = " + hsbcPayableSubmissionId);
-        apiUtils.reconcileLedger("qa-cls5",hsbcPayableSubmissionId);
+        ApiUtils.reconcileLedger("qa-cls5",hsbcPayableSubmissionId);
     }
 
     @Then("verify legder_1 collection {string} category status {string}")
@@ -6929,7 +6895,7 @@ public class ERAAutomation_Defs {
         JsonPath ledgerJson = JsonPath.from(ledgerDoc.toJson());
         String actualStatus = ledgerJson.get("status");
         System.out.println("actualStatus = " + actualStatus);
-        logUtils.assertEquals("expected status: " + expectedStatus + " not matched with actual: " + actualStatus + " ", expectedStatus, actualStatus);
+        LogUtils.assertEquals("expected status: " + expectedStatus + " not matched with actual: " + actualStatus + " ", expectedStatus, actualStatus);
     }
 
     @Then("verify hsbc_payables_submission_1 collection {string}")

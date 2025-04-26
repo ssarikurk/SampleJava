@@ -4,7 +4,7 @@ package org.cucumber.utilities;
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement;
 import com.amazonaws.services.simplesystemsmanagement.model.*;
 
-public class awsUtils {
+public class AwsUtils {
 
     public static void executeCommandOnInstance(AWSSimpleSystemsManagement ssmClient, String instanceId, String filePath) {
         // Replace with your command to execute the .bat file

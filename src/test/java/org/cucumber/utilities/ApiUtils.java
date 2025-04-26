@@ -20,7 +20,7 @@ import java.util.*;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
-public class apiUtils {
+public class ApiUtils {
 
 
     static String finalToken = "";
@@ -502,13 +502,13 @@ public class apiUtils {
             String patRelation = patPlanDoc.getString("relationship");
             System.out.println("patRelation = " + patRelation);
 
-            AggregateIterable<Document> aggregateDoc = patientColl.aggregate(aggregatePipeline.patientToCarrier(practice,patient));
+            AggregateIterable<Document> aggregateDoc = patientColl.aggregate(AggregatePipeline.patientToCarrier(practice,patient));
             Document patientDoc = aggregateDoc.first();
 //            System.out.println("patientDoc.get(\"patient_id\") = " + patientDoc.get("patient_id"));
             JsonPath patientJson = JsonPath.from(patientDoc.toJson());
 //            patientJson.prettyPrint();
 //            JsonPath patientJson2 = apiUtils.getPatientData(partner,practice,patient);
-            JsonPath patientAllDataJson = apiUtils.getPatientData(partner,practice,patient);
+            JsonPath patientAllDataJson = ApiUtils.getPatientData(partner,practice,patient);
 //            patientAllDataJson.prettyPrint();
             String dentalPayorId = patientAllDataJson.getString("insurance.primary.carrier.dental_payor_id");
             System.out.println("dentalPayorId = " + dentalPayorId);
@@ -519,11 +519,11 @@ public class apiUtils {
 //            praceticeJson.prettyPrint();
             Map<String, Object> billingAddressJson = praceticeJson.getMap("billing_address");
 
-            Map<String, Object> billingProviderData = apiUtils.getDefaultBillingProvider(partner,practice);
+            Map<String, Object> billingProviderData = ApiUtils.getDefaultBillingProvider(partner,practice);
 //            System.out.println("billingProviderData = " + billingProviderData);
 //            billingProviderData.prettyPrint();
 //            System.out.println("----------------------");
-            JsonPath practiceData = apiUtils.getBillingProvideFromPractice(partner,practice);
+            JsonPath practiceData = ApiUtils.getBillingProvideFromPractice(partner,practice);
 //            practiceData.prettyPrint();
             String providerID = "";
             String providerNpi = "";
@@ -562,8 +562,8 @@ public class apiUtils {
 
 
 
-            Map<String,Object> eligReqMap = apiUtils.getEligRequirements(partner, practice, dentalPayorId, patient);
-            JsonPath eligReqMapJson = convertUtils.mapToJsonpath(eligReqMap);
+            Map<String,Object> eligReqMap = ApiUtils.getEligRequirements(partner, practice, dentalPayorId, patient);
+            JsonPath eligReqMapJson = ConvertUtils.mapToJsonpath(eligReqMap);
 //            eligReqMapJson.prettyPrint();
             String payorId = "";
             if (eligReqMap!=null){
