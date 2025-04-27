@@ -433,7 +433,7 @@ public class MongoDBUtils {
         for (String clearinghouse : clearinghouseList) {
 
             // Path to your JavaScript file
-            String filePath = "C:\\Users\\Administrator\\vscodeRet\\fullstack\\ret-fullstack\\scripts\\directorydb\\dental_payor_"+clearinghouse+".js";
+            String filePath = "C:\\Users\\Administrator\\vscodeRet\\fullstack\\ret-fullstack\\scripts\\directorydb"+clearinghouse+".js";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
                 String line;
