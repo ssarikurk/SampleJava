@@ -5,7 +5,7 @@ It is designed as a scalable template to automate:
 
 - **UI Testing**
 - **API Testing** (to be added)
-- **Database Testing** (to be added)
+- **Database Testing** (MongoDB)
 
 The goal is to create a **flexible, easy-to-extend** automation structure where UI, API, and Database layers can be covered with real examples.
 
