@@ -4,8 +4,8 @@ This project is a **sample automation framework** built using **Selenium WebDriv
 It is designed as a scalable template to automate:
 
 - **UI Testing**
-- **API Testing** (to be added)
-- **Database Testing** (MongoDB)
+- **API Testing** 
+- **Database Testing** (MongoDB, MySQL)
 
 The goal is to create a **flexible, easy-to-extend** automation structure where UI, API, and Database layers can be covered with real examples.
 
@@ -21,10 +21,10 @@ The goal is to create a **flexible, easy-to-extend** automation structure where 
 
 ## 🛠 Tech Stack
 
-- **Java 17**
+- **Java**
 - **Selenium WebDriver**
 - **Cucumber (BDD Framework)**
-- **JUnit** (Test Runner)
+- **JUnit** 
 - **Maven** (Dependency Management and Build Tool)
 
 ---

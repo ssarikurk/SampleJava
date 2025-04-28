@@ -22,22 +22,19 @@ import static io.restassured.RestAssured.given;
 
 public class ApiUtils {
 
-
     static String finalToken = "";
     public static Object generateToken(String partner) {
         RestAssured.useRelaxedHTTPSValidation();
         Map<String,Object> postBody = new HashMap<>();
-        postBody.put("user", ConfigurationReader.get("Super"));
-        postBody.put("password", ConfigurationReader.get("Superpassword"));
-        postBody.put("expiresIn", 100);
-        postBody.put("partnerId", partner);
+        postBody.put("username", "test");
+        postBody.put("password", "abc123");
 //        System.out.println("postBody generatetoken = " + postBody);
 
         Response response = RestAssured.given()
                 .header("User-Agent", "test")
                 .contentType("application/json")
                 .body(postBody)
-                .when().post(ConfigurationReader.get("url")+"/api/requesttoken");
+                .when().post("https://petstore.swagger.io/oauth/authorize");
 
 //       response.prettyPrint();
 //       System.out.println("response.statusCode() = " + response.statusCode());
@@ -45,8 +42,24 @@ public class ApiUtils {
 //       System.out.println("jsonDataMap = " + jsonDataMap);
 
         finalToken = "Bearer " + jsonDataMap.get("token");
-//       System.out.println("finalToken = " + finalToken);
+       System.out.println("finalToken = " + finalToken);
         return finalToken;
+    }
+
+    public static JsonPath getPetWithPetid (int petId){
+        RestAssured.baseURI = "https://petstore.swagger.io";
+        Response response = given()
+                .relaxedHTTPSValidation()
+                .header("Accept", "application/json") // 🔥 Buraya ekleriz
+                .when()
+                .get("/v2/pet/" + petId)
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response();
+        JsonPath jsonPath = response.jsonPath();
+        response.prettyPrint();
+//        System.out.println(response.statusCode());
+        return jsonPath;
     }
 
     public static String getX12 (String partner, String practice, String claimNum){
@@ -63,17 +76,6 @@ public class ApiUtils {
         return x12Str;
     }
 
-    public static JsonPath getReprocessStatus (String partner, String integrationId){
-        RestAssured.baseURI = ConfigurationReader.get("url");
-//        RestAssured.useRelaxedHTTPSValidation();
-        Response response = given().relaxedHTTPSValidation().header("Authorization",generateToken(partner))
-                .header("User-Agent", "test")
-                .when().get("/api/integrations/"+integrationId+"/reprocess");
-        JsonPath jsonPath = response.jsonPath();
-//        response.prettyPrint();
-//        System.out.println(response.statusCode());
-        return jsonPath;
-    }
 
     public static JsonPath getSweepPage (String partner){
         RestAssured.baseURI = ConfigurationReader.get("url");
