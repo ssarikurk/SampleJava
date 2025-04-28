@@ -14,7 +14,7 @@ public class Mysql_Defs {
         SqlUtils.createConnection(ConfigurationReader.get("MySQLIp"), mysqlDbName, "root", "retrace123");
 
         List<Map<String, Object>> patientData = SqlUtils.getQueryResultMap("select *  from patient p where PatNum = '1621';");
-        System.out.println("patientData = " + patientData);
+//        System.out.println("patientData = " + patientData);
 
         String patientName = patientData.get(0).get("FName").toString();
         System.out.println("patientName = " + patientName);
