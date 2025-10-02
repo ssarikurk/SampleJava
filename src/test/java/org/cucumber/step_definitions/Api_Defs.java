@@ -8,7 +8,7 @@ import org.cucumber.utilities.ApiUtils;
 public class Api_Defs {
     @And("Get api response")
     public void getApiResponse() {
-        JsonPath petJson = ApiUtils.getPetWithPetid(3);
+        JsonPath petJson = ApiUtils.getPetWithPetid(5);
 
         String petName = petJson.getString("category.name");
         System.out.println("petName = " + petName);
