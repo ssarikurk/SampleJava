@@ -63,7 +63,7 @@ public class Login_Defs {
             username = ConfigurationReader.get("sauceLabsStandartUser");
             password = ConfigurationReader.get("sauceLabsPass");
 
-        }else if(environment.equals("Super")){
+        }else if(environment.equals("skyscanner")){
             username = ConfigurationReader.get("Super");
             password = ConfigurationReader.get("Superpassword");
 

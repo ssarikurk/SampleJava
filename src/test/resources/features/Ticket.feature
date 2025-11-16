@@ -1,8 +1,13 @@
 @webApp
 Feature: Skyscanner Feature
 
-  @suleyman
+  @sul
   Scenario: Skyscanner Ticket Search Tests
     When Scenario Started "Skyscanner Ticket Search"
-    Given User logs in to "skyscanner"
+    Given Navigate to "skyscanner"
+    #And pass human check if exists
+    Then search for flights from "Esenboğa" to "Dusseldorf"
+    And select departure date as "2025-12-20"
+
+
 

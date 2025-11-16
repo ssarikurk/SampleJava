@@ -1,0 +1,130 @@
+package org.cucumber.step_definitions;
+
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import org.cucumber.pages.TicketPage;
+import org.cucumber.utilities.BrowserUtils;
+import org.cucumber.utilities.ConfigurationReader;
+import org.cucumber.utilities.Driver;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+
+public class SkyScanner_Defs {
+    @Given("Navigate to {string}")
+    public void navigate_to(String environment) {
+        System.out.println("environment = " + environment);
+
+        String url = ConfigurationReader.get(environment);
+        //WebDriver driver = Driver.get();
+        Driver.get().get(url);
+
+        BrowserUtils.waitFor(0.2);
+
+        BrowserUtils.waitFor(5);
+    }
+
+
+    @And("pass human check if exists")
+    public void passHumanCheckIfExists() {
+        // check for human check and pass it if exists
+
+        WebDriverWait shortWait = new WebDriverWait(Driver.get(), 3);
+
+        // common slider/hold selectors to try
+        List<By> candidates = Arrays.asList(
+                By.cssSelector(".geetest_slider_button"),
+                By.cssSelector(".geetest_slider"),
+                By.cssSelector(".slider-button"),
+                By.cssSelector(".rc-slider-handle"),
+                By.xpath("//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'hold')]") ,
+                By.xpath("//*[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'press and hold')]")
+        );
+
+        boolean solved = false;
+        for (By candidate : candidates) {
+            try {
+                WebElement handle = shortWait.until(ExpectedConditions.elementToBeClickable(candidate));
+
+                // try to locate a track/slider parent to compute distance
+                WebElement track;
+                try {
+                    track = handle.findElement(By.xpath("ancestor::*[contains(@class,'slider') or contains(@class,'geetest') or contains(@class,'track')][1]"));
+                } catch (Exception e) {
+                    // fallback to parent element
+                    try { track = handle.findElement(By.xpath("..")); } catch (Exception ex) { track = null; }
+                }
+
+                int moveX = 200; // default fallback
+                if (track != null) {
+                    int trackWidth = track.getSize().getWidth();
+                    int handleWidth = handle.getSize().getWidth();
+                    moveX = Math.max(50, trackWidth - handleWidth - 5);
+                }
+
+                Actions actions = new Actions(Driver.get());
+                // click and hold, move in small steps to mimic a human
+                actions.clickAndHold(handle).pause(Duration.ofMillis(300)).perform();
+
+                int steps = Math.max(4, Math.min(12, moveX / 30));
+                int stepX = moveX / steps;
+                for (int i = 0; i < steps; i++) {
+                    actions.moveByOffset(stepX, 0).pause(Duration.ofMillis(200)).perform();
+                }
+
+                // final small move and release
+                actions.moveByOffset(moveX - stepX * steps, 0).pause(Duration.ofMillis(200)).release().perform();
+
+                // give page time to validate
+                BrowserUtils.waitFor(2);
+
+                solved = true;
+                break;
+            } catch (Exception ignore) {
+                // try next selector
+            }
+        }
+
+        if (!solved) {
+            System.out.println("No human-check detected or auto-solve failed");
+        }
+
+    }
+
+    @Then("search for flights from {string} to {string}")
+    public void searchForFlightsFromTo(String from, String to) {
+
+        TicketPage ticketPage = new TicketPage();
+        ticketPage.fromText.clear();
+        ticketPage.fromText.sendKeys(from);
+        BrowserUtils.waitFor(0.5);
+        ticketPage.fromText.sendKeys(Keys.ARROW_DOWN);
+        BrowserUtils.waitFor(1);
+        ticketPage.fromText.sendKeys(Keys.ENTER);
+        ticketPage.toText.clear();
+        ticketPage.toText.sendKeys(to);
+        BrowserUtils.waitFor(1);
+        ticketPage.toText.sendKeys(Keys.ARROW_DOWN+ ""+Keys.ENTER);
+        BrowserUtils.waitFor(4);
+        ticketPage.searchFormSubmit.click();
+        BrowserUtils.waitFor(20);
+
+    }
+
+    @And("select departure date as {string}")
+    public void selectDepartureDateAs(String date) {
+        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
+
+        BrowserUtils.waitFor(20);
+    }
+}
