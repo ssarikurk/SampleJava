@@ -25,6 +25,9 @@ public class TicketPage extends BasePage{
     @FindBy(css = ".ant-collapse-item")
     public List<WebElement> practiceSelectList;
 
+    @FindBy(css = ".flight-item")
+    public List<WebElement> flightItem;
+
 
 
 }

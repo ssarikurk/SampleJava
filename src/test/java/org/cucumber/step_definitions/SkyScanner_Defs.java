@@ -100,11 +100,10 @@ public class SkyScanner_Defs {
         }
 
     }
-
+    TicketPage ticketPage = new TicketPage();
     @Then("search for flights from {string} to {string}")
     public void searchForFlightsFromTo(String from, String to) {
 
-        TicketPage ticketPage = new TicketPage();
         ticketPage.fromText.clear();
         ticketPage.fromText.sendKeys(from);
         BrowserUtils.waitFor(0.5);
@@ -123,18 +122,28 @@ public class SkyScanner_Defs {
 
     @And("select departure date as {string}")
     public void selectDepartureDateAs(String date) {
+//        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&directflightsonly=on&flightType=2");
         Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
 
-        BrowserUtils.waitFor(20);
+        BrowserUtils.waitFor(2);
     }
 
     @Then("collect flight list")
     public void collectFlightList() {
-        List<WebElement> flightList = Driver.get().findElements(By.cssSelector(".flight-list .flight-item"));
+        List<WebElement> flightList = ticketPage.flightItem;
         System.out.println("Total flights found: "+flightList.size());
+        int n = 1;
         for (WebElement flight : flightList) {
+            String id = "item-"+n;
+            System.out.println("id = " + id);
+            WebElement itemLocater= Driver.get().findElement(By.id(id));
+            System.out.println("itemLocater = " + itemLocater);
+            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
+            System.out.println("Fiyat = " + itemLocater.getAttribute("data-price"));
+//            String transactionAmount = Driver.get().findElement(By.cssSelector()
             System.out.println(flight.getText());
             System.out.println("---------------------------------------------------");
+            n++;
         }
     }
 }
