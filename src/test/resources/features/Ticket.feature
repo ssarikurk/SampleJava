@@ -8,6 +8,7 @@ Feature: Skyscanner Feature
     #And pass human check if exists
     Then search for flights from "Esenboğa" to "Dusseldorf"
     And select departure date as "2025-12-20"
+    Then collect flight list
 
 
 

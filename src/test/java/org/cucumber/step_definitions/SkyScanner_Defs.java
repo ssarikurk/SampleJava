@@ -127,4 +127,14 @@ public class SkyScanner_Defs {
 
         BrowserUtils.waitFor(20);
     }
+
+    @Then("collect flight list")
+    public void collectFlightList() {
+        List<WebElement> flightList = Driver.get().findElements(By.cssSelector(".flight-list .flight-item"));
+        System.out.println("Total flights found: "+flightList.size());
+        for (WebElement flight : flightList) {
+            System.out.println(flight.getText());
+            System.out.println("---------------------------------------------------");
+        }
+    }
 }
