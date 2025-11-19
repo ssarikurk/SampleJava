@@ -136,12 +136,14 @@ public class SkyScanner_Defs {
         for (WebElement flight : flightList) {
             String id = "item-"+n;
             System.out.println("id = " + id);
-            WebElement itemLocater= Driver.get().findElement(By.id(id));
-            System.out.println("itemLocater = " + itemLocater);
-            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
-            System.out.println("Fiyat = " + itemLocater.getAttribute("data-price"));
+            WebElement itemLocater = Driver.get().findElement(By.id(id));
+//            System.out.println("itemLocater = " + itemLocater);
+//            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
+
+            System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
+            System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
 //            String transactionAmount = Driver.get().findElement(By.cssSelector()
-            System.out.println(flight.getText());
+//            System.out.println(flight.getText());
             System.out.println("---------------------------------------------------");
             n++;
         }
