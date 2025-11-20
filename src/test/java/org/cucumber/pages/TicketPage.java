@@ -18,13 +18,8 @@ public class TicketPage extends BasePage{
     public  WebElement toText;
     @FindBy(id="searchFormSubmit")
     public  WebElement searchFormSubmit;
-
-    @FindBy(xpath = "//input[@type='email']")
-    public WebElement username;
-
     @FindBy(css = ".ant-collapse-item")
     public List<WebElement> practiceSelectList;
-
     @FindBy(css = ".flight-item")
     public List<WebElement> flightItem;
 
