@@ -148,4 +148,10 @@ public class SkyScanner_Defs {
             n++;
         }
     }
+
+    @And("select from {string} to {string} departure date as {string}")
+    public void selectFromToDepartureDateAs(String arg0, String arg1, String arg2) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
