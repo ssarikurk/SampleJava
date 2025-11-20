@@ -122,8 +122,8 @@ public class SkyScanner_Defs {
 
     @And("select departure date as {string}")
     public void selectDepartureDateAs(String date) {
-//        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&directflightsonly=on&flightType=2");
-        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
+        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&directflightsonly=on&flightType=2");
+//        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
 
         BrowserUtils.waitFor(2);
     }
