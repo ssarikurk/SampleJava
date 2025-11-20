@@ -7,7 +7,8 @@ Feature: Skyscanner Feature
     Given Navigate to "skyscanner"
     #And pass human check if exists
 #    Then search for flights from "Esenboğa" to "Dusseldorf"
-    And select departure date as "2025-12-20"
+    And select departure date as "23.05.2026"
+    And select from "DUS" to "ESB" departure date as "23.05.2026"
     Then collect flight list
 
 
