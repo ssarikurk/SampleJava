@@ -153,9 +153,5 @@ public class SkyScanner_Defs {
     public void selectFromToDepartureDateAs(String from, String to, String dateStr) {
         Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
         BrowserUtils.waitFor(2);
-
-
-
-
     }
 }
