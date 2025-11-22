@@ -11,5 +11,15 @@ Feature: Skyscanner Feature
     And select from "DUS" to "ESB" departure date as "23.05.2026"
     Then collect flight list
 
+  Scenario Outline: Skyscanner Ticket Search with Data Table
+    When Scenario Started "Skyscanner Ticket Search with Data Table"
+    And select from "<From>" to "<To>" departure date as "<FlightDate>"
+    Then collect flight list
+    Examples:
+      | From | To  | FlightDate |
+      | DUS  | ESB | 23.05.2026 |
+      | JFK  | LAX | 15.06.2026 |
+#    Given Navigate to "skyscanner"
+
 
 
