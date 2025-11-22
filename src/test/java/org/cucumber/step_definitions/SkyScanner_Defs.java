@@ -153,5 +153,6 @@ public class SkyScanner_Defs {
     public void selectFromToDepartureDateAs(String from, String to, String dateStr) {
 
 
+
     }
 }
