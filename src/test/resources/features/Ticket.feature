@@ -17,7 +17,9 @@ Feature: Skyscanner Feature
     Examples:
       | From | To  | FlightDate |
       | DUS  | ESB | 23.05.2026 |
-      | JFK  | LAX | 15.06.2026 |
+      | DUS  | ESB | 23.05.2026 |
+      | DUS  | ESB | 23.05.2026 |
+      | DUS  | ESB | 23.05.2026 |
 
 
 
