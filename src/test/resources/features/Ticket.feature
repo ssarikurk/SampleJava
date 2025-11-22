@@ -1,7 +1,6 @@
 @webApp
 Feature: Skyscanner Feature
 
-  @sul
   Scenario: Skyscanner Ticket Search Tests
     When Scenario Started "Skyscanner Ticket Search"
 #    Given Navigate to "skyscanner"
@@ -19,7 +18,6 @@ Feature: Skyscanner Feature
       | From | To  | FlightDate |
       | DUS  | ESB | 23.05.2026 |
       | JFK  | LAX | 15.06.2026 |
-#    Given Navigate to "skyscanner"
 
 
 
