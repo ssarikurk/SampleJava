@@ -120,11 +120,13 @@ public class SkyScanner_Defs {
 
     }
 
+    String dateStr;
     @And("select departure date as {string}")
     public void selectDepartureDateAs(String date) {
         Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&directflightsonly=on&flightType=2");
 //        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
 
+        dateStr = date;
         BrowserUtils.waitFor(2);
     }
 
@@ -132,9 +134,9 @@ public class SkyScanner_Defs {
     public void collectFlightList() {
         List<WebElement> flightList = ticketPage.flightItem;
         System.out.println("Total flights found: "+flightList.size());
-        int n = 1;
-        for (WebElement flight : flightList) {
-            String id = "item-"+n;
+//        int n = 1;
+        for (int i = 0; i < flightList.size(); i++) {
+            String id = "item-"+(i+1);
             System.out.println("id = " + id);
             WebElement itemLocater = Driver.get().findElement(By.id(id));
 //            System.out.println("itemLocater = " + itemLocater);
@@ -145,7 +147,8 @@ public class SkyScanner_Defs {
 //            String transactionAmount = Driver.get().findElement(By.cssSelector()
 //            System.out.println(flight.getText());
             System.out.println("---------------------------------------------------");
-            n++;
+//            n++;
+
         }
     }
 
