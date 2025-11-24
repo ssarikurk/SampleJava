@@ -24,4 +24,5 @@ Feature: Skyscanner Feature
 
   Scenario: Ticket Search Tests with Flight list
     When Scenario Started "Ticket Search Tests with Flight list"
+    Then read search data from csv "src/test/resources/testdata/flightSearchData.csv"
 
