@@ -1,6 +1,5 @@
 package org.cucumber.step_definitions;
 
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +19,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class SkyScanner_Defs {
+public class Ticket_Defs {
     @Given("Navigate to {string}")
     public void navigate_to(String environment) {
         System.out.println("environment = " + environment);
