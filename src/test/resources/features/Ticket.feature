@@ -17,9 +17,10 @@ Feature: Skyscanner Feature
     Examples:
       | From | To  | FlightDate |
       | DUS  | ESB | 23.05.2026 |
-      | DUS  | ESB | 23.05.2026 |
-      | DUS  | ESB | 23.05.2026 |
-      | DUS  | ESB | 23.05.2026 |
+      | ESB  | FRA | 23.05.2026 |
+      | ESB  | DUS | 23.05.2026 |
+      | ESB  | CGN | 23.05.2026 |
+
 
 
 
