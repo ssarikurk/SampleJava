@@ -22,5 +22,6 @@ Feature: Skyscanner Feature
       | ESB  | CGN | 23.05.2026 |
 
 
-
+  Scenario: Ticket Search Tests with Flight list
+    When Scenario Started "Ticket Search Tests with Flight list"
 
