@@ -1,5 +1,6 @@
 package org.cucumber.step_definitions;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -155,5 +156,11 @@ public class Ticket_Defs {
     public void selectFromToDepartureDateAs(String from, String to, String dateStr) {
         Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
         BrowserUtils.waitFor(2);
+    }
+
+    @Then("read search data from csv {string}")
+    public void readSearchDataFromCsv(String arg0) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }
