@@ -163,4 +163,10 @@ public class Ticket_Defs {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @And("for each flight in flight list")
+    public void forEachFlightInFlightList() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
