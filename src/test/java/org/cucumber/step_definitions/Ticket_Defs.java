@@ -175,7 +175,12 @@ public class Ticket_Defs {
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
+            String from = (String) record.get("from");
+            String to = (String) record.get("to");
+            String dateStr = (String) record.get("date");
             System.out.println("Record: " + record);
+            Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
+            BrowserUtils.waitFor(2);
         }
     }
 }
