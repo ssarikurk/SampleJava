@@ -167,14 +167,15 @@ public class Ticket_Defs {
     public void readSearchDataFromCsv(String csvFile) {
         csvRecords = ExcelUtil.readCSVtoListofMapWithPath(csvFile);
         // print csvRecords
-        for (Map<String, Object> record : csvRecords) {
-            System.out.println("Record: " + record);
-        }
+//        for (Map<String, Object> record : csvRecords) {
+//            System.out.println("Record: " + record);
+//        }
     }
 
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
-
-        System.out.println("WIP");
+        for (Map<String, Object> record : csvRecords) {
+            System.out.println("Record: " + record);
+        }
     }
 }
