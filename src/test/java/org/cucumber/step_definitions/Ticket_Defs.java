@@ -9,6 +9,7 @@ import org.cucumber.utilities.BrowserUtils;
 import org.cucumber.utilities.ConfigurationReader;
 import org.cucumber.utilities.Driver;
 
+import org.cucumber.utilities.ExcelUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -16,9 +17,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Ticket_Defs {
     @Given("Navigate to {string}")
@@ -158,15 +162,19 @@ public class Ticket_Defs {
         BrowserUtils.waitFor(2);
     }
 
+    List<Map<String, Object>> csvRecords = new ArrayList<>();
     @Then("read search data from csv {string}")
-    public void readSearchDataFromCsv(String arg0) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void readSearchDataFromCsv(String csvFile) {
+        csvRecords = ExcelUtil.readCSVtoListofMapWithPath(csvFile);
+        // print csvRecords
+        for (Map<String, Object> record : csvRecords) {
+            System.out.println("Record: " + record);
+        }
     }
 
-    @And("for each flight in flight list")
-    public void forEachFlightInFlightList() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("search for each flight in flight list")
+    public void searchForEachFlightInFlightList() {
+
+        System.out.println("WIP");
     }
 }
