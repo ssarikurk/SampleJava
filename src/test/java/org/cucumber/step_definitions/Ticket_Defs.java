@@ -176,9 +176,9 @@ public class Ticket_Defs {
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
             String from = (String) record.get("from");
-            System.out.println("from = " + from);
+//            System.out.println("from = " + from);
             String to = (String) record.get("to");
-            System.out.println("to = " + to);
+//            System.out.println("to = " + to);
             String dateStr = (String) record.get("date");
             System.out.println("Record: " + record);
             Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
