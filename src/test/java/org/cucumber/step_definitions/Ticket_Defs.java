@@ -176,11 +176,32 @@ public class Ticket_Defs {
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
             String from = (String) record.get("from");
+            System.out.println("from = " + from);
             String to = (String) record.get("to");
+            System.out.println("to = " + to);
             String dateStr = (String) record.get("date");
             System.out.println("Record: " + record);
             Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
             BrowserUtils.waitFor(2);
+
+            List<WebElement> flightList = ticketPage.flightItem;
+            System.out.println("Total flights found: "+flightList.size());
+//        int n = 1;
+            for (int i = 0; i < flightList.size(); i++) {
+                String id = "item-"+(i+1);
+                System.out.println("id = " + id);
+                WebElement itemLocater = Driver.get().findElement(By.id(id));
+//            System.out.println("itemLocater = " + itemLocater);
+//            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
+
+                System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
+                System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
+//            String transactionAmount = Driver.get().findElement(By.cssSelector()
+//            System.out.println(flight.getText());
+                System.out.println("---------------------------------------------------");
+//            n++;
+
+            }
         }
     }
 }
