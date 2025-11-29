@@ -49,8 +49,6 @@ public class ExcelUtil {
         }
     }
 
-    public static void exportListofMapToHTMLTable(String s, List<Map<String, Object>> flights) {
-    }
 
     public String getCellData(int rowNum, int colNum) {
         Cell cell;
@@ -92,7 +90,7 @@ public class ExcelUtil {
         return data;
 
     }
-    exportListofMapToHTMLTable
+
     
     
     
@@ -876,6 +874,44 @@ public class ExcelUtil {
             System.out.println("No tabs to delete. All tabs are within the last three days or marked as ControlGroup.");
         }
     }
+
+    public static StringBuilder exportListofMapToHTMLTable(String s, List<Map<String, Object>> flights) {
+        StringBuilder htmlTable = new StringBuilder();
+        htmlTable.append("<html><body><table border='1'>");
+
+        // Add table headers
+        if (!flights.isEmpty()) {
+            htmlTable.append("<tr>");
+            for (String key : flights.get(0).keySet()) {
+                htmlTable.append("<th>").append(key).append("</th>");
+            }
+            htmlTable.append("</tr>");
+        }
+
+        // Add table rows
+        for (Map<String, Object> flight : flights) {
+            htmlTable.append("<tr>");
+            for (Object value : flight.values()) {
+                htmlTable.append("<td>").append(value != null ? value.toString() : "").append("</td>");
+            }
+            htmlTable.append("</tr>");
+        }
+
+        htmlTable.append("</table></body></html>");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BrowserUtils.getDownloadPath() + "/" + s))) {
+            writer.write(htmlTable.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return htmlTable;
+    }
+
+
+
+
+
+
 
 
 }
