@@ -169,7 +169,7 @@ public class Ticket_Defs {
 //        }
     }
 
-    List<Map<String, Object>> flightList = new ArrayList<>();
+    List<Map<String, Object>> flights = new ArrayList<>();
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
@@ -196,9 +196,14 @@ public class Ticket_Defs {
                 System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
                 System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
 
+                flightMap.put("Rota", itemLocater.getAttribute("data-airports"));
+                flightMap.put("Fiyat", itemLocater.getAttribute("data-price"));
+//                flightMap.put("Para Birimi", itemLocater.getAttribute("data-currency"));
+//                flightMap.put("Tarih", dateStr);
                 System.out.println("---------------------------------------------------");
 
             }
+            flights.add(flightMap);
         }
     }
 }
