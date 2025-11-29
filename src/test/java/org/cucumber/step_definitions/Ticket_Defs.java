@@ -186,7 +186,7 @@ public class Ticket_Defs {
 
             List<WebElement> flightList = ticketPage.flightItem;
             System.out.println("Total flights found: "+flightList.size());
-//        int n = 1;
+
             for (int i = 0; i < flightList.size(); i++) {
                 String id = "item-"+(i+1);
                 System.out.println("id = " + id);
@@ -196,10 +196,9 @@ public class Ticket_Defs {
 
                 System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
                 System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
-//            String transactionAmount = Driver.get().findElement(By.cssSelector()
-//            System.out.println(flight.getText());
+
                 System.out.println("---------------------------------------------------");
-//            n++;
+
 
             }
         }
