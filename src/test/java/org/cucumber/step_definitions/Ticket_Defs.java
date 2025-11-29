@@ -198,8 +198,8 @@ public class Ticket_Defs {
 
                 flightMap.put("Rota", itemLocater.getAttribute("data-airports"));
                 flightMap.put("Fiyat", itemLocater.getAttribute("data-price"));
-//                flightMap.put("Para Birimi", itemLocater.getAttribute("data-currency"));
-//                flightMap.put("Tarih", dateStr);
+                flightMap.put("Para Birimi", itemLocater.getAttribute("data-currency"));
+                flightMap.put("Tarih", dateStr);
                 System.out.println("---------------------------------------------------");
 
             }
