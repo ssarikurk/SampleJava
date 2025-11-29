@@ -19,10 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Ticket_Defs {
     @Given("Navigate to {string}")
@@ -172,10 +169,11 @@ public class Ticket_Defs {
 //        }
     }
 
-    List<Map<String, Object>> errorList = new ArrayList<>();
+    List<Map<String, Object>> flightList = new ArrayList<>();
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
+            Map<String, Object> flightMap = new HashMap<>();
             String from = (String) record.get("from");
 //            System.out.println("from = " + from);
             String to = (String) record.get("to");
