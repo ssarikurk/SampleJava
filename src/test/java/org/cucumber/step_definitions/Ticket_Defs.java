@@ -205,5 +205,13 @@ public class Ticket_Defs {
             }
             flights.add(flightMap);
         }
+        System.out.println("flights = " + flights);
+        // export flights to html table file
+        try {
+            ExcelUtil.exportListofMapToHTMLTable("flight_search_results_"+ System.currentTimeMillis()+".html", flights);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
     }
+    //
+
 }
