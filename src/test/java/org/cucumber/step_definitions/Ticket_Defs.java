@@ -5,11 +5,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.cucumber.pages.TicketPage;
-import org.cucumber.utilities.BrowserUtils;
-import org.cucumber.utilities.ConfigurationReader;
-import org.cucumber.utilities.Driver;
+import org.cucumber.utilities.*;
 
-import org.cucumber.utilities.ExcelUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -48,7 +45,7 @@ public class Ticket_Defs {
                 By.cssSelector(".geetest_slider"),
                 By.cssSelector(".slider-button"),
                 By.cssSelector(".rc-slider-handle"),
-                By.xpath("//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'hold')]") ,
+                By.xpath("//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'hold')]"),
                 By.xpath("//*[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'press and hold')]")
         );
 
@@ -63,7 +60,11 @@ public class Ticket_Defs {
                     track = handle.findElement(By.xpath("ancestor::*[contains(@class,'slider') or contains(@class,'geetest') or contains(@class,'track')][1]"));
                 } catch (Exception e) {
                     // fallback to parent element
-                    try { track = handle.findElement(By.xpath("..")); } catch (Exception ex) { track = null; }
+                    try {
+                        track = handle.findElement(By.xpath(".."));
+                    } catch (Exception ex) {
+                        track = null;
+                    }
                 }
 
                 int moveX = 200; // default fallback
@@ -101,7 +102,9 @@ public class Ticket_Defs {
         }
 
     }
+
     TicketPage ticketPage = new TicketPage();
+
     @Then("search for flights from {string} to {string}")
     public void searchForFlightsFromTo(String from, String to) {
 
@@ -114,7 +117,7 @@ public class Ticket_Defs {
         ticketPage.toText.clear();
         ticketPage.toText.sendKeys(to);
         BrowserUtils.waitFor(1);
-        ticketPage.toText.sendKeys(Keys.ARROW_DOWN+ ""+Keys.ENTER);
+        ticketPage.toText.sendKeys(Keys.ARROW_DOWN + "" + Keys.ENTER);
         BrowserUtils.waitFor(4);
         ticketPage.searchFormSubmit.click();
         BrowserUtils.waitFor(20);
@@ -122,9 +125,10 @@ public class Ticket_Defs {
     }
 
     String dateStr;
+
     @And("select departure date as {string}")
     public void selectDepartureDateAs(String date) {
-        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&directflightsonly=on&flightType=2");
+        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate=" + date + "&adult=1&directflightsonly=on&flightType=2");
 //        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=ESB&to=DUS&toIsCity=1&ddate="+date+"&adult=1&flightType=2");
 
         dateStr = date;
@@ -134,17 +138,17 @@ public class Ticket_Defs {
     @Then("collect flight list")
     public void collectFlightList() {
         List<WebElement> flightList = ticketPage.flightItem;
-        System.out.println("Total flights found: "+flightList.size());
+        System.out.println("Total flights found: " + flightList.size());
 //        int n = 1;
         for (int i = 0; i < flightList.size(); i++) {
-            String id = "item-"+(i+1);
+            String id = "item-" + (i + 1);
             System.out.println("id = " + id);
             WebElement itemLocater = Driver.get().findElement(By.id(id));
 //            System.out.println("itemLocater = " + itemLocater);
 //            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
 
             System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
-            System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
+            System.out.println("Fiyat = " + itemLocater.getAttribute("data-price") + " --> " + itemLocater.getAttribute("data-currency"));
 //            String transactionAmount = Driver.get().findElement(By.cssSelector()
 //            System.out.println(flight.getText());
             System.out.println("---------------------------------------------------");
@@ -155,11 +159,12 @@ public class Ticket_Defs {
 
     @And("select from {string} to {string} departure date as {string}")
     public void selectFromToDepartureDateAs(String from, String to, String dateStr) {
-        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
+        Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=" + from + "&to=" + to + "&toIsCity=1&ddate=" + dateStr + "&adult=1&directflightsonly=on&flightType=2");
         BrowserUtils.waitFor(2);
     }
 
     List<Map<String, Object>> csvRecords = new ArrayList<>();
+
     @Then("read search data from csv {string}")
     public void readSearchDataFromCsv(String csvFile) {
         csvRecords = ExcelUtil.readCSVtoListofMapWithPath(csvFile);
@@ -170,6 +175,7 @@ public class Ticket_Defs {
     }
 
     List<Map<String, Object>> flights = new ArrayList<>();
+
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
@@ -180,21 +186,21 @@ public class Ticket_Defs {
 //            System.out.println("to = " + to);
             String dateStr = (String) record.get("date");
             System.out.println("Record: " + record);
-            Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from="+from+"&to="+to+"&toIsCity=1&ddate="+dateStr+"&adult=1&directflightsonly=on&flightType=2");
+            Driver.get().get("https://www.ucuzabilet.com/dis-hat-arama-sonuc?from=" + from + "&to=" + to + "&toIsCity=1&ddate=" + dateStr + "&adult=1&directflightsonly=on&flightType=2");
             BrowserUtils.waitFor(2);
 
             List<WebElement> flightList = ticketPage.flightItem;
-            System.out.println("Total flights found: "+flightList.size());
+            System.out.println("Total flights found: " + flightList.size());
 
             for (int i = 0; i < flightList.size(); i++) {
-                String id = "item-"+(i+1);
+                String id = "item-" + (i + 1);
                 System.out.println("id = " + id);
                 WebElement itemLocater = Driver.get().findElement(By.id(id));
 //            System.out.println("itemLocater = " + itemLocater);
 //            System.out.println("itemLocater.isDisplayed() = " + itemLocater.isDisplayed());
 
                 System.out.println("Rota = " + itemLocater.getAttribute("data-airports"));
-                System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
+                System.out.println("Fiyat = " + itemLocater.getAttribute("data-price") + " --> " + itemLocater.getAttribute("data-currency"));
 
                 flightMap.put("Rota", itemLocater.getAttribute("data-airports"));
                 flightMap.put("Fiyat", itemLocater.getAttribute("data-price"));
@@ -206,12 +212,11 @@ public class Ticket_Defs {
             flights.add(flightMap);
         }
         System.out.println("flights = " + flights);
-        // export flights to html table file
-        try {
-            ExcelUtil.exportListofMapToHTMLTable("flight_search_results_"+ System.currentTimeMillis()+".html", flights);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-    }
-    //
+        // export flights to html table file and assignt a unique name with timestamp
+        StringBuilder htmlList = ExcelUtil.exportListofMapToHTMLTable("flight_search_results_" + System.currentTimeMillis() + ".html", flights);
 
+        System.out.println("htmlList = " + htmlList);
+//        GmailUtil.sendEmail();
+
+    }
 }
