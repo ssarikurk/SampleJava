@@ -49,6 +49,9 @@ public class ExcelUtil {
         }
     }
 
+    public static void exportListofMapToHTMLTable(String s, List<Map<String, Object>> flights) {
+    }
+
     public String getCellData(int rowNum, int colNum) {
         Cell cell;
         try {
@@ -89,7 +92,10 @@ public class ExcelUtil {
         return data;
 
     }
-
+    exportListofMapToHTMLTable
+    
+    
+    
     public List<Map<String, String>> getDataList() {
         // get all columns
         List<String> columns = getColumnsNames();
