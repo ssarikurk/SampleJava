@@ -172,6 +172,7 @@ public class Ticket_Defs {
 //        }
     }
 
+    List<Map<String, Object>> errorList = new ArrayList<>();
     @And("search for each flight in flight list")
     public void searchForEachFlightInFlightList() {
         for (Map<String, Object> record : csvRecords) {
@@ -198,7 +199,6 @@ public class Ticket_Defs {
                 System.out.println("Fiyat = " + itemLocater.getAttribute("data-price")+" --> "+itemLocater.getAttribute("data-currency"));
 
                 System.out.println("---------------------------------------------------");
-
 
             }
         }
